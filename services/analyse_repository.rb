@@ -53,7 +53,8 @@ class AnalyseRepository
     }
 
     format = format_bits.values.join(separator) + end_character
-    command = "cd #{root_path} && git log -10 --reverse --format=\"#{format}\""
+    limit = ENV['LIMIT'] || 10
+    command = "cd #{root_path} && git log -#{limit} --reverse --format=\"#{format}\""
 
     execute_command(command) do |output|
       lines = output.split(end_character).map(&:strip)

@@ -1,7 +1,7 @@
 #!/bin/ruby
 
 repository_url = "https://github.com/soundasleep/rmagic"
-ENV['database'] = ARGV[0] || ":memory:"
+ENV['DATABASE'] = ARGV[0] || ":memory:"
 
 require_relative "lib/preload"
 
