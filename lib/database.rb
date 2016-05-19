@@ -10,5 +10,5 @@ ActiveRecord::Base.establish_connection(
 
 # Create the database if necessary
 unless ActiveRecord::Base.connection.table_exists? "schema"
-  require_relative "db/schema"
+  require_relative "../db/schema"
 end

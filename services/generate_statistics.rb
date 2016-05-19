@@ -6,6 +6,6 @@ class GenerateStatistics
   end
 
   def call
-    # do something
+    LOG.info "Generating statistics..."
   end
 end

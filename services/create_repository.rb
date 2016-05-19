@@ -6,6 +6,8 @@ class CreateRepository
   end
 
   def call
+    LOG.info "Creating repository..."
+
     Repository.where(url: url).first || new_repository
   end
 

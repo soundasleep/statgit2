@@ -11,14 +11,13 @@ class AbstractReport
     @template ||= Haml::Engine.new(File.read(root_template))
     filename = file_for(name)
 
-    LOG.info "Creating #{filename}..."
     engine = Haml::Engine.new(File.read(template_for(name)))
     output = @template.render self, template_arguments do
       engine.render self, template_arguments
     end
 
     bytes = File.write filename, output
-    LOG.debug "(#{bytes} bytes)"
+    LOG.debug "Created #{filename} (#{bytes} bytes)"
   end
 
   def title

@@ -6,6 +6,7 @@ class AnalyseRepository
   end
 
   def call
+    LOG.info "Analysing repository..."
 
   end
 end

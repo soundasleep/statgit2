@@ -6,8 +6,10 @@ class GenerateReports
   end
 
   def call
+    LOG.info "Generating reports..."
+
     ALL_REPORTS.each do |report|
-      LOG.info("Creating report #{report}...")
+      LOG.info ">> #{report.name}"
 
       report.new(repository: repository).generate!
     end
