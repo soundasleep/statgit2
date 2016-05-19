@@ -4,6 +4,7 @@ class Commit < ActiveRecord::Base
   has_many :lines_of_code_stats, dependent: :destroy
 
   belongs_to :repository
+  belongs_to :author
 
   default_scope { order('created_at ASC') }
 

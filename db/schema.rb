@@ -25,12 +25,15 @@ ActiveRecord::Schema.define(version: 0) do
     t.string   "body"
     t.string   "commit_notes"
 
+    t.integer  "author_id"
+
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end
 
   add_index "commits", ["repository_id"]
   add_index "commits", ["commit_hash"]
+  add_index "commits", ["author_id"]
 
   create_table :authors do |t|
     t.integer  "repository_id", null: false
