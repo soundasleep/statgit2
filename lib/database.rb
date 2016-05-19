@@ -1,5 +1,6 @@
 require "active_record"
 require "connection_pool"
+require "sqlite3"
 
 # Enable logging if necessary
 # ActiveRecord::Base.logger = Logger.new(STDERR)
