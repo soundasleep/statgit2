@@ -6,6 +6,7 @@ Generate Git development statistics, a reboot of [statgit](https://github.com/so
 # Running
 
 ```
+npm install
 ruby generate.rb https://github.com/your/repository
 ```
 
