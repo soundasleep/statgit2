@@ -10,9 +10,9 @@
 
     %dt Report period
     %dd
-      = date(repository.commits.first.created_at)
+      = date(repository.commits.first.author_date)
       to
-      = date(repository.commits.last.created_at)
+      = date(repository.commits.last.author_date)
 
     %dt Total files
     %dd= repository.latest_commit.files.length

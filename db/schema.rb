@@ -17,10 +17,10 @@ ActiveRecord::Schema.define(version: 0) do
     t.string   "parent_hashes", null: false
     t.string   "author_name",   null: false
     t.string   "author_email",  null: false
-    t.string   "author_date",   null: false
+    t.datetime "author_date",   null: false
     t.string   "committer_name",   null: false
     t.string   "committer_email",  null: false
-    t.string   "committer_date",   null: false
+    t.datetime "committer_date",   null: false
     t.string   "subject",       null: false
     t.string   "body"
     t.string   "commit_notes"
