@@ -4,3 +4,6 @@ require "logger"
 require "logger/colors"
 
 LOG = Logger.new(STDOUT)
+
+# Flush after every output
+STDOUT.sync = true
