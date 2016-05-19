@@ -5,4 +5,8 @@ class Repository < ActiveRecord::Base
   def latest_commit
     commits.last
   end
+
+  def root_path
+    "workspace/"
+  end
 end

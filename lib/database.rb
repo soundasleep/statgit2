@@ -1,4 +1,5 @@
 require "active_record"
+require "connection_pool"
 
 # Enable logging if necessary
 # ActiveRecord::Base.logger = Logger.new(STDERR)

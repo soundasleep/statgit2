@@ -12,13 +12,13 @@ class AnalyseRepository
 
     check_out_git
     export_log
+
+    repository.commits.each do |commit|
+      AnalyseCommit.new(commit: commit).call
+    end
   end
 
   private
-
-  def root_path
-    "workspace/"
-  end
 
   def check_out_git
     unless Dir.exist?(root_path)
@@ -53,7 +53,7 @@ class AnalyseRepository
     }
 
     format = format_bits.values.join(separator) + end_character
-    command = "cd #{root_path} && git log --reverse --format=\"#{format}\""
+    command = "cd #{root_path} && git log -10 --reverse --format=\"#{format}\""
 
     execute_command(command) do |output|
       lines = output.split(end_character).map(&:strip)

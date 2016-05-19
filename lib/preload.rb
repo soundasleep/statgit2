@@ -3,12 +3,14 @@ require_relative "database"
 require_relative "templates"
 
 ALL_REPORTS = []
+COMMIT_ANALYSERS = []
 
 include_paths = [
   "helpers",
   "models",
   "services",
   "reports",
+  "analysers",
 ]
 
 include_paths.each do |include_path|

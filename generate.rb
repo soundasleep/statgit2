@@ -1,7 +1,7 @@
 #!/bin/ruby
 
 repository_url = "https://github.com/soundasleep/rmagic"
-ENV['database'] = "db/database.sqlite3"
+ENV['database'] = ARGV[0] || ":memory:"
 
 require_relative "lib/preload"
 
