@@ -1,0 +1,16 @@
+!!!
+%head
+  %title= title
+
+%body
+  %header
+    #navigation
+      - navigation.each do |href, title|
+        %a{href: href}= title
+
+  #content
+    =yield
+
+  %footer
+    Generated
+    = Time.now

@@ -1,7 +1,13 @@
+require_relative "logger"
 require_relative "database"
+require_relative "templates"
+
+ALL_REPORTS = []
 
 include_paths = [
-  "models"
+  "models",
+  "services",
+  "reports",
 ]
 
 include_paths.each do |include_path|
