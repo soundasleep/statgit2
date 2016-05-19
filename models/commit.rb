@@ -12,6 +12,6 @@ class Commit < ActiveRecord::Base
   end
 
   def lines_of_code
-    lines_of_code_stats.sum(&:code)
+    lines_of_code_stats.sum(:code)
   end
 end

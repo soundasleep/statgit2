@@ -1,4 +1,6 @@
 class AbstractReport
+  include ReportHelper
+
   attr_reader :repository
 
   def initialize(repository:)

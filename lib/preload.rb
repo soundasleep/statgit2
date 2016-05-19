@@ -5,6 +5,7 @@ require_relative "templates"
 ALL_REPORTS = []
 
 include_paths = [
+  "helpers",
   "models",
   "services",
   "reports",
