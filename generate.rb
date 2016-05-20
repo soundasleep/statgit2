@@ -1,6 +1,6 @@
 #!/bin/ruby
 
-repository_url = "https://github.com/soundasleep/statgit"
+repository_url = ENV['REPOSITORY'] || "https://github.com/soundasleep/statgit"
 
 ENV['DATABASE'] = ARGV[0] || ":memory:"
 
