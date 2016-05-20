@@ -10,6 +10,10 @@ class SimpleReport < AbstractReport
   def self.root_path
     "index"
   end
+
+  def self.public?
+    true
+  end
 end
 
 ALL_REPORTS << SimpleReport

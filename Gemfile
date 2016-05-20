@@ -11,3 +11,4 @@ gem 'sqlite3'
 gem 'logger-colors'
 
 gem 'haml'
+gem 'sass'

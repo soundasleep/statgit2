@@ -43,6 +43,7 @@ GEM
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
+    sass (3.4.20)
     sqlite3 (1.3.11)
     thread_safe (0.3.5)
     tilt (2.0.1)
@@ -60,6 +61,7 @@ DEPENDENCIES
   connection_pool
   haml
   logger-colors
+  sass
   sqlite3
 
 BUNDLED WITH

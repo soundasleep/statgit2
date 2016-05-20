@@ -8,24 +8,19 @@ class AbstractReport
   end
 
   def create_file!(name)
-    Dir.mkdir "output/" unless Dir.exist?("output/")
+    Dir.mkdir(output_location) unless Dir.exist?(output_location)
 
-    # @template ||= Haml::Engine.new(File.read(root_template))
-    # filename = file_for(name)
+    filename = output_location + file_for(name)
+    output = render_output(name)
+    bytes = File.write filename, output
 
-    # engine = Haml::Engine.new(File.read(template_for(name)))
-    # output = @template.render self, template_arguments do
-    #   engine.render self, template_arguments
-    # end
+    LOG.debug "Created #{filename} (#{bytes} bytes)"
+  end
 
-    filename = file_for(name)
-
-    output = render_template(root_template, template_arguments) do
+  def render_output(name)
+    render_template(root_template, template_arguments) do
       render_template(template_for(name), template_arguments)
     end
-
-    bytes = File.write filename, output
-    LOG.debug "Created #{filename} (#{bytes} bytes)"
   end
 
   def title
@@ -41,23 +36,35 @@ class AbstractReport
   end
 
   def navigation
-    ALL_REPORTS.map do |report|
+    ALL_REPORTS.select(&:public?).map do |report|
       [report.root_path + ".html", report.title]
     end
   end
 
+  def self.public?
+    false
+  end
+
   private
 
+  def output_location
+    "output/"
+  end
+
   def file_for(filename)
-    "output/#{filename}.html"
+    "#{filename}.html"
+  end
+
+  def template_extension
+    ".html.haml"
   end
 
   def template_for(filename)
-    File.dirname(__FILE__) + "/../templates/#{simple_class_name}/#{filename}.html.haml"
+    File.dirname(__FILE__) + "/../templates/#{simple_class_name}/#{filename}#{template_extension}"
   end
 
   def root_template
-    File.dirname(__FILE__) + "/../templates/layouts/default.html.haml"
+    File.dirname(__FILE__) + "/../templates/layouts/default#{template_extension}"
   end
 
   def simple_class_name

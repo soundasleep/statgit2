@@ -3,3 +3,4 @@ db/*.sqlite3
 output/
 workspace/
 node_modules/
+.sass-cache/
