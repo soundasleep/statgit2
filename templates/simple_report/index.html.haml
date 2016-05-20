@@ -1,0 +1,32 @@
+%h1= repository.url
+
+%dl
+  %dt Commits
+  %dd= repository.commits.length
+
+  - if repository.commits.any?
+    %dt Latest commit
+    %dd
+      = commit_link(repository.commits.last)
+      %br
+      %i= repository.commits.last.subject
+
+    %dt Report period
+    %dd
+      = iso_date(repository.commits.first.author_date)
+      to
+      = iso_date(repository.commits.last.author_date)
+      (#{(repository.commits.last.author_date.to_date - repository.commits.first.author_date.to_date).to_i} days)
+
+    %dt Total files
+    %dd= repository.latest_commit.files.length
+
+    %dt Total lines of code
+    %dd= repository.latest_commit.lines_of_code
+
+  %dt Developers
+  %dd= repository.authors.length
+
+%h1 Lines of Code
+
+= line_chart(repository, :lines_of_code_per_day, "LOC")

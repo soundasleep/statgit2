@@ -1,6 +1,6 @@
 #!/bin/ruby
 
-repository_url = "https://github.com/soundasleep/rmagic"
+repository_url = "https://github.com/soundasleep/statgit"
 
 ENV['DATABASE'] = ARGV[0] || ":memory:"
 

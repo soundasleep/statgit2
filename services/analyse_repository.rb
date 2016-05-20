@@ -53,7 +53,7 @@ class AnalyseRepository
     }
 
     format = format_bits.values.join(separator) + end_character
-    limit = ENV['LIMIT'] || 5
+    limit = ENV['LIMIT'] || 10
     command = "cd #{root_path} && git log -#{limit} --reverse --format=\"#{format}\""
 
     execute_command(command) do |output|

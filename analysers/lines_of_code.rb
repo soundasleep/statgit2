@@ -25,7 +25,7 @@ class LinesOfCode < AbstractCommitAnalyser
       end
     end
 
-    LOG.info "Found #{commit.lines_of_code_stats.size} languages"
+    LOG.info "Found #{commit.lines_of_code_stats.size} languages with #{commit.lines_of_code_stats.map(&:code).reduce(&:+)} LOC"
   end
 end
 

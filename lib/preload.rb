@@ -15,6 +15,7 @@ include_paths = [
   "services",
   "reports",
   "analysers",
+  "transforms",
 ]
 
 include_paths.each do |include_path|

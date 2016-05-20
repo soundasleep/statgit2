@@ -9,4 +9,8 @@ class Repository < ActiveRecord::Base
   def root_path
     "workspace/"
   end
+
+  def lines_of_code_per_day
+    @lines_of_code_per_day ||= LinesOfCodePerDay.new(self).call
+  end
 end

@@ -10,12 +10,18 @@ class AbstractReport
   def create_file!(name)
     Dir.mkdir "output/" unless Dir.exist?("output/")
 
-    @template ||= Haml::Engine.new(File.read(root_template))
+    # @template ||= Haml::Engine.new(File.read(root_template))
+    # filename = file_for(name)
+
+    # engine = Haml::Engine.new(File.read(template_for(name)))
+    # output = @template.render self, template_arguments do
+    #   engine.render self, template_arguments
+    # end
+
     filename = file_for(name)
 
-    engine = Haml::Engine.new(File.read(template_for(name)))
-    output = @template.render self, template_arguments do
-      engine.render self, template_arguments
+    output = render_template(root_template, template_arguments) do
+      render_template(template_for(name), template_arguments)
     end
 
     bytes = File.write filename, output
@@ -47,11 +53,11 @@ class AbstractReport
   end
 
   def template_for(filename)
-    File.dirname(__FILE__) + "/#{simple_class_name}/#{filename}.html.haml"
+    File.dirname(__FILE__) + "/../templates/#{simple_class_name}/#{filename}.html.haml"
   end
 
   def root_template
-    File.dirname(__FILE__) + "/layouts/default.html.haml"
+    File.dirname(__FILE__) + "/../templates/layouts/default.html.haml"
   end
 
   def simple_class_name
