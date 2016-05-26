@@ -6,7 +6,7 @@ class Commit < ActiveRecord::Base
   belongs_to :repository
   belongs_to :author
 
-  default_scope { order('created_at ASC') }
+  default_scope { order('author_date ASC') }
 
   def files
     commit_files

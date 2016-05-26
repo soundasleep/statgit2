@@ -1,18 +1,11 @@
 require "action_view"
 
 module ReportHelper
+  include DateHelper
   include ActionView::Helpers::UrlHelper
 
   def commit_link(commit)
     link_to(commit.commit_hash, "#")
-  end
-
-  def date(date)
-    iso_date(date)
-  end
-
-  def iso_date(date)
-    date.strftime("%Y-%m-%d")
   end
 
   def wrap_array(data)

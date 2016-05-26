@@ -1,5 +1,6 @@
 class AnalyseRepository
   include CommandLineHelper
+  include DateHelper
 
   attr_reader :repository
 
@@ -16,6 +17,24 @@ class AnalyseRepository
     repository.commits.each do |commit|
       AnalyseCommit.new(commit: commit).call
     end
+  end
+
+  def commits_per_day(commits, per_day = nil)
+    return commits unless per_day
+
+    results = []
+    day_map = {}
+    commits.each do |commit|
+      date = iso_date(commit.author_date)
+
+      unless day_map.has_key?(date) && day_map[date] >= per_day
+        day_map[date] ||= 0
+        day_map[date] += 1
+        results << commit
+      end
+    end
+
+    results
   end
 
   private
@@ -53,8 +72,8 @@ class AnalyseRepository
     }
 
     format = format_bits.values.join(separator) + end_character
-    limit = ENV['LIMIT'] || 1
-    command = "cd #{root_path} && git log -#{limit} --reverse --format=\"#{format}\""
+    days = ENV['DAYS'] || 3
+    command = "cd #{root_path} && git log -#{days} --reverse --format=\"#{format}\""
 
     execute_command(command) do |output|
       lines = output.split(end_character).map(&:strip)
