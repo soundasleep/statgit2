@@ -27,7 +27,7 @@ class AnalyseRepository
     results = []
     day_map = {}
     commits.each do |commit|
-      date = iso_date(Date.parse(commit[:author_date]))
+      date = iso_date(commit[:author_date])
 
       unless day_map.has_key?(date) && day_map[date] >= per_day
         day_map[date] ||= 0
@@ -91,7 +91,8 @@ class AnalyseRepository
 
         # Use local timezone as necessary
         [:author_date, :committer_date].each do |key|
-          commit[key] = DateTime.parse(commit[key]).in_time_zone(time_zone)
+          commit[key] = DateTime.parse(commit[key]) if commit[key].is_a?(String)
+          commit[key] = commit[key].in_time_zone(time_zone)
         end
 
         loaded_commits << commit
