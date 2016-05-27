@@ -12,8 +12,15 @@ ruby generate.rb https://github.com/your/repository
 
 This will generate, by default, things in `output/` and a database stored locally as `db/database.sqlite3`.
 
+# Tests
+
+```
+bundle exec rspec
+```
+
 # TODO
 
+* `--from` and `--to` options
 * Tests with rspec
 * Generate all of the base stats from statgit
 * Travis-CI build

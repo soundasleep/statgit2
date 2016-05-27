@@ -1,14 +1,11 @@
 #!/bin/ruby
 
-repository_url = ENV['REPOSITORY'] || "https://github.com/soundasleep/statgit"
-
-ENV['DATABASE'] = ARGV[0] || ":memory:"
-
 require_relative "lib/preload"
+repository_url = options[:url]
 
 # Do all the things
-repository = CreateRepository.new(url: repository_url).call
+repository = CreateRepository.new(url: repository_url, options: options).call
 
-AnalyseRepository.new(repository: repository).call
-GenerateStatistics.new(repository: repository).call
-GenerateReports.new(repository: repository).call
+AnalyseRepository.new(repository: repository, options: options).call
+GenerateStatistics.new(repository: repository, options: options).call
+GenerateReports.new(repository: repository, options: options).call

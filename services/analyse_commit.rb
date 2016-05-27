@@ -1,12 +1,13 @@
 class AnalyseCommit
   include CommandLineHelper
 
-  attr_reader :commit
+  attr_reader :commit, :options
 
   delegate :repository, to: :commit
 
-  def initialize(commit:)
+  def initialize(commit:, options:)
     @commit = commit
+    @options = options
   end
 
   def call

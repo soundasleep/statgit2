@@ -2,20 +2,22 @@ class AnalyseRepository
   include CommandLineHelper
   include DateHelper
 
-  attr_reader :repository
+  attr_reader :repository, :options
 
-  def initialize(repository:)
+  def initialize(repository:, options:)
     @repository = repository
+    @options = options
   end
 
   def call
     LOG.info "Analysing repository..."
 
+    # TODO fail if checked out git is not the current repository URL
     check_out_git
     export_log
 
     repository.commits.each do |commit|
-      AnalyseCommit.new(commit: commit).call
+      AnalyseCommit.new(commit: commit, options: options).call
     end
   end
 
@@ -25,7 +27,7 @@ class AnalyseRepository
     results = []
     day_map = {}
     commits.each do |commit|
-      date = iso_date(commit.author_date)
+      date = iso_date(Date.parse(commit[:author_date]))
 
       unless day_map.has_key?(date) && day_map[date] >= per_day
         day_map[date] ||= 0
@@ -72,8 +74,10 @@ class AnalyseRepository
     }
 
     format = format_bits.values.join(separator) + end_character
-    days = ENV['DAYS'] || 3
-    command = "cd #{root_path} && git log -#{days} --reverse --format=\"#{format}\""
+    limit = options[:limit] ? "-#{options[:limit]} " : ""
+    command = "cd #{root_path} && git log #{limit} --reverse --format=\"#{format}\""
+
+    loaded_commits = []
 
     execute_command(command) do |output|
       lines = output.split(end_character).map(&:strip)
@@ -85,8 +89,12 @@ class AnalyseRepository
           commit[key] = line_bits[i]
         end
 
-        new_commit commit
+        loaded_commits << commit
       end
+    end
+
+    commits_per_day(loaded_commits, options[:commits_per_day]).each do |commit|
+      new_commit commit
     end
   end
 

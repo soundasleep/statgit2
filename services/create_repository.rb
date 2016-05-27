@@ -1,21 +1,23 @@
 class CreateRepository
-  attr_reader :url
+  attr_reader :options
 
-  def initialize(url:)
-    @url = url
+  def initialize(options:)
+    @options = options
   end
 
   def call
     LOG.info "Creating repository..."
 
-    Repository.where(url: url).first || new_repository
+    fail "Need to provide a URL with --url" unless options[:url]
+
+    Repository.where(url: options[:url]).first || new_repository
   end
 
   private
 
   def new_repository
     Repository.create!(
-      url: url
+      url: options[:url],
     )
   end
 end

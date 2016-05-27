@@ -1,8 +1,9 @@
 class GenerateReports
-  attr_reader :repository
+  attr_reader :repository, :options
 
-  def initialize(repository:)
+  def initialize(repository:, options:)
     @repository = repository
+    @options = options
   end
 
   def call
