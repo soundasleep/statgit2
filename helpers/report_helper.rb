@@ -16,7 +16,7 @@ module ReportHelper
     end
   end
 
-  def line_chart(repository, method, title, options = {})
+  def render_chart(chart_type, repository, method, title, options = {})
     data = repository.send(method).map do |key, value|
       [key, wrap_array(value)]
     end
@@ -25,10 +25,10 @@ module ReportHelper
 
     labels = wrap_array(title)
 
-    options = options.merge({
+    options = {
       width: 600,
       height: 400,
-    })
+    }.merge(options)
 
     arguments = template_arguments.merge(options).merge({
       data: data,
@@ -37,7 +37,15 @@ module ReportHelper
       method: method,
     })
 
-    render_template(shared_template("line_chart"), arguments)
+    render_template(shared_template(chart_type), arguments)
+  end
+
+  def scatter_chart(repository, method, title, options = {})
+    render_chart "scatter_chart", repository, method, title, options
+  end
+
+  def line_chart(repository, method, title, options = {})
+    render_chart "line_chart", repository, method, title, options
   end
 
   def render_template(template, template_arguments)

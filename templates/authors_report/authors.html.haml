@@ -1,0 +1,9 @@
+%h1 #{repository.authors.length} Authors
+
+%h2 Commit Activity
+
+= scatter_chart(repository, :commit_activity, "Hour")
+
+%h2 Per Day
+
+%h2 Per Hour

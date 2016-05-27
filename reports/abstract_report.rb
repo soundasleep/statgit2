@@ -32,7 +32,7 @@ class AbstractReport
   end
 
   def self.root_path
-    self.class.name
+    self.title.downcase
   end
 
   def navigation

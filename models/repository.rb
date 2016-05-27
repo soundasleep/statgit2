@@ -13,4 +13,8 @@ class Repository < ActiveRecord::Base
   def lines_of_code_per_day
     @lines_of_code_per_day ||= LinesOfCodePerDay.new(self).call
   end
+
+  def commit_activity
+    @commit_activity ||= CommitActivity.new(self).call
+  end
 end
