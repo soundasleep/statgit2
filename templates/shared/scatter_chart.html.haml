@@ -23,7 +23,7 @@
         #{
           data.map do |date, values|
             ([
-              "new Date(#{date[0, 4]}, #{date[5, 2]} - 1, #{date[8, 25]})"
+              "new Date(#{date[0, 4]}, #{date[5, 2]} - 1, #{date[8, 2]})"
             ] + values).join(", ")
           end.map { |row| "[#{row}]" }.join(",\n")
         }
