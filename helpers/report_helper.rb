@@ -1,4 +1,5 @@
 require "action_view"
+require_relative "date_helper"
 
 module ReportHelper
   include DateHelper
