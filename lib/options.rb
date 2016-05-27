@@ -8,6 +8,7 @@ def load_command_line_options
     database: ":memory:",
     debug: false,
     url: nil,
+    timezone: nil,
   }
 
   OptionParser.new do |opts|
@@ -19,6 +20,10 @@ def load_command_line_options
 
     opts.on("-u", "--url URL", "Analyse this Git repository") do |url|
       options[:url] = url
+    end
+
+    opts.on("-t", "--timezone ZONE", "Generate reports using this timezone (default: local)") do |timezone|
+      options[:timezone] = timezone
     end
 
     opts.on("--limit COMMITS", Integer, "Only go back this number of commits") do |commits|

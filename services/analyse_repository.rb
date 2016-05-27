@@ -89,6 +89,11 @@ class AnalyseRepository
           commit[key] = line_bits[i]
         end
 
+        # Use local timezone as necessary
+        [:author_date, :committer_date].each do |key|
+          commit[key] = DateTime.parse(commit[key]).in_time_zone(time_zone)
+        end
+
         loaded_commits << commit
       end
     end

@@ -9,7 +9,7 @@ class CommitActivity
 
   def call
     raw = repository.commits.map do |commit|
-      [ minute_date(commit.author_date), commit.author_date.hour + (commit.author_date.min / 60.to_f) ]
+      [ minute_date(commit.date), commit.date.hour + (commit.date.min / 60.to_f) ]
     end
 
     Hash[raw]
