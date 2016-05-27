@@ -24,9 +24,12 @@
     %dt Total lines of code
     %dd= repository.latest_commit.lines_of_code
 
-  %dt Developers
+  %dt Authors
   %dd= repository.authors.length
 
-%h1 Lines of Code
+%ul
+  %li= link_to "Authors", "authors.html"
+
+%h2 Lines of Code
 
 = line_chart(repository, :lines_of_code_per_day, "LOC")
