@@ -42,12 +42,23 @@ class AnalyseRepository
   private
 
   def check_out_git
-    unless Dir.exist?(root_path)
+    if Dir.exist?(root_path)
+      command = "cd #{root_path} && git remote -v"
+      execute_command command do |output|
+        output.split("\n").each do |line|
+          remote_name, remote_url = line.split(/\s+/)
+          if remote_url != repository.url
+            fail "Remote '#{remote_name}' in '#{root_path}' was not '#{repository.url}': was '#{remote_url}'"
+          end
+        end
+      end
+    else
       command = "git clone #{repository.url} #{root_path}"
       execute_command command
     end
 
-    command = "cd #{root_path} && git pull origin master"
+    # TODO allow specific branches to be analysed
+    command = "cd #{root_path} && git pull origin master && git checkout master"
     execute_command command
   end
 
