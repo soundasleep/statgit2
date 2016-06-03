@@ -2,7 +2,6 @@ class Commit < ActiveRecord::Base
   include DateHelper
 
   has_many :commit_files, dependent: :destroy
-
   has_many :lines_of_code_stats, dependent: :destroy
 
   belongs_to :repository
@@ -20,5 +19,13 @@ class Commit < ActiveRecord::Base
 
   def lines_of_code
     lines_of_code_stats.sum(:code)
+  end
+
+  def reek_smells
+    commit_files.map(&:reek_smells).flatten
+  end
+
+  def select_file(filename)
+    commit_files.where(full_path: filename).first
   end
 end

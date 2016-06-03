@@ -18,3 +18,6 @@ group :development, :test do
   gem 'rspec'
   gem 'rspec-collection_matchers'
 end
+
+# code analysers
+gem 'reek'
