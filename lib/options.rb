@@ -8,7 +8,7 @@ def load_command_line_options
     database: ":memory:",
     debug: false,
     url: nil,
-    timezone: nil,
+    timezone: "UTC",
   }
 
   OptionParser.new do |opts|
@@ -22,7 +22,7 @@ def load_command_line_options
       options[:url] = url
     end
 
-    opts.on("-t", "--timezone ZONE", "Generate reports using this timezone (default: local)") do |timezone|
+    opts.on("-t", "--timezone ZONE", "Generate reports using this timezone (default: `UTC`)") do |timezone|
       options[:timezone] = timezone
     end
 

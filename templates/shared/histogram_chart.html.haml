@@ -1,0 +1,45 @@
+/ TODO this is copy and pasted a lot, refactor it out!
+
+- div_name = "chart_#{method}_#{Random.rand(0xffff)}"
+.div{id: div_name, style: "width: #{width}px; height: #{height}px;"}
+
+%script{type: "text/javascript"}
+  - method_name = "draw_#{div_name}"
+
+  :plain
+    // Load the Visualization API and the piechart package.
+    google.load("visualization", "1.0", {"packages": ["corechart"]});
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.setOnLoadCallback(#{method_name});
+
+    // Callback that creates and populates a data table,
+    // instantiates the pie chart, passes in the data and
+    // draws it.
+    function #{method_name}() {
+
+      // Create the data table.
+      var data = google.visualization.arrayToDataTable([
+        ["Key", "#{heading}"],
+
+        #{
+          data.map do |key, values|
+            # TODO use an actual escaping thing
+            (["\"#{key}\""] + values).join(", ")
+          end.map { |row| "[#{row}]" }.join(",\n")
+        }
+      ]);
+
+      // Set chart options
+      var options = {
+        width: #{width},
+        height: #{height},
+        hAxis: {title: "#{title}"},
+        vAxis: {title: "#{heading}", minValue: 0},
+        chartArea: {width: "75%", height: "70%", left: 50, top: 25}
+      };
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.ColumnChart(document.getElementById("#{div_name}"));
+      chart.draw(data, options);
+    }

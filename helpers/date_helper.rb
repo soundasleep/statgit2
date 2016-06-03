@@ -7,6 +7,10 @@ module DateHelper
     date.strftime("%Y-%m-%d %H:%M")
   end
 
+  def day_name(date)
+    date.strftime("%a")
+  end
+
   def time_zone
     return nil unless options[:timezone]
     @time_zone ||= ActiveSupport::TimeZone.new(options[:timezone]) or fail(invalid_timezone_error)

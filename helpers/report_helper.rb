@@ -35,7 +35,7 @@ module ReportHelper
       data: data,
       labels: labels,
       title: title,
-      method: method,
+      method: method
     })
 
     render_template(shared_template(chart_type), arguments)
@@ -47,6 +47,10 @@ module ReportHelper
 
   def line_chart(repository, method, title, options = {})
     render_chart "line_chart", repository, method, title, options
+  end
+
+  def histogram_chart(repository, method, heading, title, options = {})
+    render_chart "histogram_chart", repository, method, title, {heading: heading}.merge(options)
   end
 
   def render_template(template, template_arguments)

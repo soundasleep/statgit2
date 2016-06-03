@@ -1,12 +1,12 @@
 require "spec_helper"
 
 describe AnalyseRepository, type: :service do
-  let(:commit_0) { { author_date: "2015-01-01" } }
-  let(:commit_3) { { author_date: "2015-01-03 10:00:00" } }
-  let(:commit_3_1) { { author_date: "2015-01-03 11:00:00" } }
-  let(:commit_3_2) { { author_date: "2015-01-03 12:00:00" } }
-  let(:commit_4) { { author_date: "2015-01-04" } }
-  let(:commit_5) { { author_date: "2015-01-05" } }
+  let(:commit_0) { { author_date: Date.parse("2015-01-01") } }
+  let(:commit_3) { { author_date: Date.parse("2015-01-03 10:00:00") } }
+  let(:commit_3_1) { { author_date: Date.parse("2015-01-03 11:00:00") } }
+  let(:commit_3_2) { { author_date: Date.parse("2015-01-03 12:00:00") } }
+  let(:commit_4) { { author_date: Date.parse("2015-01-04") } }
+  let(:commit_5) { { author_date: Date.parse("2015-01-05") } }
 
   let(:commits) {
     [

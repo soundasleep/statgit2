@@ -17,4 +17,8 @@ class Repository < ActiveRecord::Base
   def commit_activity
     @commit_activity ||= CommitActivity.new(self).call
   end
+
+  def commits_per_day
+    @commits_per_day ||= CommitsPerDay.new(self).call
+  end
 end
