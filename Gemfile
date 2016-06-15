@@ -21,4 +21,3 @@ group :development, :test do
 end
 
 # code analysers
-gem 'reek'

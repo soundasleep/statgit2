@@ -23,26 +23,13 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     arel (6.0.3)
-    ast (2.2.0)
-    axiom-types (0.1.1)
-      descendants_tracker (~> 0.0.4)
-      ice_nine (~> 0.11.0)
-      thread_safe (~> 0.3, >= 0.3.1)
     builder (3.2.2)
-    codeclimate-engine-rb (0.3.1)
-      virtus (~> 1.0)
-    coercible (1.0.0)
-      descendants_tracker (~> 0.0.1)
     connection_pool (2.2.0)
-    descendants_tracker (0.0.4)
-      thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.2.5)
-    equalizer (0.0.11)
     erubis (2.7.0)
     haml (4.0.7)
       tilt
     i18n (0.7.0)
-    ice_nine (0.11.2)
     json (1.8.3)
     logger (1.2.8)
     logger-colors (1.0.0)
@@ -52,8 +39,6 @@ GEM
     minitest (5.9.0)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
-    parser (2.3.1.2)
-      ast (~> 2.2)
     rails-deprecated_sanitizer (1.0.3)
       activesupport (>= 4.2.0.alpha)
     rails-dom-testing (1.0.7)
@@ -62,11 +47,6 @@ GEM
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
-    rainbow (2.1.0)
-    reek (4.0.3)
-      codeclimate-engine-rb (~> 0.3.1)
-      parser (~> 2.3, >= 2.3.0.6)
-      rainbow (~> 2.0)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
@@ -88,11 +68,6 @@ GEM
     tilt (2.0.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    virtus (1.0.5)
-      axiom-types (~> 0.1)
-      coercible (~> 1.0)
-      descendants_tracker (~> 0.0, >= 0.0.3)
-      equalizer (~> 0.0, >= 0.0.9)
 
 PLATFORMS
   ruby
@@ -107,7 +82,6 @@ DEPENDENCIES
   haml
   logger
   logger-colors
-  reek
   rspec
   rspec-collection_matchers
   sass

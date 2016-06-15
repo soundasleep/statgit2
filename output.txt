@@ -1,0 +1,34 @@
+LOAD_PATH = ["/Users/jevon/.rbenv/rbenv.d/exec/gem-rehash", "/Users/jevon/.rbenv/versions/2.2.0/lib/ruby/site_ruby/2.2.0", "/Users/jevon/.rbenv/versions/2.2.0/lib/ruby/site_ruby/2.2.0/x86_64-darwin14", "/Users/jevon/.rbenv/versions/2.2.0/lib/ruby/site_ruby", "/Users/jevon/.rbenv/versions/2.2.0/lib/ruby/vendor_ruby/2.2.0", "/Users/jevon/.rbenv/versions/2.2.0/lib/ruby/vendor_ruby/2.2.0/x86_64-darwin14", "/Users/jevon/.rbenv/versions/2.2.0/lib/ruby/vendor_ruby", "/Users/jevon/.rbenv/versions/2.2.0/lib/ruby/2.2.0", "/Users/jevon/.rbenv/versions/2.2.0/lib/ruby/2.2.0/x86_64-darwin14"]
+[0;32mI, [2016-06-16T11:58:24.322142 #56096]  INFO -- : Using database :memory:
+[0;0m-- create_table(:schema)
+   -> 0.0011s
+-- create_table(:repositories)
+   -> 0.0002s
+-- create_table(:commits)
+   -> 0.0004s
+-- add_index("commits", ["repository_id"])
+   -> 0.0005s
+-- add_index("commits", ["commit_hash"])
+   -> 0.0004s
+-- add_index("commits", ["author_id"])
+   -> 0.0004s
+-- create_table(:authors)
+   -> 0.0003s
+-- add_index("authors", ["repository_id"])
+   -> 0.0003s
+-- add_index("authors", ["email"])
+   -> 0.0003s
+-- create_table(:commit_files)
+   -> 0.0003s
+-- add_index("commit_files", ["commit_id"])
+   -> 0.0002s
+-- add_index("commit_files", ["full_path"])
+   -> 0.0003s
+-- create_table(:lines_of_code_stats)
+   -> 0.0003s
+-- add_index("lines_of_code_stats", ["commit_id"])
+   -> 0.0002s
+-- add_index("lines_of_code_stats", ["language"])
+   -> 0.0003s
+-- initialize_schema_migrations_table()
+   -> 0.0043s
