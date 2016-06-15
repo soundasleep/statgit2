@@ -110,16 +110,21 @@ class AnalyseRepository
       end
     end
 
+    to_import = []
     commits_per_day(loaded_commits, options[:commits_per_day]).each do |commit|
-      new_commit commit
+      to_import << new_commit(commit)
     end
+
+    Commit.import to_import.compact
+    LOG.debug "Created #{to_import.size} commits"
   end
 
   def new_commit(commit)
     if Commit.where(repository: repository, commit_hash: commit[:commit_hash]).none?
       commit[:repository] = repository
-      c = Commit.create! commit
-      LOG.debug "Created commit #{c.id}"
+      Commit.new(commit)
+    else
+      nil
     end
   end
 end

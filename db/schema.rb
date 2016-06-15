@@ -88,14 +88,4 @@ ActiveRecord::Schema.define(version: 0) do
 
   add_index "reek_smells", ["commit_file_id"]
   add_index "reek_smells", ["smell_type"]
-
-  create_table :reek_smell_lines do |t|
-    t.integer  "reek_smell_id", null: false
-    t.integer  "line_number",   null: false
-
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-  end
-
-  add_index "reek_smell_lines", ["reek_smell_id"]
 end

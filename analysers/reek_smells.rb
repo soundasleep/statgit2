@@ -9,6 +9,8 @@ class ReekSmells < AbstractCommitAnalyser
   end
 
   def call
+    to_import = []
+
     argv = ["--format", "json", "--no-wiki-links", root_path]
 
     output = capture_output do
@@ -23,22 +25,19 @@ class ReekSmells < AbstractCommitAnalyser
       file = commit.select_file(filename)
       raise "Could not identify file '#{smell["source"]}' in commit #{commit}" if file.nil?
 
-      smell = file.reek_smells.create!(
+      to_import << ReekSmell.new(
+        commit_file: file,
         context: smell["context"],
         message: smell["message"],
         smell_type: smell["smell_type"],
         name: smell["name"] || "",
         count: smell["count"] || 0,
       )
-
-      (smell["lines"] || []).each do |line|
-        smell.reek_smell_lines.create! line_number: line
-      end
     end
 
-    commit.reload
+    ReekSmell.import(to_import)
 
-    LOG.info "Found #{commit.reek_smells.size} code smells"
+    LOG.info "Found #{to_import.size} code smells"
   end
 end
 

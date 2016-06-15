@@ -1,6 +1,7 @@
 require "active_record"
 require "connection_pool"
 require "sqlite3"
+require "activerecord-import"
 
 # Enable logging if necessary
 ActiveRecord::Base.logger = Logger.new(STDERR) if options[:debug]

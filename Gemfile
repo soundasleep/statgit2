@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'activesupport'
 gem 'activemodel'
 gem 'activerecord'
+gem 'activerecord-import'
 gem 'connection_pool'
 
 gem 'actionview'
