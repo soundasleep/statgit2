@@ -21,4 +21,8 @@ class Repository < ActiveRecord::Base
   def commits_per_day
     @commits_per_day ||= CommitsPerDay.new(self).call
   end
+
+  def latest_commit_languages
+    @latest_commit_languages ||= LatestCommitLanguages.new(self).call
+  end
 end

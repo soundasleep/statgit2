@@ -1,10 +1,10 @@
-class SimpleReport < AbstractReport
+class IndexReport < AbstractReport
   def generate!
     create_file! "index"
   end
 
   def self.title
-    "Simple Report"
+    "Home"
   end
 
   def self.root_path
@@ -16,4 +16,4 @@ class SimpleReport < AbstractReport
   end
 end
 
-ALL_REPORTS << SimpleReport
+ALL_REPORTS << IndexReport

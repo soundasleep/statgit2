@@ -33,3 +33,7 @@
 %h2 Lines of Code
 
 = line_chart(repository, :lines_of_code_per_day, "LOC")
+
+%h2 Languages
+
+= pie_chart(repository, :latest_commit_languages, "Lines of Code")
