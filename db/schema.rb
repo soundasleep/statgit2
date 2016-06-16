@@ -73,4 +73,17 @@ ActiveRecord::Schema.define(version: 0) do
 
   add_index "lines_of_code_stats", ["commit_id"]
   add_index "lines_of_code_stats", ["language"]
+
+  create_table :commit_diffs do |t|
+    t.integer  "commit_id",     null: false
+    t.integer  "commit_file_id", null: false
+    t.integer  "added",         null: false
+    t.integer  "removed",       null: false
+
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "commit_diffs", ["commit_id"]
+  add_index "commit_diffs", ["commit_file_id"]
 end

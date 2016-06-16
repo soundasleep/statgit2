@@ -41,4 +41,8 @@ class Repository < ActiveRecord::Base
   def lines_of_code_per_file_per_day
     @lines_of_code_per_file_per_day ||= LinesOfCodePerFilePerDay.new(self).call
   end
+
+  def files_with_most_revisions
+    @files_with_most_revisions ||= FilesWithMostRevisions.new(self).call
+  end
 end

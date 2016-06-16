@@ -7,7 +7,7 @@
 
     %dt Average file size
     %dd
-      #{repository.latest_commit.average_file_size}
+      #{float_number(repository.latest_commit.average_file_size)}
       lines of code
 
 %h2 File Count
@@ -17,3 +17,7 @@
 %h2 Average Lines of Code per File
 
 = large_line_chart(repository, :lines_of_code_per_file_per_day, "LOC/file")
+
+%h2 Most Changed Files
+
+= table(repository, :files_with_most_revisions, "File", {revisions: "Revisions", size: "Size"})

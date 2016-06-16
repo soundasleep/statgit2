@@ -3,6 +3,7 @@ require_relative "date_helper"
 
 module ReportHelper
   include DateHelper
+  include NumberHelper
   include ActionView::Helpers::UrlHelper
 
   def commit_link(commit)
@@ -35,7 +36,7 @@ module ReportHelper
       data: data,
       labels: labels,
       title: title,
-      method: method
+      method: method,
     })
 
     render_template(shared_template(chart_type), arguments)
@@ -59,6 +60,20 @@ module ReportHelper
 
   def histogram_chart(repository, method, heading, title, options = {})
     render_chart "histogram_chart", repository, method, title, {heading: heading}.merge(options)
+  end
+
+  def table(repository, method, title, labels, limit = 30, options = {})
+    data = repository.send(method).first(limit)
+
+    arguments = template_arguments.merge(options).merge({
+      data: data,
+      title: title,
+      labels: labels,
+      limit: limit,
+      method: method,
+    })
+
+    render_template(shared_template("table"), arguments)
   end
 
   def render_template(template, template_arguments)

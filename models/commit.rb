@@ -2,6 +2,7 @@ class Commit < ActiveRecord::Base
   include DateHelper
 
   has_many :commit_files, dependent: :destroy
+  has_many :commit_diffs, dependent: :destroy
   has_many :lines_of_code_stats, dependent: :destroy
 
   belongs_to :repository

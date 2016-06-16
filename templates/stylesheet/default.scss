@@ -69,10 +69,20 @@ ul.tag_cloud li {
 table.statistics {
   border: 1px solid #ccc;
   border-collapse: collapse;
+  min-width: 500px;
 }
 
 table.statistics th, table.statistics td {
   padding: 4px 6px;
+}
+
+table.statistics {
+  td {
+    text-align: right;
+  }
+  td:first-of-type {
+    text-align: left;
+  }
 }
 
 table.statistics thead {

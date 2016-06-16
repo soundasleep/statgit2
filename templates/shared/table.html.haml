@@ -1,0 +1,18 @@
+%table.statistics
+  %thead
+    %tr
+      %th= title
+      - labels.each do |key, title|
+        %th{class: key}= title
+
+  %tbody
+    - data.each do |key, values|
+      %tr
+        %td= key
+        - labels.each do |key, title|
+          %td{class: key}
+            - case key
+              - when :size
+                = kb_size values[key]
+              - else
+                = values[key]
