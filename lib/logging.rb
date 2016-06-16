@@ -1,8 +1,10 @@
 require "logger"
 
-# TODO only include this if the output platform supports colours
 require "active_support/logger"
-require "logger/colors"
+
+if options[:colours]
+  require "logger/colors"
+end
 
 LOG = Logger.new(STDOUT)
 levels = {

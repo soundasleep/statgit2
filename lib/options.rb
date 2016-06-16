@@ -9,6 +9,7 @@ def default_options
     debug: false,
     timezone: "UTC",
     level: "info",
+    colours: false,
   }
 end
 
@@ -20,6 +21,10 @@ def load_command_line_options
 
     opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
       options[:debug] = v
+    end
+
+    opts.on("-c", "--colours", "Use colour logging") do |c|
+      options[:colours] = c
     end
 
     opts.on("-u", "--url URL", "Analyse this Git repository") do |url|
