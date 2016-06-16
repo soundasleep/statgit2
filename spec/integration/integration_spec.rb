@@ -8,6 +8,7 @@ describe "Integration tests", type: :integration do
     default_options.merge({
       url: url,
       limit: 1,
+      level: "error",
     })
   }
 

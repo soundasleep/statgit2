@@ -8,7 +8,7 @@ def default_options
     database: ":memory:",
     debug: false,
     timezone: "UTC",
-    level: "warn",
+    level: "info",
   }
 end
 

@@ -22,7 +22,7 @@ class AnalyseCommit
           switched = true
         end
 
-        LOG.debug ">> #{tool}"
+        LOG.info ">> #{tool}"
         instance.call
       end
     end
