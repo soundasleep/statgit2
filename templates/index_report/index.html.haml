@@ -19,16 +19,17 @@
       (#{(repository.commits.last.author_date.to_date - repository.commits.first.author_date.to_date).to_i} days)
 
     %dt Total files
-    %dd= repository.latest_commit.files.length
+    %dd= link_to repository.latest_commit.files.length, "files.html"
 
     %dt Total lines of code
     %dd= repository.latest_commit.lines_of_code
 
   %dt Authors
-  %dd= repository.authors.length
+  %dd= link_to repository.authors.length, "authors.html"
 
 %ul
   %li= link_to "Authors", "authors.html"
+  %li= link_to "Files", "files.html"
 
 %h2 Lines of Code
 

@@ -24,4 +24,8 @@ class Commit < ActiveRecord::Base
   def select_file(filename)
     commit_files.where(full_path: filename).first
   end
+
+  def average_file_size
+    lines_of_code / files.size.to_f
+  end
 end

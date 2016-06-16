@@ -1,0 +1,11 @@
+%h1 File Statistics
+
+%dl
+  - if repository.latest_commit
+    %dt Total files
+    %dd= repository.latest_commit.files.size
+
+    %dt Average file size
+    %dd
+      #{repository.latest_commit.average_file_size}
+      lines of code
