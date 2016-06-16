@@ -37,3 +37,7 @@
 %h2 Languages
 
 = pie_chart(repository, :latest_commit_languages, "Lines of Code")
+
+%h2 Top Authors
+
+= pie_chart(repository, :commits_per_author, "Commits")
