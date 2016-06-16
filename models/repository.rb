@@ -22,6 +22,10 @@ class Repository < ActiveRecord::Base
     @commits_per_day ||= CommitsPerDay.new(self).call
   end
 
+  def commits_per_hour
+    @commits_per_hour ||= CommitsPerHour.new(self).call
+  end
+
   def commits_per_author
     @commits_per_author ||= CommitsPerAuthor.new(self).call
   end
