@@ -1,15 +1,19 @@
 require "optparse"
 
-def load_command_line_options
-  options = {
+def default_options
+  {
     limit: nil,
     commits_per_day: nil,
     adapter: "sqlite3",
     database: ":memory:",
     debug: false,
-    url: nil,
     timezone: "UTC",
+    level: "warn",
   }
+end
+
+def load_command_line_options
+  options = default_options
 
   OptionParser.new do |opts|
     opts.banner = "Usage: generate.rb [options]"
@@ -40,6 +44,10 @@ def load_command_line_options
 
     opts.on("--database FILE", "Database file to use (default: `:memory:`)") do |database|
       options[:database] = database
+    end
+
+    opts.on("--level LEVEL", "Log to this level (default: `warn`)") do |level|
+      options[:level] = level
     end
 
     opts.on_tail("-h", "--help", "Show this message") do

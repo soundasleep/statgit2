@@ -6,7 +6,7 @@ require "activerecord-import"
 # Enable logging if necessary
 ActiveRecord::Base.logger = Logger.new(STDERR) if options[:debug]
 
-unless $running_in_rspec
+def connect_to_database
   ActiveRecord::Base.establish_connection(
     :adapter => options[:adapter],
     :database => options[:database]
@@ -16,6 +16,9 @@ unless $running_in_rspec
 
   # Create the database if necessary
   unless ActiveRecord::Base.connection.table_exists? "schema"
+    LOG.info "Creating database"
     require_relative "../db/schema"
   end
 end
+
+connect_to_database unless $running_in_rspec
