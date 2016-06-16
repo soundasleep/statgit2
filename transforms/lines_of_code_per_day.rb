@@ -9,7 +9,7 @@ class LinesOfCodePerDay
 
   def call
     raw = repository.commits.map do |commit|
-      [ iso_date(commit.author_date), commit.lines_of_code ]
+      [ iso_date(commit.date), commit.lines_of_code ]
     end
 
     Hash[raw]

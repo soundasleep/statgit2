@@ -15,7 +15,7 @@ class CommitsPerHour
     end
 
     repository.commits.each do |commit|
-      hour = commit.author_date.hour
+      hour = commit.date.hour
       result["#{hour}h"] += 1
     end
 

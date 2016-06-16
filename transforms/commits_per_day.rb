@@ -17,7 +17,7 @@ class CommitsPerDay
     end
 
     repository.commits.each do |commit|
-      day = day_name(commit.author_date)
+      day = day_name(commit.date)
       result[day] += 1
     end
 
