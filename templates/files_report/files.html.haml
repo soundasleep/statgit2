@@ -9,3 +9,11 @@
     %dd
       #{repository.latest_commit.average_file_size}
       lines of code
+
+%h2 File Count
+
+= large_line_chart(repository, :files_count, "Files")
+
+%h2 Average Lines of Code per File
+
+= large_line_chart(repository, :lines_of_code_per_file_per_day, "LOC/file")

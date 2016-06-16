@@ -49,6 +49,10 @@ module ReportHelper
     render_chart "line_chart", repository, method, title, options
   end
 
+  def large_line_chart(repository, method, title, options = {})
+    line_chart(repository, method, title, {width: 800, height: 600}.merge(options))
+  end
+
   def pie_chart(repository, method, title, options = {})
     render_chart "pie_chart", repository, method, title, {width: 400, height: 300}.merge(options)
   end

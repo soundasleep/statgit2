@@ -33,4 +33,12 @@ class Repository < ActiveRecord::Base
   def latest_commit_languages
     @latest_commit_languages ||= LatestCommitLanguages.new(self).call
   end
+
+  def files_count
+    @files_count ||= FilesCount.new(self).call
+  end
+
+  def lines_of_code_per_file_per_day
+    @lines_of_code_per_file_per_day ||= LinesOfCodePerFilePerDay.new(self).call
+  end
 end
