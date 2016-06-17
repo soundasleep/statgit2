@@ -29,4 +29,8 @@ class Commit < ActiveRecord::Base
   def average_file_size
     lines_of_code / files.size.to_f
   end
+
+  def files_with_revisions_and_sizes
+    @files_with_revisions_and_sizes ||= FilesWithRevisionsAndSizes.new(self).call
+  end
 end

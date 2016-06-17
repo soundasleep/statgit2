@@ -21,3 +21,7 @@
 %h2 Most Changed Files
 
 = table(repository, :files_with_most_revisions, {filename: "File", revisions: "Revisions", size: "Size"})
+
+%h2 Largest Files
+
+= table(repository, :largest_files, {filename: "File", revisions: "Revisions", size: "Size"})

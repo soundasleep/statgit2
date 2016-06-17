@@ -10,6 +10,6 @@ class CommitFile < ActiveRecord::Base
       else
         0
       end
-    end.sum
+    end.sum + 1     # if a file exists, it must have had at least one commit
   end
 end

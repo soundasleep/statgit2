@@ -45,4 +45,8 @@ class Repository < ActiveRecord::Base
   def files_with_most_revisions
     @files_with_most_revisions ||= FilesWithMostRevisions.new(self).call
   end
+
+  def largest_files
+    @largest_files ||= LargestFiles.new(self).call
+  end
 end

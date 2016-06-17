@@ -1,4 +1,4 @@
-class FilesWithMostRevisions
+class LargestFiles
   include ReportHelper
 
   attr_reader :repository
@@ -9,9 +9,9 @@ class FilesWithMostRevisions
 
   def call
     repository.latest_commit.files_with_revisions_and_sizes.select do |key, value|
-      value[:revisions] > 0
+      value[:size] > 0
     end.sort_by do |key, value|
-      -value[:revisions]
+      -value[:size]
     end
   end
 end
