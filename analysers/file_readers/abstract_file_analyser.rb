@@ -1,0 +1,3 @@
+class AbstractFileAnalyser < AbstractCommitAnalyser
+
+end

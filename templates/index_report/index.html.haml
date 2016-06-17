@@ -24,12 +24,16 @@
     %dt Total lines of code
     %dd= repository.latest_commit.lines_of_code
 
+    %dt TODOs
+    %dd= link_to repository.latest_commit.todos, "todos.html"
+
   %dt Authors
   %dd= link_to repository.authors.length, "authors.html"
 
 %ul
   %li= link_to "Authors", "authors.html"
   %li= link_to "Files", "files.html"
+  %li= link_to "TODOs", "todos.html"
 
 %h2 Lines of Code
 

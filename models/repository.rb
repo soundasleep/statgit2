@@ -49,4 +49,12 @@ class Repository < ActiveRecord::Base
   def largest_files
     @largest_files ||= LargestFiles.new(self).call
   end
+
+  def todos_per_day
+    @todos_per_day ||= TodosPerDay.new(self).call
+  end
+
+  def files_with_most_todos
+    @files_with_most_todos ||= FilesWithMostTodos.new(self).call
+  end
 end

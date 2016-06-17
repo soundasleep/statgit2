@@ -7,13 +7,13 @@ class CountFiles < AbstractCommitAnalyser
     to_import = []
 
     Dir["#{repository.root_path}**/*"].each do |file|
-      relative_file = file[repository.root_path.length, file.length].strip
-      if relative_file && File.file?(file)
+      file_path = file_path_for(file)
+      if file_path && File.file?(file)
         file_size = File.new(file).size
 
         to_import << CommitFile.new(
           commit: commit,
-          full_path: relative_file,
+          full_path: file_path,
           size: file_size
         )
       end

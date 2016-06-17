@@ -6,4 +6,10 @@ class AbstractCommitAnalyser
   def initialize(commit:)
     @commit = commit
   end
+
+  private
+
+  def file_path_for(file)
+    file[repository.root_path.length, file.length].strip
+  end
 end

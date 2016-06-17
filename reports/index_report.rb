@@ -1,17 +1,13 @@
 class IndexReport < AbstractReport
-  def generate!
-    create_file! "index"
-  end
-
-  def self.title
+  def title
     "Home"
   end
 
-  def self.root_path
+  def root_path
     "index"
   end
 
-  def self.public?
+  def public?
     true
   end
 end

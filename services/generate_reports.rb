@@ -10,9 +10,11 @@ class GenerateReports
     LOG.info "Generating reports..."
 
     ALL_REPORTS.each do |report|
-      LOG.info ">> #{report.name}"
+      instance = report.new(repository: repository)
 
-      report.new(repository: repository).generate!
+      LOG.info ">> #{instance.name}"
+
+      instance.generate!
     end
   end
 end

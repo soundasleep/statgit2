@@ -17,31 +17,31 @@ class AbstractReport
     LOG.debug "Created #{filename} (#{bytes} bytes)"
   end
 
+  def generate!
+    create_file! root_path
+  end
+
   def render_output(name)
     render_template(root_template, template_arguments) do
       render_template(template_for(name), template_arguments)
     end
   end
 
-  def title
-    self.class.title
+  def root_path
+    title.downcase
   end
 
-  def self.title
+  def name
     self.class.name
   end
 
-  def self.root_path
-    self.title.downcase
-  end
-
   def navigation
-    ALL_REPORTS.select(&:public?).map do |report|
+    ALL_REPORTS.map { |r| r.new(repository: repository) }.select(&:public?).map do |report|
       [report.root_path + ".html", report.title]
     end
   end
 
-  def self.public?
+  def public?
     false
   end
 

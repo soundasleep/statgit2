@@ -1,17 +1,13 @@
 class AuthorsReport < AbstractReport
-  def generate!
-    create_file! "authors"
-  end
-
-  def self.title
+  def title
     "Authors"
   end
 
-  def self.root_path
+  def root_path
     "authors"
   end
 
-  def self.public?
+  def public?
     true
   end
 end

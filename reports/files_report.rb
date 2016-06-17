@@ -1,17 +1,13 @@
 class FilesReport < AbstractReport
-  def generate!
-    create_file! "files"
-  end
-
-  def self.title
+  def title
     "Files"
   end
 
-  def self.root_path
+  def root_path
     "files"
   end
 
-  def self.public?
+  def public?
     true
   end
 end

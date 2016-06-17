@@ -13,17 +13,20 @@ class AnalyseCommit
   def call
     LOG.info "Analysing commit #{commit.commit_hash}..."
 
-    COMMIT_ANALYSERS.each do |tool|
-      instance = tool.new(commit: commit)
-      switched = false
-      if instance.needs_update?
-        unless switched
-          execute_command "cd #{root_path} && git reset --hard && git checkout #{commit.commit_hash} && git reset --hard #{commit.commit_hash}"
-          switched = true
-        end
+    switched = false
 
-        LOG.info ">> #{tool}"
-        instance.call
+    3.times do    # Rather than defining tool dependencies, just run all tools many times
+      COMMIT_ANALYSERS.each do |tool|
+        instance = tool.new(commit: commit)
+        if instance.needs_update?
+          unless switched
+            execute_command "cd #{root_path} && git reset --hard && git checkout #{commit.commit_hash} && git reset --hard #{commit.commit_hash}"
+            switched = true
+          end
+
+          LOG.info ">> #{tool}"
+          instance.call
+        end
       end
     end
   end

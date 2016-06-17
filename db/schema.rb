@@ -86,4 +86,13 @@ ActiveRecord::Schema.define(version: 0) do
 
   add_index "commit_diffs", ["commit_id"]
   add_index "commit_diffs", ["commit_file_id"]
+
+  create_table :file_todos do |t|
+    t.integer  "commit_id",     null: false
+    t.integer  "commit_file_id", null: false
+    t.integer  "todo_count",    null: false
+  end
+
+  add_index "file_todos", ["commit_id"]
+  add_index "file_todos", ["commit_file_id"]
 end

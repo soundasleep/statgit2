@@ -14,6 +14,7 @@ class FilesWithRevisionsAndSizes
           filename: file.full_path,
           revisions: file.revisions,
           size: file.size,
+          todos: file.file_todos.any? ? file.file_todos.first.todo_count : 0,
         } ]
     end
 

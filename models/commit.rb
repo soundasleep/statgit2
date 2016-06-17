@@ -3,6 +3,7 @@ class Commit < ActiveRecord::Base
 
   has_many :commit_files, dependent: :destroy
   has_many :commit_diffs, dependent: :destroy
+  has_many :file_todos, dependent: :destroy
   has_many :lines_of_code_stats, dependent: :destroy
 
   belongs_to :repository
@@ -20,6 +21,10 @@ class Commit < ActiveRecord::Base
 
   def lines_of_code
     @lines_of_code ||= lines_of_code_stats.sum(:code)
+  end
+
+  def todos
+    @todos ||= file_todos.sum(:todo_count)
   end
 
   def select_file(filename)

@@ -1,6 +1,8 @@
 class CommitFile < ActiveRecord::Base
   belongs_to :commit
+
   has_one :commit_diff, dependent: :destroy
+  has_many :file_todos, dependent: :destroy
 
   def revisions
     @revisions ||= commit.repository.commits.map do |commit|

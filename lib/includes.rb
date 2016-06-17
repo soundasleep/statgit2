@@ -1,5 +1,6 @@
 ALL_REPORTS = []
 COMMIT_ANALYSERS = []
+FILE_ANALYSERS = []
 
 include_paths = [
   "helpers",
@@ -7,6 +8,7 @@ include_paths = [
   "services",
   "reports",
   "analysers",
+  "analysers/file_readers",
   "transforms",
 ]
 
