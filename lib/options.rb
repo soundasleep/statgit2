@@ -6,7 +6,6 @@ def default_options
     commits_per_day: nil,
     adapter: "sqlite3",
     database: ":memory:",
-    debug: false,
     timezone: "UTC",
     level: "info",
     colours: false,
@@ -20,10 +19,6 @@ def load_command_line_options
 
   OptionParser.new do |opts|
     opts.banner = "Usage: generate.rb [options]"
-
-    opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
-      options[:debug] = v
-    end
 
     opts.on("-c", "--colours", "Use colour logging") do |c|
       options[:colours] = c
@@ -54,7 +49,7 @@ def load_command_line_options
     end
 
     opts.on("--level LEVEL", "Log to this level (default: `warn`)") do |level|
-      options[:level] = level
+      options[:level] = level.downcase
     end
 
     opts.on("--blob URL", "Use this URL as a prefix to view file blobs (default: none)") do |blob|

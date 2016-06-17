@@ -4,7 +4,7 @@ require "sqlite3"
 require "activerecord-import"
 
 # Enable logging if necessary
-ActiveRecord::Base.logger = Logger.new(STDERR) if options[:debug]
+ActiveRecord::Base.logger = Logger.new(STDERR) if options[:level] == "debug"
 
 def connect_to_database
   ActiveRecord::Base.establish_connection(

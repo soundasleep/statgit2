@@ -13,9 +13,9 @@ levels = {
   warn: Logger::WARN,
   error: Logger::ERROR,
 }
-fail("Unknown log level #{options[:level]}") unless levels[options[:level].downcase.to_sym]
+fail("Unknown log level #{options[:level]}") unless levels[options[:level].to_sym]
 
-LOG.level = levels[options[:level].downcase.to_sym]
+LOG.level = levels[options[:level].to_sym]
 
 # Flush after every output
 STDOUT.sync = true
