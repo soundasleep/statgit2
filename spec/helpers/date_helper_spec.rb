@@ -9,18 +9,30 @@ describe DateHelper, type: :helper do
     subject { iso_date(date) }
 
     it { is_expected.to eq("2016-01-01") }
+
+    it "formats nil" do
+      expect(iso_date(nil)).to eq("")
+    end
   end
 
   describe "#minute_date" do
     subject { minute_date(date) }
 
     it { is_expected.to eq("2016-01-01 11:12") }
+
+    it "formats nil" do
+      expect(minute_date(nil)).to eq("")
+    end
   end
 
   describe "#day_name" do
     subject { day_name(date) }
 
     it { is_expected.to eq("Fri") }
+
+    it "formats nil" do
+      expect(day_name(nil)).to eq("")
+    end
   end
 
   describe "#time_zone" do

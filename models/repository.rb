@@ -7,6 +7,7 @@ class Repository < ActiveRecord::Base
   end
 
   def root_path
+    # TODO make this an option
     "workspace/"
   end
 
@@ -56,5 +57,13 @@ class Repository < ActiveRecord::Base
 
   def files_with_most_todos
     @files_with_most_todos ||= FilesWithMostTodos.new(self).call
+  end
+
+  def top_authors
+    @top_authors ||= TopAuthors.new(self).call
+  end
+
+  def authors_with_commits
+    @authors_with_commits ||= AuthorsWithCommits.new(self).call
   end
 end

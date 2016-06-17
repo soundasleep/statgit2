@@ -11,3 +11,7 @@
 %h2 Per Hour
 
 = histogram_chart(repository, :commits_per_hour, "Commits", "Commits per Hour", width: 800, height: 300)
+
+%h2 Top Authors
+
+= table(repository, :top_authors, {author: "Author", commits: "Commits", changes: "Changes", last_commit: "Last Commit"})

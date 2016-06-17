@@ -1,13 +1,16 @@
 module DateHelper
   def iso_date(date)
+    return "" if date.nil?
     date.strftime("%Y-%m-%d")
   end
 
   def minute_date(date)
+    return "" if date.nil?
     date.strftime("%Y-%m-%d %H:%M")
   end
 
   def day_name(date)
+    return "" if date.nil?
     date.strftime("%a")
   end
 

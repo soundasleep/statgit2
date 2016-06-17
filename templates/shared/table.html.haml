@@ -14,5 +14,9 @@
                 = kb_size values[key]
               - when :filename
                 = blob_link values[key]
+              - when :author
+                = values[key].email
+              - when :last_commit
+                = iso_date(values[key].date)
               - else
                 = values[key]
