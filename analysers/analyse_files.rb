@@ -45,7 +45,10 @@ class AnalyseFiles < AbstractCommitAnalyser
   private
 
   def read_file(file)
-    File.read(file)
+    string = File.read(file)
+
+    # get rid of any invalid characters
+    string.encode("UTF-8", "UTF-8", invalid: :replace)
   end
 end
 
