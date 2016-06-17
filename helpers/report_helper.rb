@@ -7,7 +7,19 @@ module ReportHelper
   include ActionView::Helpers::UrlHelper
 
   def commit_link(commit)
-    link_to(commit.commit_hash, "#")
+    if options[:commit_path]
+      link_to(commit.commit_hash, options[:commit_path] + commit.commit_hash)
+    else
+      commit.commit_hash
+    end
+  end
+
+  def blob_link(filename)
+    if options[:blob_path]
+      link_to(filename, options[:blob_path] + filename)
+    else
+      filename
+    end
   end
 
   def wrap_array(data)
@@ -62,12 +74,11 @@ module ReportHelper
     render_chart "histogram_chart", repository, method, title, {heading: heading}.merge(options)
   end
 
-  def table(repository, method, title, labels, limit = 30, options = {})
+  def table(repository, method, labels, limit = 30, options = {})
     data = repository.send(method).first(limit)
 
     arguments = template_arguments.merge(options).merge({
       data: data,
-      title: title,
       labels: labels,
       limit: limit,
       method: method,

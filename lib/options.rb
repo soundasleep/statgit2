@@ -10,6 +10,8 @@ def default_options
     timezone: "UTC",
     level: "info",
     colours: false,
+    blob_path: nil,
+    commit_path: nil,
   }
 end
 
@@ -53,6 +55,14 @@ def load_command_line_options
 
     opts.on("--level LEVEL", "Log to this level (default: `warn`)") do |level|
       options[:level] = level
+    end
+
+    opts.on("--blob URL", "Use this URL as a prefix to view file blobs (default: none)") do |blob|
+      options[:blob_path] = blob
+    end
+
+    opts.on("--commit URL", "Use this URL as a prefix to view individual commits (default: none)") do |commit|
+      options[:commit_path] = commit
     end
 
     opts.on_tail("-h", "--help", "Show this message") do

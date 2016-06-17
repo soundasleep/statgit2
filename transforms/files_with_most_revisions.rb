@@ -12,6 +12,7 @@ class FilesWithMostRevisions
     raw = repository.latest_commit.files.map do |file|
       [ file.full_path,
         {
+          filename: file.full_path,
           revisions: file.revisions,
           size: file.size,
         } ]
