@@ -19,15 +19,16 @@ class Commit < ActiveRecord::Base
   end
 
   def lines_of_code
-    lines_of_code_stats.sum(:code)
+    @lines_of_code ||= lines_of_code_stats.sum(:code)
   end
 
   def select_file(filename)
-    commit_files.where(full_path: filename).first
+    @select_file ||= {}
+    @select_file[filename] ||= commit_files.where(full_path: filename).first
   end
 
   def average_file_size
-    lines_of_code / files.size.to_f
+    @average_file_size ||= lines_of_code / files.size.to_f
   end
 
   def files_with_revisions_and_sizes
