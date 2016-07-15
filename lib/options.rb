@@ -11,6 +11,7 @@ def default_options
     colours: false,
     blob_path: nil,
     commit_path: nil,
+    workspace: "workspace/",
   }
 end
 
@@ -26,10 +27,23 @@ def load_command_line_options
 
     opts.on("-u", "--url URL", "Analyse this Git repository") do |url|
       options[:url] = url
+
+      # set other paths if this is github
+      if match = url.match(/^https:\/\/github.com\/([^\/]+)\/([^\/]+)\/?$/)
+        username, project = match.captures
+
+        options[:blob_path] = "https://github.com/#{username}/#{project}/blob/master/"
+        options[:commmit_path] = "https://github.com/#{username}/#{project}/commit/"
+      end
     end
 
     opts.on("-t", "--timezone ZONE", "Generate reports using this timezone (default: `UTC`)") do |timezone|
       options[:timezone] = timezone
+    end
+
+    opts.on("-w", "--workspace PATH", "Use this path as the Git workspace (default: `workspace/`)") do |path|
+      fail "Expected / at end of path" unless path[-1] == "/"
+      options[:workspace] = path
     end
 
     opts.on("--limit COMMITS", Integer, "Only go back this number of commits") do |commits|

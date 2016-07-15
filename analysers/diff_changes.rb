@@ -13,6 +13,7 @@ class DiffChanges < AbstractCommitAnalyser
       numstat.split("\n").each do |row|
         if match = row.match(/^([0-9]+)\t([0-9]+)\t(.+)$/)
           added, removed, file_path = match.captures
+
           file = commit.select_file(file_path)
 
           if file
@@ -22,6 +23,9 @@ class DiffChanges < AbstractCommitAnalyser
               added: added,
               removed: removed,
             )
+          else
+            # TODO this doesn't capture added files: they're not in the current commit,
+            # but they are in the diff. Particularly initial commits.
           end
         end
       end
