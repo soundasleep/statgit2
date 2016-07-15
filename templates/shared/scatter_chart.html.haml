@@ -1,5 +1,6 @@
 - div_name = "chart_#{method}_#{Random.rand(0xffff)}"
 .div{id: div_name, style: "width: #{width}px; height: #{height}px;"}
+%small.benchmark Rendered in #{(benchmark * 1000).to_i} ms
 
 %script{type: "text/javascript"}
   - method_name = "draw_#{div_name}"

@@ -31,8 +31,12 @@ module ReportHelper
   end
 
   def render_chart(chart_type, repository, method, title, options = {})
-    data = repository.send(method).map do |key, value|
-      [key, wrap_array(value)]
+    data = nil
+
+    benchmark = Benchmark.realtime do
+      data = repository.send(method).map do |key, value|
+        [key, wrap_array(value)]
+      end
     end
 
     data = Hash[data]
@@ -45,6 +49,7 @@ module ReportHelper
     }.merge(options)
 
     arguments = template_arguments.merge(options).merge({
+      benchmark: benchmark,
       data: data,
       labels: labels,
       title: title,
@@ -75,9 +80,13 @@ module ReportHelper
   end
 
   def table(repository, method, labels, limit = 30, options = {})
-    data = repository.send(method).first(limit)
+    data = nil
+    benchmark = Benchmark.realtime do
+      data = repository.send(method).first(limit)
+    end
 
     arguments = template_arguments.merge(options).merge({
+      benchmark: benchmark,
       data: data,
       labels: labels,
       limit: limit,

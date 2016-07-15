@@ -24,3 +24,4 @@ bundle exec rspec
 * Tests with rspec
 * Generate all of the base stats from statgit
 * Travis-CI build
+* Write up features list

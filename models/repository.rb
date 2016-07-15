@@ -66,4 +66,9 @@ class Repository < ActiveRecord::Base
   def authors_with_commits
     @authors_with_commits ||= AuthorsWithCommits.new(self).call
   end
+
+  def revisions_for(file_path)
+    @revisions_for_paths ||= RevisionsForPaths.new(self).call
+    @revisions_for_paths[file_path] || 0
+  end
 end
