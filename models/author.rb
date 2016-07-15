@@ -4,11 +4,7 @@ class Author < ActiveRecord::Base
   has_many :commits, dependent: :destroy
 
   def changes
-    @changes ||= commits.map do |commit|
-      commit.commit_diffs.map do |diff|
-        diff.added + diff.removed
-      end.sum
-    end.sum
+    @changes ||= repository.changes_by_author(self)
   end
 
   def last_commit
