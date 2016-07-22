@@ -1,0 +1,26 @@
+- author = selector
+
+%h1 #{author.email}
+
+%dl
+  %dt Name
+  %dd= author.name
+
+  - if author.commits.any?
+    %dt First commit
+    %dd
+      = commit_link(author.commits.first)
+      %br
+      %i= author.commits.first.subject
+
+    %dt Last commit
+    %dd
+      = commit_link(author.commits.last)
+      %br
+      %i= author.commits.last.subject
+
+  %dt Commits
+  %dd= author.commits.count
+
+  %dt Changes
+  %dd= author.changes

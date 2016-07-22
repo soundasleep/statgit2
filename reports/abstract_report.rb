@@ -23,8 +23,12 @@ class AbstractReport
 
   def render_output(name, selector = nil)
     render_template(root_template, template_arguments) do
-      render_template(template_for(name), template_arguments)
+      render_template(template_for(name, selector), template_arguments(selector))
     end
+  end
+
+  def render_shared(template, arguments = {})
+    render_template(shared_template(template), arguments)
   end
 
   def root_path
@@ -67,8 +71,12 @@ class AbstractReport
     ".html.haml"
   end
 
-  def template_for(filename)
-    File.dirname(__FILE__) + "/../templates/#{simple_class_name}/#{filename}#{template_extension}"
+  def template_for(filename, selector = nil)
+    if selector
+      File.dirname(__FILE__) + "/../templates/#{simple_class_name}/#{filename}_subreport#{template_extension}"
+    else
+      File.dirname(__FILE__) + "/../templates/#{simple_class_name}/#{filename}#{template_extension}"
+    end
   end
 
   def root_template
@@ -79,9 +87,10 @@ class AbstractReport
     self.class.name.underscore
   end
 
-  def template_arguments
+  def template_arguments(selector = nil)
     {
       repository: repository,
+      selector: selector
     }
   end
 end

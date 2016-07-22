@@ -1,0 +1,5 @@
+- author = repository.authors.where(email: email).first
+- if author
+  = link_to email, link_for(AuthorsReport, author)
+- else
+  = email

@@ -33,7 +33,7 @@ def load_command_line_options
         username, project = match.captures
 
         options[:blob_path] = "https://github.com/#{username}/#{project}/blob/master/"
-        options[:commmit_path] = "https://github.com/#{username}/#{project}/commit/"
+        options[:commit_path] = "https://github.com/#{username}/#{project}/commit/"
       end
     end
 
