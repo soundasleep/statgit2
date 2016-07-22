@@ -24,3 +24,16 @@
 
   %dt Changes
   %dd= author.changes
+
+%h2 Commit Activity
+
+= scatter_chart(author, :commit_activity, "Hour")
+
+%h2 Per Day
+
+= histogram_chart(author, :commits_per_day, "Commits", "Commits per Day")
+
+%h2 Per Hour
+
+= histogram_chart(author, :commits_per_hour, "Commits", "Commits per Hour", width: 800, height: 300)
+

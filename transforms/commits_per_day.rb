@@ -1,10 +1,10 @@
 class CommitsPerDay
   include ReportHelper
 
-  attr_reader :repository
+  attr_reader :repository_or_author
 
-  def initialize(repository)
-    @repository = repository
+  def initialize(repository_or_author)
+    @repository_or_author = repository_or_author
   end
 
   def call
@@ -16,7 +16,7 @@ class CommitsPerDay
       result[day] = 0
     end
 
-    repository.commits.each do |commit|
+    repository_or_author.commits.each do |commit|
       day = day_name(commit.date)
       result[day] += 1
     end
