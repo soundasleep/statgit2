@@ -7,11 +7,11 @@ class AbstractReport
     @repository = repository
   end
 
-  def create_file!(name)
+  def create_file!(name, selector = nil)
     Dir.mkdir(output_location) unless Dir.exist?(output_location)
 
-    filename = output_location + file_for(name)
-    output = render_output(name)
+    filename = output_location + hyperlink(selector)
+    output = render_output(name, selector)
     bytes = File.write filename, output
 
     LOG.debug "Created #{filename} (#{bytes} bytes)"
@@ -21,7 +21,7 @@ class AbstractReport
     create_file! root_path
   end
 
-  def render_output(name)
+  def render_output(name, selector = nil)
     render_template(root_template, template_arguments) do
       render_template(template_for(name), template_arguments)
     end
@@ -45,14 +45,22 @@ class AbstractReport
     false
   end
 
+  def hyperlink(selector = nil)
+    file_for(root_path, selector)
+  end
+
+  def file_for(filename, selector = nil)
+    if selector
+      "#{filename}_#{file_for_selector(selector)}.html"
+    else
+      "#{filename}.html"
+    end
+  end
+
   private
 
   def output_location
     "output/"
-  end
-
-  def file_for(filename)
-    "#{filename}.html"
   end
 
   def template_extension

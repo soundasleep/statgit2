@@ -106,4 +106,8 @@ module ReportHelper
   def shared_template(key)
     File.dirname(__FILE__) + "/../templates/shared/#{key}.html.haml"
   end
+
+  def link_for(report, selector = nil)
+    report.new(repository: repository).hyperlink(selector)
+  end
 end

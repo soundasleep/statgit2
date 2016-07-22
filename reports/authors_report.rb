@@ -1,4 +1,4 @@
-class AuthorsReport < AbstractReport
+class AuthorsReport < AbstractReportCollection
   def title
     "Authors"
   end
@@ -9,6 +9,14 @@ class AuthorsReport < AbstractReport
 
   def public?
     true
+  end
+
+  def all_reports
+    repository.authors.compact
+  end
+
+  def file_for_selector(author)
+    author.email
   end
 end
 

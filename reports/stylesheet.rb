@@ -1,15 +1,15 @@
 require "sass"
 
 class Stylesheet < AbstractReport
-  def generate!
-    create_file! "default"
-  end
-
-  def file_for(filename)
+  def file_for(filename, selector = nil)
     "#{filename}.css"
   end
 
-  def render_output(name)
+  def root_path
+    "default"
+  end
+
+  def render_output(name, selector = nil)
     Sass::Engine.for_file(template_for(name), sass_options).render
   end
 

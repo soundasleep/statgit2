@@ -24,6 +24,7 @@ GEM
       tzinfo (~> 1.1)
     arel (6.0.3)
     builder (3.2.2)
+    byebug (8.2.1)
     connection_pool (2.2.0)
     diff-lcs (1.2.5)
     erubis (2.7.0)
@@ -78,6 +79,7 @@ DEPENDENCIES
   activerecord
   activerecord-import
   activesupport
+  byebug
   connection_pool
   haml
   logger
