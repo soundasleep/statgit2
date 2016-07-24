@@ -1,3 +1,5 @@
+require_relative 'abstract_report'
+
 class AbstractReportCollection < AbstractReport
   def generate!
     # generate root .html
