@@ -9,7 +9,7 @@ module CommandLineHelper
     command += " 2>&1 > #{temp_file.path}"
 
     LOG.debug ">> #{command}"
-    system(*command) or raise CommandLineError, "Command failed: #{$?}"
+    system(*command) or raise CommandLineError, "Command failed: #{$?}: #{temp_file.path}"
 
     output = temp_file.read
 

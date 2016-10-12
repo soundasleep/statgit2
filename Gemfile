@@ -19,6 +19,9 @@ group :development, :test do
   gem 'rspec'
   gem 'rspec-collection_matchers'
   gem 'byebug'
+
+  # allow specs to be run using nitra
+  gem 'nitra', path: '/Users/jevon/workspace/nitra' # , git: 'git://github.com/willbryant/nitra.git'
 end
 
 # code analysers

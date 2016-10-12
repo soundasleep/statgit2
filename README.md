@@ -18,6 +18,12 @@ This will generate, by default, things in `output/` and a database stored locall
 bundle exec rspec
 ```
 
+You can also run the specs across all of your cores using [nitra](https://github.com/willbryant/nitra):
+
+```
+bundle exec nitra --rspec
+```
+
 # TODO
 
 * `--from` and `--to` options

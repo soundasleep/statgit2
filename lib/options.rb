@@ -83,7 +83,7 @@ def load_command_line_options
       puts ::Version.join(".")
       exit
     end
-  end.parse!
+  end.parse
 
   $command_line_options = options
 end
