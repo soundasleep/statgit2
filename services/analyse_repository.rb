@@ -58,7 +58,13 @@ class AnalyseRepository
     end
 
     # TODO allow specific branches to be analysed
-    command = "cd #{root_path} && git pull origin master && git checkout master"
+    command = "cd #{root_path} && git reset --hard && git clean -f"
+    execute_command command
+
+    command = "cd #{root_path} && git pull origin master"
+    execute_command command
+
+    command = "cd #{root_path} && git checkout -f master"
     execute_command command
   end
 
