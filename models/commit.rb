@@ -28,6 +28,14 @@ class Commit < ActiveRecord::Base
     @todos ||= file_todos.sum(:todo_count)
   end
 
+  def sass_rules
+    @sass_rules ||= file_sass_stylesheets.sum(:rules)
+  end
+
+  def sass_properties
+    @sass_properties ||= file_sass_stylesheets.sum(:properties)
+  end
+
   def select_file(filename)
     @select_file ||= {}
     @select_file[filename] ||= commit_files.where(full_path: filename).first

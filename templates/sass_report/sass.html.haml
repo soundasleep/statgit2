@@ -1,0 +1,17 @@
+%h1 SASS
+
+%h2 SASS stylesheets in repository
+
+= line_chart(repository, :sass_stylesheets_per_day, "Stylesheets")
+
+%h2 SASS rules in repository
+
+= line_chart(repository, :sass_rules_per_day, "Rules")
+
+%h2 SASS properties per rule
+
+= line_chart(repository, :sass_properties_per_rule_per_day, "Properties")
+
+%h2 Files with most rules
+
+= table(repository, :files_with_most_sass_rules, {filename: "File", revisions: "Revisions", sass_rules: "Rules"})

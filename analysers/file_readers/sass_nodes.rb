@@ -27,7 +27,7 @@ class SassNodes < AbstractFileAnalyser
   end
 
   def import(collection)
-    SassNodes.import(collection)
+    FileSassStylesheet.import(collection)
   end
 
   private
@@ -38,37 +38,22 @@ class SassNodes < AbstractFileAnalyser
     NODE_MAP = {
       Sass::Tree::Node => :nodes,
 
-      Sass::Tree::RuleNode => :rules,       # any generic rule, e.g. `head { }`
-      Sass::Tree::PropNode => :properties,  # any generic proprty e.g. `background: red;`
-      Sass::Tree::ExtendNode => :extends,   # @extend
+      Sass::Tree::RuleNode => :rules,           # `head { }`
+      Sass::Tree::PropNode => :properties,      # `background: red;`
+      Sass::Tree::VariableNode => :variables,   # `$foo: black;`
+      Sass::Tree::CommentNode => :comments,     # `/* comment */`
+
+      Sass::Tree::DirectiveNode => :directives, # @import, @media, etc
+      Sass::Tree::CssImportNode => :imports,    # @import
+      Sass::Tree::MediaNode => :medias,         # @media
+
+      Sass::Tree::ExtendNode => :extends,       # @extend
+      Sass::Tree::MixinDefNode => :mixin_definitions,   # @mixin { }
+      Sass::Tree::MixinNode => :mixins,         # @include mixin
     }
 
     def initialize
-      # @output = {
-      #   # common things
-      #   nodes: 0,
-
-      #   rules: 0,
-      #   properties: 0,
-      #   variables: 0,
-      #   comments: 0,
-      #   imports: 0,       # import for SASS
-      #   medias: 0,        # @media
-      #   directives: 0,    # @import for plain CSS, other unprocessed CSS directives
-      #   extends: 0,       # @extend
-      #   mixin_definitions: 0,
-      #   mixins: 0,        # a mixin include
-
-      #   # uncommon things
-      #   functions: 0,     # function definition
-      #   ifs: 0,           # @if, @else, @else if
-      #   fors: 0,          # @for
-      #   eaches: 0,        # @each
-      #   whiles: 0,        # @while
-      #   others: 0,        # anything we haven't identified
-      # }
-
-      @output = Hash.new { |hash, key| hash[key] = 0 }
+      @output = Hash[NODE_MAP.values.map { |key| [key, 0] }]
     end
 
     def visit(node)

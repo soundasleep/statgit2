@@ -66,6 +66,22 @@ class Repository < ActiveRecord::Base
     @authors_with_commits ||= AuthorsWithCommits.new(self).call
   end
 
+  def sass_stylesheets_per_day
+    @sass_stylesheets_per_day ||= SassStylesheetsPerDay.new(self).call
+  end
+
+  def sass_rules_per_day
+    @sass_rules_per_day ||= SassRulesPerDay.new(self).call
+  end
+
+  def sass_properties_per_rule_per_day
+    @sass_properties_per_rule_per_day ||= SassPropertiesPerRulePerDay.new(self).call
+  end
+
+  def files_with_most_sass_rules
+    @files_with_most_sass_rules ||= FilesWithMostSassRules.new(self).call
+  end
+
   def changes_by_author(author)
     @changes_by_author ||= ChangesByAuthor.new(self).call
     @changes_by_author[author.id] || 0
