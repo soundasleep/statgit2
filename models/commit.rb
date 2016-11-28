@@ -1,13 +1,14 @@
 class Commit < ActiveRecord::Base
   include DateHelper
 
+  belongs_to :repository
+  belongs_to :author
+
   has_many :commit_files, dependent: :destroy
   has_many :commit_diffs, dependent: :destroy
   has_many :file_todos, dependent: :destroy
+  has_many :file_sass_stylesheets, dependent: :destroy
   has_many :lines_of_code_stats, dependent: :destroy
-
-  belongs_to :repository
-  belongs_to :author
 
   default_scope { order('author_date ASC') }
 
