@@ -15,6 +15,7 @@ class FilesWithRevisionsAndSizes
           revisions: file.revisions,
           size: file.size,
           todos: file.file_todos.any? ? file.file_todos.first.todo_count : 0,
+          sass_rules: file.file_sass_stylesheets.any? ? file.file_sass_stylesheets.first.rules : 0,
         } ]
     end
 

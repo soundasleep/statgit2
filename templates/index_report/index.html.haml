@@ -27,6 +27,9 @@
     %dt TODOs
     %dd= link_to repository.latest_commit.todos, link_for(TodosReport)
 
+    %dt SASS Rules
+    %dd= link_to repository.latest_commit.sass_rules, link_for(SassReport)
+
   %dt Authors
   %dd= link_to repository.authors.length, link_for(AuthorsReport)
 

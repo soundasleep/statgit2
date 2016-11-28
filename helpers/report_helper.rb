@@ -35,8 +35,12 @@ module ReportHelper
 
     benchmark = Benchmark.realtime do
       data = repository.send(method).map do |key, value|
-        [key, wrap_array(value)]
-      end
+        if value.nil? || (value.is_a?(Float) && value.nan?)
+          nil
+        else
+          [key, wrap_array(value)]
+        end
+      end.compact
     end
 
     data = Hash[data]

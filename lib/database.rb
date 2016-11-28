@@ -19,6 +19,10 @@ def connect_to_database
     LOG.info "Creating database"
     require_relative "../db/schema"
   end
+
+  # And then apply migrations as necessary
+  ActiveRecord::Migrator.migrate("db/migrate/")
+  LOG.info "Database migrated"
 end
 
 connect_to_database unless $running_in_rspec

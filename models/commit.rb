@@ -1,13 +1,14 @@
 class Commit < ActiveRecord::Base
   include DateHelper
 
+  belongs_to :repository
+  belongs_to :author
+
   has_many :commit_files, dependent: :destroy
   has_many :commit_diffs, dependent: :destroy
   has_many :file_todos, dependent: :destroy
+  has_many :file_sass_stylesheets, dependent: :destroy
   has_many :lines_of_code_stats, dependent: :destroy
-
-  belongs_to :repository
-  belongs_to :author
 
   default_scope { order('author_date ASC') }
 
@@ -25,6 +26,14 @@ class Commit < ActiveRecord::Base
 
   def todos
     @todos ||= file_todos.sum(:todo_count)
+  end
+
+  def sass_rules
+    @sass_rules ||= file_sass_stylesheets.sum(:rules)
+  end
+
+  def sass_properties
+    @sass_properties ||= file_sass_stylesheets.sum(:properties)
   end
 
   def select_file(filename)
