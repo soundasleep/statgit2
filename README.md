@@ -7,7 +7,7 @@ Generate Git development statistics, a reboot of [statgit](https://github.com/so
 
 ```
 npm install
-ruby generate.rb https://github.com/your/repository
+ruby generate.rb --url https://github.com/your/repository --database db/databse.sqlite3
 ```
 
 This will generate, by default, things in `output/` and a database stored locally as `db/database.sqlite3`.

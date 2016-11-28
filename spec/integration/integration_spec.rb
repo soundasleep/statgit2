@@ -31,4 +31,10 @@ describe "Integration tests", type: :integration do
       expect(repository.commits.first.files).to_not be_empty
     end
   end
+
+  describe "sass" do
+    it "has some sass nodes for the latest commit" do
+      expect(repository.commits.last.file_sass_stylesheets).to_not be_empty
+    end
+  end
 end
