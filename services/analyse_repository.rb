@@ -39,6 +39,35 @@ class AnalyseRepository
     results
   end
 
+  def commits_between(commits, from = nil, to = nil)
+    hashes = commits.sort { |a, b| a[:author_date] <=> b[:author_date] }
+        .map { |commit| commit[:commit_hash] }
+
+    selected_hashes = hashes_from(hashes, from) & hashes_to(hashes, to)
+
+    return selected_hashes.map do |hash|
+      commits.find { |commit| commit[:commit_hash] == hash }
+    end
+  end
+
+  def hashes_from(hashes, from = nil)
+    return hashes if from.nil?
+
+    index = hashes.find_index { |hash| hash.start_with?(from) }
+    return [] if index.nil?
+
+    return hashes.slice(index, hashes.length)
+  end
+
+  def hashes_to(hashes, to = nil)
+    return hashes if to.nil?
+
+    index = hashes.find_index { |hash| hash.start_with?(to) }
+    return [] if index.nil?
+
+    return hashes.slice(0, index + 1)
+  end
+
   private
 
   def check_out_git
