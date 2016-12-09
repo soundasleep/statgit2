@@ -11,7 +11,7 @@ class AnalyseCommit
   end
 
   def call
-    LOG.info "Analysing commit #{commit.commit_hash}..."
+    LOG.info "Analysing commit #{commit.commit_hash} (#{percent_done})..."
 
     switched = false
 
@@ -29,5 +29,11 @@ class AnalyseCommit
         end
       end
     end
+  end
+
+  private
+
+  def percent_done
+    sprintf "%0.1f%%", (repository.commits.find_index(commit) / repository.commits.count.to_f) * 100
   end
 end
