@@ -31,16 +31,16 @@ class AnalyseFiles < AbstractCommitAnalyser
             end
           end
         end
+
+        to_import = to_import.compact
+
+        if to_import.any?
+          analyser.import(to_import)
+          successful_analysis ||= true
+        end
+
+        LOG.info "Found #{to_import.size} #{analyser.class.name}"
       end
-
-      to_import = to_import.compact
-
-      if to_import.any?
-        analyser.import(to_import)
-        successful_analysis ||= true
-      end
-
-      LOG.info "Found #{to_import.size} #{analyser.class.name}"
     end
 
     return successful_analysis

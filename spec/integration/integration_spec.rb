@@ -66,6 +66,10 @@ describe "Integration tests", type: :integration do
       it "has files for that commit" do
         expect(repository.commits.first.files).to_not be_empty
       end
+
+      it "has a TODO in src/HtmlGenerator.php" do
+        expect(repository.commits.first.file_todos).to_not be_empty
+      end
     end
 
     describe "sass" do

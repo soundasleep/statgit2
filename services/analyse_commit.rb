@@ -19,7 +19,7 @@ class AnalyseCommit
     analysed = false
 
     # Rather than defining tool dependencies, just run all tools many times
-    # (e.g. CountTodos depends on another tool)
+    # (e.g. CountTodos depends on CountFiles to create commit.files)
     3.times do
       COMMIT_ANALYSERS.each do |tool|
         instance = tool.new(commit: commit)
