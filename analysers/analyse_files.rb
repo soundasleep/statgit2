@@ -1,7 +1,7 @@
 class AnalyseFiles < AbstractCommitAnalyser
   def analysers
     @analysers ||= FILE_ANALYSERS.map do |analyser|
-      analyser.new(commit: commit)
+      analyser.new(commit: commit, options: options)
     end
   end
 
@@ -19,7 +19,7 @@ class AnalyseFiles < AbstractCommitAnalyser
       to_import = []
 
       if analyser.needs_update?
-        Dir["#{repository.root_path}**/*#{analyser.extension}"].each do |file|
+        Dir["#{root_path}**/*#{analyser.extension}"].each do |file|
           file_path = file_path_for(file)
           if file_path && File.file?(file)
             commit_file = commit.select_file(file_path)

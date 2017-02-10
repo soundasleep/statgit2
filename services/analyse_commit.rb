@@ -22,7 +22,7 @@ class AnalyseCommit
     # (e.g. CountTodos depends on CountFiles to create commit.files)
     3.times do
       COMMIT_ANALYSERS.each do |tool|
-        instance = tool.new(commit: commit)
+        instance = tool.new(commit: commit, options: options)
         if instance.needs_update?
           unless switched
             execute_command "cd #{root_path} && git reset --hard && git checkout #{commit.commit_hash} && git reset --hard #{commit.commit_hash}"
@@ -41,7 +41,7 @@ class AnalyseCommit
 
   def needs_update?
     return COMMIT_ANALYSERS.any? do |tool|
-      tool.new(commit: commit).needs_update?
+      tool.new(commit: commit, options: options).needs_update?
     end
   end
 

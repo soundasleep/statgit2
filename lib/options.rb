@@ -108,8 +108,7 @@ def options
   $command_line_options
 end
 
-load_command_line_options
-
 unless $running_in_rspec
+  load_command_line_options
   raise "Need to provide a URL with --url" unless options[:url]
 end

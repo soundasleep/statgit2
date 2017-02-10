@@ -10,7 +10,7 @@ describe "Integration tests", type: :integration do
       url: url,
       limit: 1,
       level: "error",
-      workspace: workspace,
+      workspace: workspace + "/",
       database: database,
     })
   }
@@ -21,7 +21,6 @@ describe "Integration tests", type: :integration do
       LOG.info "Resetting workspace #{workspace}"
       FileUtils.rm_r(workspace)
     end
-    Dir.mkdir(workspace)
 
     if File.exist?(database)
       LOG.info "Resetting database #{database}"
@@ -66,13 +65,17 @@ describe "Integration tests", type: :integration do
       it "has files for that commit" do
         expect(repository.commits.first.files).to_not be_empty
       end
+    end
 
-      it "has a TODO in src/HtmlGenerator.php" do
+    describe "todo" do
+      # TODO this is a todo that will be caught by the TODO analyser
+      it "has a TODO in this file" do
         expect(repository.commits.first.file_todos).to_not be_empty
       end
     end
 
     describe "sass" do
+      # this captures the stylesheets in templates/stylesheets/
       it "has some sass nodes for the latest commit" do
         expect(repository.commits.last.file_sass_stylesheets).to_not be_empty
       end

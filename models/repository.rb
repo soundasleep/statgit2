@@ -8,10 +8,6 @@ class Repository < ActiveRecord::Base
     commits.last
   end
 
-  def root_path
-    options[:workspace]
-  end
-
   def lines_of_code_per_day
     @lines_of_code_per_day ||= LinesOfCodePerDay.new(self).call
   end

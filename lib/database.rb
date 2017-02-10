@@ -3,9 +3,6 @@ require "connection_pool"
 require "sqlite3"
 require "activerecord-import"
 
-# Enable logging if necessary
-ActiveRecord::Base.logger = Logger.new(STDERR) if options[:level] == "debug"
-
 def connect_to_database(options)
   ActiveRecord::Base.remove_connection
 
@@ -21,4 +18,9 @@ def connect_to_database(options)
   LOG.info "Database migrated"
 end
 
-connect_to_database(options) unless $running_in_rspec
+unless $running_in_rspec
+  # Enable logging if necessary
+  ActiveRecord::Base.logger = Logger.new(STDERR) if options[:level] == "debug"
+
+  connect_to_database(options) unless $running_in_rspec
+end

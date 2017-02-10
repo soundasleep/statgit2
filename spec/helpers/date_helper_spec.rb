@@ -38,12 +38,18 @@ describe DateHelper, type: :helper do
   describe "#time_zone" do
     subject { time_zone.name }
 
-    it { is_expected.to eq("UTC") }
+    context "with default options" do
+      def options
+        default_options
+      end
+
+      it { is_expected.to eq("UTC") }
+    end
 
     context "with options[timezone] = 'Auckland'" do
       def options
         {
-          timezone: "Auckland"
+          timezone: "Auckland",
         }
       end
 
