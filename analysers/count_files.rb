@@ -22,6 +22,8 @@ class CountFiles < AbstractCommitAnalyser
     CommitFile.import(to_import)
 
     LOG.info "Found #{to_import.size} files"
+
+    return to_import.any?
   end
 end
 

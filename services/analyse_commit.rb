@@ -11,11 +11,16 @@ class AnalyseCommit
   end
 
   def call
+    return false unless needs_update?
+
     LOG.info "Analysing commit #{commit.commit_hash} (#{percent_done})..."
 
     switched = false
+    analysed = false
 
-    3.times do    # Rather than defining tool dependencies, just run all tools many times
+    # Rather than defining tool dependencies, just run all tools many times
+    # (e.g. CountTodos depends on another tool)
+    3.times do
       COMMIT_ANALYSERS.each do |tool|
         instance = tool.new(commit: commit)
         if instance.needs_update?
@@ -25,9 +30,18 @@ class AnalyseCommit
           end
 
           LOG.info ">> #{tool}"
-          instance.call
+          result = instance.call
+          analysed ||= !!result
         end
       end
+    end
+
+    return analysed
+  end
+
+  def needs_update?
+    return COMMIT_ANALYSERS.any? do |tool|
+      tool.new(commit: commit).needs_update?
     end
   end
 

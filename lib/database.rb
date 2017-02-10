@@ -6,7 +6,9 @@ require "activerecord-import"
 # Enable logging if necessary
 ActiveRecord::Base.logger = Logger.new(STDERR) if options[:level] == "debug"
 
-def connect_to_database
+def connect_to_database(options)
+  ActiveRecord::Base.remove_connection
+
   ActiveRecord::Base.establish_connection(
     :adapter => options[:adapter],
     :database => options[:database]
@@ -14,15 +16,9 @@ def connect_to_database
 
   LOG.info "Using database #{options[:database]}"
 
-  # Create the database if necessary
-  unless ActiveRecord::Base.connection.table_exists? "schema"
-    LOG.info "Creating database"
-    require_relative "../db/schema"
-  end
-
   # And then apply migrations as necessary
   ActiveRecord::Migrator.migrate("db/migrate/")
   LOG.info "Database migrated"
 end
 
-connect_to_database unless $running_in_rspec
+connect_to_database(options) unless $running_in_rspec

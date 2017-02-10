@@ -11,6 +11,8 @@ class IdentifyAuthor < AbstractCommitAnalyser
 
     # link through to commit
     commit.update_attributes! author: author
+
+    return true
   end
 
   private

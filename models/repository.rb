@@ -1,4 +1,6 @@
 class Repository < ActiveRecord::Base
+  include AnalysedCommits
+
   has_many :commits, dependent: :destroy
   has_many :authors, dependent: :destroy
 

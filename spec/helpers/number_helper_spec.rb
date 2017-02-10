@@ -19,4 +19,13 @@ describe NumberHelper, type: :helper do
       expect(float_number(1024.34)).to eq("1,024.34")
     end
   end
+
+  describe "#percent" do
+    it "formats percents" do
+      expect(percent(1)).to eq("100%")
+      expect(percent(0.01)).to eq("1%")
+      expect(percent(1.0/3.0)).to eq("33%")
+      expect(percent(2.0/3.0)).to eq("67%")
+    end
+  end
 end

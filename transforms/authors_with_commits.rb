@@ -13,7 +13,7 @@ class AuthorsWithCommits
         {
           author: author,
           email: author.email,
-          commits: author.commits.size,
+          commits: author.analysed_commits.size,
           changes: author.changes,
           last_commit: author.last_commit,
         } ]

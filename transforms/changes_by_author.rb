@@ -10,7 +10,7 @@ class ChangesByAuthor
   def call
     result = {}
 
-    repository.commits.each do |commit|
+    repository.analysed_commits.each do |commit|
       commit.commit_diffs.each do |diff|
         if commit.author.present?
           changes = diff.added + diff.removed

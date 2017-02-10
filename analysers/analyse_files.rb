@@ -13,6 +13,7 @@ class AnalyseFiles < AbstractCommitAnalyser
 
   def call
     read_files = {}
+    successful_analysis = false
 
     analysers.each do |analyser|
       to_import = []
@@ -36,10 +37,13 @@ class AnalyseFiles < AbstractCommitAnalyser
 
       if to_import.any?
         analyser.import(to_import)
+        successful_analysis ||= true
       end
 
       LOG.info "Found #{to_import.size} #{analyser.class.name}"
     end
+
+    return successful_analysis
   end
 
   private

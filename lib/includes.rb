@@ -4,6 +4,7 @@ FILE_ANALYSERS = []
 
 include_paths = [
   "helpers",
+  "models/modules",
   "models",
   "services",
   "reports",

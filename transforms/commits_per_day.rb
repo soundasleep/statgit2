@@ -16,7 +16,7 @@ class CommitsPerDay
       result[day] = 0
     end
 
-    repository_or_author.commits.each do |commit|
+    repository_or_author.analysed_commits.each do |commit|
       day = day_name(commit.date)
       result[day] += 1
     end

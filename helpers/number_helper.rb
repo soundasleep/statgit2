@@ -10,4 +10,8 @@ module NumberHelper
   def float_number(number)
     number_with_precision(number, precision: 2, significant: false, delimiter: ",")
   end
+
+  def percent(number)
+    number_with_precision(number * 100.0, precision: 0, significant: false, delimiter: ",") + "%"
+  end
 end

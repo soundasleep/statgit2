@@ -3,6 +3,7 @@ require "optparse"
 def default_options
   {
     limit: nil,
+    max: nil,
     commits_per_day: nil,
     adapter: "sqlite3",
     database: ":memory:",
@@ -48,6 +49,10 @@ def load_command_line_options
 
     opts.on("--limit COMMITS", Integer, "Only go back this number of commits") do |commits|
       options[:limit] = commits
+    end
+
+    opts.on("--max COMMITS", Integer, "Only analyse this many unanalysed commits (from the last [limit] commits)") do |commits|
+      options[:max] = commits
     end
 
     opts.on("--commits-per-day N", Integer, "Select the most recent N commits per day") do |n|

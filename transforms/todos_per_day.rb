@@ -8,7 +8,7 @@ class TodosPerDay
   end
 
   def call
-    raw = repository.commits.map do |commit|
+    raw = repository.analysed_commits.map do |commit|
       [ iso_date(commit.date), commit.todos ]
     end
 
