@@ -1,4 +1,4 @@
-statgit2
+statgit2 [![Build Status](https://travis-ci.org/soundasleep/statgit2.svg?branch=master)](https://travis-ci.org/soundasleep/statgit2)
 ========
 
 Generate Git development statistics, a reboot of [statgit](https://github.com/soundasleep/statgit).
