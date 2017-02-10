@@ -12,6 +12,8 @@ ruby generate.rb --url https://github.com/your/repository --database db/databse.
 
 This will generate, by default, things in `output/` and a database stored locally as `db/database.sqlite3`.
 
+A full list of options is available with `--help`.
+
 # Tests
 
 ```
