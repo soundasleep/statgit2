@@ -2,8 +2,8 @@ require "spec_helper"
 
 describe "Integration tests", type: :integration do
   let(:url) { "https://github.com/soundasleep/statgit2" }
-  let(:workspace) { Dir.tmpdir }
-  let(:database_dir) { Dir.tmpdir }
+  let(:workspace) { Dir.mktmpdir }
+  let(:database_dir) { Dir.mktmpdir }
   let(:database) { "#{database_dir}/database" }
   let(:integration_options) {
     default_options.merge({
