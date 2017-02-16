@@ -10,7 +10,7 @@ class RevisionsForPaths
   def call
     result = {}
 
-    repository.commits.each do |commit|
+    repository.analysed_commits.each do |commit|
       commit.commit_diffs.each do |diff|
         path = diff.commit_file.full_path
         result[path] ||= 1

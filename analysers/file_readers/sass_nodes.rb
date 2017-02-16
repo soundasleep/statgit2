@@ -70,7 +70,7 @@ class SassNodes < AbstractFileAnalyser
   end
 
   def importer
-    Sass::Importers::Filesystem.new(repository.root_path)
+    Sass::Importers::Filesystem.new(root_path)
   end
 end
 

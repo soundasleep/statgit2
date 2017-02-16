@@ -6,21 +6,21 @@
   %dt Name
   %dd= author.name
 
-  - if author.commits.any?
+  - if author.analysed_commits.any?
     %dt First commit
     %dd
-      = commit_link(author.commits.first)
+      = commit_link(author.analysed_commits.first)
       %br
-      %i= author.commits.first.subject
+      %i= author.analysed_commits.first.subject
 
     %dt Last commit
     %dd
-      = commit_link(author.commits.last)
+      = commit_link(author.analysed_commits.last)
       %br
-      %i= author.commits.last.subject
+      %i= author.analysed_commits.last.subject
 
   %dt Commits
-  %dd= author.commits.count
+  %dd= author.analysed_commits.count
 
   %dt Changes
   %dd= author.changes

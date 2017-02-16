@@ -1,4 +1,6 @@
 class Author < ActiveRecord::Base
+  include AnalysedCommits
+
   belongs_to :repository
 
   has_many :commits, dependent: :destroy

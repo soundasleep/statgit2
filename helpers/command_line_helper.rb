@@ -1,7 +1,9 @@
 module CommandLineHelper
   class CommandLineError < StandardError; end
 
-  delegate :root_path, to: :repository
+  def root_path
+    options[:workspace]
+  end
 
   def execute_command(command)
     temp_file = Tempfile.new(self.class.name)

@@ -35,6 +35,8 @@ class DiffChanges < AbstractCommitAnalyser
     commit.reload
 
     LOG.info "Found #{to_import.size} changed files"
+
+    return to_import.any?
   end
 end
 

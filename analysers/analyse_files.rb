@@ -1,7 +1,7 @@
 class AnalyseFiles < AbstractCommitAnalyser
   def analysers
     @analysers ||= FILE_ANALYSERS.map do |analyser|
-      analyser.new(commit: commit)
+      analyser.new(commit: commit, options: options)
     end
   end
 
@@ -13,12 +13,13 @@ class AnalyseFiles < AbstractCommitAnalyser
 
   def call
     read_files = {}
+    successful_analysis = false
 
     analysers.each do |analyser|
       to_import = []
 
       if analyser.needs_update?
-        Dir["#{repository.root_path}**/*#{analyser.extension}"].each do |file|
+        Dir["#{root_path}**/*#{analyser.extension}"].each do |file|
           file_path = file_path_for(file)
           if file_path && File.file?(file)
             commit_file = commit.select_file(file_path)
@@ -30,16 +31,19 @@ class AnalyseFiles < AbstractCommitAnalyser
             end
           end
         end
+
+        to_import = to_import.compact
+
+        if to_import.any?
+          analyser.import(to_import)
+          successful_analysis ||= true
+        end
+
+        LOG.info "Found #{to_import.size} #{analyser.class.name}"
       end
-
-      to_import = to_import.compact
-
-      if to_import.any?
-        analyser.import(to_import)
-      end
-
-      LOG.info "Found #{to_import.size} #{analyser.class.name}"
     end
+
+    return successful_analysis
   end
 
   private

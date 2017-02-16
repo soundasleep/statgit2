@@ -16,8 +16,20 @@ class AnalyseRepository
     check_out_git
     export_log
 
+    unanalysed_commits_analysed = 0
+
     repository.commits.each do |commit|
-      AnalyseCommit.new(commit: commit, options: options).call
+      next if options[:max].present? && unanalysed_commits_analysed >= options[:max]
+
+      analysis = AnalyseCommit.new(commit: commit, options: options)
+      if analysis.needs_update?
+        nonzero_analysis = analysis.call
+        unanalysed_commits_analysed += 1 if !!nonzero_analysis
+      end
+
+      if options[:max].present? && unanalysed_commits_analysed >= options[:max]
+        LOG.info "Halting analysis after analysing #{unanalysed_commits_analysed}/#{options[:max]} commits"
+      end
     end
   end
 

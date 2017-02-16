@@ -2,7 +2,10 @@
 
 %dl
   %dt Commits
-  %dd= repository.commits.length
+  %dd
+    = repository.analysed_commits.length
+    - if repository.commits.any?
+      (#{percent(repository.analysed_commits.length / repository.commits.length)} out of #{repository.commits.length} total)
 
   - if repository.commits.any?
     %dt Latest commit
@@ -13,10 +16,10 @@
 
     %dt Report period
     %dd
-      = iso_date(repository.commits.first.author_date)
+      = iso_date(repository.analysed_commits.first.author_date)
       to
-      = iso_date(repository.commits.last.author_date)
-      (#{(repository.commits.last.author_date.to_date - repository.commits.first.author_date.to_date).to_i} days)
+      = iso_date(repository.analysed_commits.last.author_date)
+      (#{(repository.analysed_commits.last.author_date.to_date - repository.analysed_commits.first.author_date.to_date).to_i} days)
 
     %dt Total files
     %dd= link_to repository.latest_commit.files.length, link_for(FilesReport)

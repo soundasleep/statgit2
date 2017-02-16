@@ -8,7 +8,7 @@ class SassPropertiesPerRulePerDay
   end
 
   def call
-    raw = repository.commits.map do |commit|
+    raw = repository.analysed_commits.map do |commit|
       [ iso_date(commit.date), commit.sass_properties.to_f / commit.sass_rules.to_f ]
     end
 

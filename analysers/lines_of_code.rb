@@ -29,6 +29,8 @@ class LinesOfCode < AbstractCommitAnalyser
     LinesOfCodeStat.import(to_import)
 
     LOG.info "Found #{to_import.size} languages with #{to_import.map(&:code).reduce(&:+)} LOC"
+
+    return to_import.any?
   end
 end
 

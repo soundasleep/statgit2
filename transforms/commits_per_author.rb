@@ -13,7 +13,7 @@ class CommitsPerAuthor
     end
     result = Hash[result]
 
-    repository.commits.each do |commit|
+    repository.analysed_commits.each do |commit|
       result[commit.author.email] += 1
     end
 

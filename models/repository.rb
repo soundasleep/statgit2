@@ -1,13 +1,11 @@
 class Repository < ActiveRecord::Base
+  include AnalysedCommits
+
   has_many :commits, dependent: :destroy
   has_many :authors, dependent: :destroy
 
   def latest_commit
     commits.last
-  end
-
-  def root_path
-    options[:workspace]
   end
 
   def lines_of_code_per_day
