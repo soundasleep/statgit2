@@ -1,7 +1,5 @@
 language: ruby
 rvm:
   - 2.2.0
-addons:
-  apt:
-    packages:
-      - cloc
+before_install:
+  - npm install
