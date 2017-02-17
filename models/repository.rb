@@ -5,7 +5,7 @@ class Repository < ActiveRecord::Base
   has_many :authors, dependent: :destroy
 
   def latest_commit
-    commits.last
+    commits.order(author_date: :desc).last
   end
 
   def lines_of_code_per_day

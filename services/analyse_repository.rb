@@ -18,7 +18,7 @@ class AnalyseRepository
 
     unanalysed_commits_analysed = 0
 
-    repository.commits.each do |commit|
+    repository.commits.order(author_date: :desc).each do |commit|
       next if options[:max].present? && unanalysed_commits_analysed >= options[:max]
 
       analysis = AnalyseCommit.new(commit: commit, options: options)
