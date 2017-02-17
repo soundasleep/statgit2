@@ -18,7 +18,8 @@ class AnalyseRepository
 
     unanalysed_commits_analysed = 0
 
-    repository.commits.order(author_date: :desc).each do |commit|
+    # by default, commits are in author_date asc; we want to go author_date desc for --max
+    repository.commits.reverse_order.each do |commit|
       next if options[:max].present? && unanalysed_commits_analysed >= options[:max]
 
       analysis = AnalyseCommit.new(commit: commit, options: options)
@@ -28,7 +29,7 @@ class AnalyseRepository
       end
 
       if options[:max].present? && unanalysed_commits_analysed >= options[:max]
-        LOG.info "Halting analysis after analysing #{unanalysed_commits_analysed}/#{options[:max]} commits"
+        LOG.info "Halting analysis after analysing #{unanalysed_commits_analysed} commits"
       end
     end
   end

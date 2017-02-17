@@ -48,6 +48,6 @@ class AnalyseCommit
   private
 
   def percent_done
-    sprintf "%0.1f%%", (repository.commits.find_index(commit) / repository.commits.count.to_f) * 100
+    sprintf "%0.1f%%", (1 - (repository.commits.find_index(commit) / repository.commits.count.to_f)) * 100
   end
 end
