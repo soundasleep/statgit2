@@ -31,7 +31,7 @@ describe CommandLineHelper, type: :helper do
       execute_command("echo hi") do |out|
         output << out
       end
-      expect(output).to eq(["hi\n"])
+      expect(output.map(&:strip)).to eq(["hi"])
       expect(output.first.split("\n")).to eq(["hi"])
     end
 
@@ -44,7 +44,7 @@ describe CommandLineHelper, type: :helper do
       execute_command("cat \"#{temp.path}\"") do |out|
         output << out
       end
-      expect(output).to eq(["test(test\n"])
+      expect(output.map(&:strip)).to eq(["test(test"])
       expect(output.first.split("\n")).to eq(["test(test"])
     end
   end
