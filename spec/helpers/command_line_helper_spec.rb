@@ -36,8 +36,12 @@ describe CommandLineHelper, type: :helper do
     end
 
     it "can handle invalid UTF-8 by stripping it out" do
+      temp = Tempfile.new("invalid_utf8")
+      temp.write("test\xf0\x28\x8c\xbctest")
+      temp.close
+
       output = []
-      execute_command("echo \"test\\xf0\\x28\\x8c\\xbctest\"") do |out|
+      execute_command("cat \"#{temp.path}\"") do |out|
         output << out
       end
       expect(output).to eq(["test(test\n"])
