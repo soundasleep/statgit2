@@ -10,9 +10,9 @@
   - if repository.commits.any?
     %dt Latest commit
     %dd
-      = commit_link(repository.commits.last)
+      = commit_link(repository.latest_commit)
       %br
-      %i= repository.commits.last.subject
+      %i= repository.latest_commit.subject
 
     %dt Report period
     %dd

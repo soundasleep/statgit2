@@ -157,6 +157,8 @@ class AnalyseRepository
       end
     end
 
+    LOG.info "Identified #{loaded_commits.size} commits in log"
+
     to_import = []
     commits_per_day(loaded_commits, options[:commits_per_day]).each do |commit|
       to_import << new_commit(commit)
