@@ -16,7 +16,8 @@ module CommandLineHelper
     output = temp_file.read
 
     if block_given?
-      yield(output)
+      # remove any invalid UTF-8 symbols
+      yield(output.encode("utf-8", invalid: :replace, undef: :replace, replace: ""))
     else
       LOG.debug "(#{output.split("\n").length} lines)"
     end
