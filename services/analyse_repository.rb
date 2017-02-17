@@ -110,7 +110,7 @@ class AnalyseRepository
   end
 
   def export_log
-    LOG.info "Exporting complete log to JSON..."
+    LOG.info "Exporting complete log..."
 
     separator = "(separator)"
     end_character = "(end log entry)"
