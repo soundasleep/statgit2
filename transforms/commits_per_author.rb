@@ -17,6 +17,6 @@ class CommitsPerAuthor
       result[commit.author.email] += 1
     end
 
-    result
+    result.sort_by { |_email, commits| -commits }
   end
 end
