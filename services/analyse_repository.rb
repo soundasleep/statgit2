@@ -10,6 +10,11 @@ class AnalyseRepository
   end
 
   def call
+    if options[:max].zero?
+      LOG.info "Skipping Git repository analysis"
+      return
+    end
+
     LOG.info "Analysing repository..."
 
     # TODO fail if checked out git is not the current repository URL

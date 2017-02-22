@@ -8,7 +8,7 @@ class SassRulesPerDay
   end
 
   def call
-    raw = repository.commits.map do |commit|
+    raw = repository.commits.preload(:file_sass_stylesheets).map do |commit|
       [ iso_date(commit.date), commit.sass_rules ]
     end
 

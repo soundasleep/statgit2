@@ -84,6 +84,10 @@ module ReportHelper
     render_chart "histogram_chart", repository, method, title, {heading: heading}.merge(options)
   end
 
+  def large_histogram_chart(repository, method, heading, title, options = {})
+    histogram_chart(repository, method, heading, title, {width: 800, height: 600}.merge(options))
+  end
+
   def table(repository, method, labels, limit = 30, options = {})
     data = nil
     benchmark = Benchmark.realtime do

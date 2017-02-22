@@ -33,6 +33,9 @@
     %dt SASS Rules
     %dd= link_to repository.latest_commit.sass_rules, link_for(SassReport)
 
+    %dt Lines of code touched this month
+    %dd= link_to repository.lines_of_code_touched_this_month, link_for(ChurnReport)
+
   %dt Authors
   %dd= link_to repository.authors.length, link_for(AuthorsReport)
 
@@ -40,6 +43,7 @@
   %li= link_to "Authors", link_for(AuthorsReport)
   %li= link_to "Files", link_for(FilesReport)
   %li= link_to "TODOs", link_for(TodosReport)
+  %li= link_to "Churn", link_for(ChurnReport)
 
 %h2 Lines of Code
 

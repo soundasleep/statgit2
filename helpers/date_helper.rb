@@ -9,6 +9,11 @@ module DateHelper
     date.strftime("%Y-%m-%d %H:%M")
   end
 
+  def month_date(date)
+    return "" if date.nil?
+    date.strftime("%Y-%m")
+  end
+
   def day_name(date)
     return "" if date.nil?
     date.strftime("%a")

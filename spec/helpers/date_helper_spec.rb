@@ -25,6 +25,16 @@ describe DateHelper, type: :helper do
     end
   end
 
+  describe "#month_date" do
+    subject { month_date(date) }
+
+    it { is_expected.to eq("2016-01") }
+
+    it "formats nil" do
+      expect(iso_date(nil)).to eq("")
+    end
+  end
+
   describe "#day_name" do
     subject { day_name(date) }
 

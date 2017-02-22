@@ -5,7 +5,7 @@ class Repository < ActiveRecord::Base
   has_many :authors, dependent: :destroy
 
   def latest_commit
-    commits.last  # commit default order is author_date asc
+    @latest_commit ||= commits.last  # commit default order is author_date asc
   end
 
   def lines_of_code_per_day
@@ -38,6 +38,14 @@ class Repository < ActiveRecord::Base
 
   def lines_of_code_per_file_per_day
     @lines_of_code_per_file_per_day ||= LinesOfCodePerFilePerDay.new(self).call
+  end
+
+  def lines_of_code_touched_per_month
+    @lines_of_code_touched_per_month ||= LinesOfCodeTouchedPerMonth.new(self).call
+  end
+
+  def lines_of_code_touched_this_month
+    @lines_of_code_touched_this_month ||= lines_of_code_touched_per_month.values.last
   end
 
   def files_with_most_revisions

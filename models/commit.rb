@@ -13,7 +13,7 @@ class Commit < ActiveRecord::Base
   default_scope { order('author_date ASC') }
 
   def date
-    author_date.in_time_zone(time_zone)
+    @date ||= author_date.in_time_zone(time_zone)
   end
 
   def files
@@ -47,5 +47,9 @@ class Commit < ActiveRecord::Base
 
   def files_with_revisions_and_sizes
     @files_with_revisions_and_sizes ||= FilesWithRevisionsAndSizes.new(self).call
+  end
+
+  def lines_of_code_touched
+    @lines_of_code_touched ||= commit_diffs.sum(:added) + commit_diffs.sum(:removed)
   end
 end
