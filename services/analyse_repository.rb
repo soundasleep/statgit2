@@ -10,7 +10,7 @@ class AnalyseRepository
   end
 
   def call
-    if options[:max].zero?
+    if options[:max].present? && options[:max].zero?
       LOG.info "Skipping Git repository analysis"
       return
     end
