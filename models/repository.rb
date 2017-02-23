@@ -88,6 +88,10 @@ class Repository < ActiveRecord::Base
     @files_with_most_sass_rules ||= FilesWithMostSassRules.new(self).call
   end
 
+  def files_with_most_contributors
+    @files_with_most_contributors ||= FilesWithMostContributors.new(self).call
+  end
+
   def changes_by_author(author)
     @changes_by_author ||= ChangesByAuthor.new(self).call
     @changes_by_author[author.id] || 0
@@ -96,5 +100,11 @@ class Repository < ActiveRecord::Base
   def revisions_for(file_path)
     @revisions_for_paths ||= RevisionsForPaths.new(self).call
     @revisions_for_paths[file_path] || 0
+  end
+
+  # TODO maybe these two _for methods can be merged into a single method
+  def contributors_for(file_path)
+    @contributors_for ||= ContributorsForPaths.new(self).call
+    @contributors_for[file_path] || 0
   end
 end

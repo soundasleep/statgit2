@@ -20,8 +20,12 @@
 
 %h2 Most Changed Files
 
-= table(repository, :files_with_most_revisions, {filename: "File", revisions: "Revisions", size: "Size"})
+= table(repository, :files_with_most_revisions, {filename: "File", revisions: "Revisions", contributors: "Contributors", size: "Size"})
 
 %h2 Largest Files
 
-= table(repository, :largest_files, {filename: "File", revisions: "Revisions", size: "Size"})
+= table(repository, :largest_files, {filename: "File", revisions: "Revisions", contributors: "Contributors", size: "Size"})
+
+%h2 Most Contributed Files
+
+= table(repository, :files_with_most_contributors, {filename: "File", revisions: "Revisions", contributors: "Contributors", size: "Size"})

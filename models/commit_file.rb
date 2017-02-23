@@ -9,4 +9,8 @@ class CommitFile < ActiveRecord::Base
   def revisions
     @revisions ||= commit.repository.revisions_for(full_path) + 1     # if a file exists, it must have had at least one commit
   end
+
+  def contributors
+    @contributors ||= commit.repository.contributors_for(full_path)
+  end
 end
