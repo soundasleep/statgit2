@@ -26,3 +26,8 @@ bundle exec rspec
 * `--from` and `--to` options
 * Generate all of the base stats from [statgit](https://github.com/soundasleep/statgit)
 * Write up features list
+
+## Examples
+
+* [Openclerk](http://openclerk.org/stats/)
+
