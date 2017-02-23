@@ -5,7 +5,7 @@
   %dd
     = repository.analysed_commits.length
     - if repository.commits.any?
-      (#{percent(repository.analysed_commits.length / repository.commits.length)} out of #{repository.commits.length} total)
+      (#{percent(repository.analysed_commits.length / repository.commits.length.to_f)} out of #{repository.commits.length} total)
 
   - if repository.commits.any?
     %dt Latest commit
