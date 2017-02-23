@@ -3,7 +3,12 @@ require "spec_helper"
 describe DateHelper, type: :helper do
   include DateHelper
 
-  let(:date) { Time.parse("2016-01-01 11:12:13 +0800") }
+  let(:date_time_zone) { ActiveSupport::TimeZone.new("Auckland") }
+  let(:date) { Time.parse("2016-01-01 11:12:13 +0800").in_time_zone(date_time_zone) }
+
+  it "date_time_zone is valid" do
+    expect(date_time_zone).to_not be_nil
+  end
 
   describe "#iso_date" do
     subject { iso_date(date) }
@@ -18,7 +23,7 @@ describe DateHelper, type: :helper do
   describe "#minute_date" do
     subject { minute_date(date) }
 
-    it { is_expected.to eq("2016-01-01 11:12") }
+    it { is_expected.to eq("2016-01-01 16:12") }
 
     it "formats nil" do
       expect(minute_date(nil)).to eq("")

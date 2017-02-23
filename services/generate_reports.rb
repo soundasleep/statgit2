@@ -9,6 +9,8 @@ class GenerateReports
   def call
     LOG.info "Generating reports..."
 
+    repository.reload
+
     ALL_REPORTS.each do |report|
       instance = report.new(repository: repository)
 
