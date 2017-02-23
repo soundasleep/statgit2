@@ -18,11 +18,11 @@ class IdentifyAuthor < AbstractCommitAnalyser
   private
 
   def find_author
-    Author.where(repository: repository, email: commit.author_email).first
+    repository.authors.where(email: commit.author_email).first
   end
 
   def create_author
-    Author.create!(repository: repository, name: commit.author_name, email: commit.author_email)
+    repository.authors.create!(name: commit.author_name, email: commit.author_email)
   end
 end
 

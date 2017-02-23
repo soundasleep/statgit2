@@ -8,7 +8,7 @@ class FilesWithRevisionsAndSizes
   end
 
   def call
-    result = commit.files.map do |file|
+    result = commit.files.preload(:file_todos, :file_sass_stylesheets).map do |file|
       [ file.full_path,
         {
           filename: file.full_path,

@@ -37,8 +37,11 @@ class Commit < ActiveRecord::Base
   end
 
   def select_file(filename)
-    @select_file ||= {}
-    @select_file[filename] ||= commit_files.where(full_path: filename).first
+    commit_files_as_hash[filename]
+  end
+
+  def commit_files_as_hash
+    @commit_files_as_hash ||= Hash[commit_files.map { |file| [file.full_path, file] }]
   end
 
   def average_file_size
