@@ -1,11 +1,11 @@
 %h1= repository.url
 
 %dl
-  %dt Commits
+  %dt Commits analysed
   %dd
-    = repository.analysed_commits.length
+    = repository.analysed_commits.count
     - if repository.commits.any?
-      (#{percent(repository.analysed_commits.length / repository.commits.length.to_f)} out of #{repository.commits.length} total)
+      (#{percent(repository.analysed_commits.count / repository.commits.count.to_f)} out of #{repository.commits.count} total)
 
   - if repository.commits.any?
     %dt Latest commit
@@ -29,7 +29,7 @@
       (#{(repository.analysed_commits.last.author_date.to_date - repository.analysed_commits.first.author_date.to_date).to_i} days)
 
     %dt Total files
-    %dd= link_to repository.latest_commit.files.length, link_for(FilesReport)
+    %dd= link_to repository.latest_commit.files.count, link_for(FilesReport)
 
     %dt Total lines of code
     %dd= repository.latest_commit.lines_of_code
@@ -44,7 +44,7 @@
     %dd= link_to repository.lines_of_code_touched_this_month, link_for(ChurnReport)
 
   %dt Authors
-  %dd= link_to repository.authors.length, link_for(AuthorsReport)
+  %dd= link_to repository.authors.count, link_for(AuthorsReport)
 
 %ul
   %li= link_to "Authors", link_for(AuthorsReport)
