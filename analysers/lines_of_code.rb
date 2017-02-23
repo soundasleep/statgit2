@@ -12,6 +12,8 @@ class LinesOfCode < AbstractCommitAnalyser
 
     command = "node_modules/.bin/cloc --csv --quiet #{root_path}"
     execute_command(command) do |csv|
+      LOG.debug "cloc output: #{csv}"
+
       CSV.parse(csv) do |row|
         if row.length == 5
           to_import << LinesOfCodeStat.new(
@@ -26,7 +28,7 @@ class LinesOfCode < AbstractCommitAnalyser
       end
     end
 
-    LinesOfCodeStat.import(to_import)
+    LinesOfCodeStat.import!(to_import)
 
     LOG.info "Found #{to_import.size} languages with #{to_import.map(&:code).reduce(&:+)} LOC"
 

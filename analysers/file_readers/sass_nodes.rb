@@ -26,8 +26,8 @@ class SassNodes < AbstractFileAnalyser
     end
   end
 
-  def import(collection)
-    FileSassStylesheet.import(collection)
+  def import!(collection)
+    FileSassStylesheet.import!(collection)
   end
 
   private

@@ -31,7 +31,7 @@ class DiffChanges < AbstractCommitAnalyser
       end
     end
 
-    CommitDiff.import(to_import)
+    CommitDiff.import!(to_import)
     commit.reload
 
     LOG.info "Found #{to_import.size} changed files"

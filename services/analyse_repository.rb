@@ -175,11 +175,15 @@ class AnalyseRepository
   end
 
   def new_commit(commit)
-    if Commit.where(repository: repository, commit_hash: commit[:commit_hash]).none?
+    unless commit_hashes[commit[:commit_hash]]
       commit[:repository] = repository
       Commit.new(commit)
     else
       nil
     end
+  end
+
+  def commit_hashes
+    @commit_hashes ||= Hash[repository.commits.pluck(:commit_hash).map { |value| [value, 1] }]
   end
 end

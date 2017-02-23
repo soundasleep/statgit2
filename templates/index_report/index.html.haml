@@ -14,6 +14,13 @@
       %br
       %i= repository.latest_commit.subject
 
+    - if repository.latest_commit != repository.analysed_commits.last
+      %dt Last analysed commit
+      %dd
+        = commit_link(repository.analysed_commits.last)
+        %br
+        %i= repository.analysed_commits.last.subject
+
     %dt Report period
     %dd
       = iso_date(repository.analysed_commits.first.author_date)

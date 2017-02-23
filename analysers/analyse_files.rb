@@ -19,6 +19,8 @@ class AnalyseFiles < AbstractCommitAnalyser
       to_import = []
 
       if analyser.needs_update?
+        LOG.info ">> #{analyser.class.name}"
+
         Dir["#{root_path}**/*#{analyser.extension}"].each do |file|
           file_path = file_path_for(file)
           if file_path && File.file?(file)
@@ -35,7 +37,7 @@ class AnalyseFiles < AbstractCommitAnalyser
         to_import = to_import.compact
 
         if to_import.any?
-          analyser.import(to_import)
+          analyser.import!(to_import)
           successful_analysis ||= true
         end
 

@@ -20,8 +20,8 @@ class CountTodos < AbstractFileAnalyser
     end
   end
 
-  def import(collection)
-    FileTodo.import(collection)
+  def import!(collection)
+    FileTodo.import!(collection)
   end
 end
 
