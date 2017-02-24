@@ -4,6 +4,7 @@ class Author < ActiveRecord::Base
   belongs_to :repository
 
   has_many :commits, dependent: :destroy
+  has_many :commit_blames, dependent: :nullify
 
   def changes
     @changes ||= repository.changes_by_author(self)

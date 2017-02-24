@@ -21,6 +21,7 @@ class AnalyseFiles < AbstractCommitAnalyser
       if analyser.needs_update?
         LOG.info ">> #{analyser.class.name}"
 
+        # TODO this will miss dotfiles
         Dir["#{root_path}**/*#{analyser.extension}"].each do |file|
           file_path = file_path_for(file)
           if file_path && File.file?(file)

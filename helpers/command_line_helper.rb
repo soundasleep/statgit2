@@ -35,6 +35,10 @@ module CommandLineHelper
   end
 
   def all_files_in(root_path)
-    Dir.glob("#{root_path}{,**/}*", File::FNM_DOTMATCH) - %w[. .. .git]
+    Dir.glob("#{root_path}{,**/}*", File::FNM_DOTMATCH).reject do |path|
+      # drop dot files and .git files
+      # TODO ideally this would scan .gitignore and use that pattern
+      path.match(/\.$/) || path.match(/.git/)
+    end
   end
 end

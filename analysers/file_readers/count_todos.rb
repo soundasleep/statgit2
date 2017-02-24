@@ -7,8 +7,8 @@ class CountTodos < AbstractFileAnalyser
     ""
   end
 
-  def analyse(file, string)
-    matches = string.scan(/\sTODO\s/).size
+  def analyse(file, file_as_string)
+    matches = file_as_string.scan(/\sTODO\s/).size
     if matches > 0
       FileTodo.new(
         commit: commit,

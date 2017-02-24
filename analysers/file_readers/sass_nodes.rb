@@ -7,9 +7,9 @@ class SassNodes < AbstractFileAnalyser
     "scss"
   end
 
-  def analyse(file, string)
+  def analyse(file, file_as_string)
     begin
-      parser = Sass::SCSS::Parser.new(string, file, importer)
+      parser = Sass::SCSS::Parser.new(file_as_string, file, importer)
       root = parser.parse
 
       output = MySassVisitor.visit(root)

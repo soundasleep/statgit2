@@ -22,6 +22,7 @@ class AnalyseCommit
     # (e.g. CountTodos depends on CountFiles to create commit.files)
     3.times do
       COMMIT_ANALYSERS.each do |tool|
+        commit.reload         # #import! does not refresh caches
         instance = tool.new(commit: commit, options: options)
         if instance.needs_update?
           unless switched

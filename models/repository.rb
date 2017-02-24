@@ -107,4 +107,12 @@ class Repository < ActiveRecord::Base
     @contributors_for ||= ContributorsForPaths.new(self).call
     @contributors_for[file_path] || 0
   end
+
+  def find_commit(commit_hash)
+    commits.where(commit_hash: commit_hash).first
+  end
+
+  def find_author(email)
+    authors.where(email: email).first
+  end
 end
