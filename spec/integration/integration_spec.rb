@@ -81,12 +81,24 @@ describe "Integration tests", type: :integration do
       end
     end
 
+    describe "count files" do
+      let(:latest_commit) { repository.latest_commit }
+
+      it "has files that we expect in the repository" do
+        expect(latest_commit.commit_files).to_not be_empty
+        expect(latest_commit.select_file("spec/integration/integration_spec.rb")).to_not be_nil
+        expect(latest_commit.select_file("README.md")).to_not be_nil
+        expect(latest_commit.select_file(".travis.yml")).to_not be_nil
+      end
+    end
+
     context "one of the files modified in the latest commit" do
       let(:file) { repository.latest_commit.commit_diffs.first.commit_file }
       let(:file_path) { file.full_path }
 
       describe "contributors_for" do
         it "has one contributor for a changed file (since --limit is 1)" do
+          expect(repository.latest_commit.commit_diffs).to_not be_empty, "There were not any diffs for commit #{repository.latest_commit.commit_hash}"
           expect(repository.contributors_for(file_path)).to eq(1)
         end
 
@@ -101,6 +113,7 @@ describe "Integration tests", type: :integration do
 
       describe "revisions_for" do
         it "has two revisions for a changed file (since --limit is 1)" do
+          expect(repository.latest_commit.commit_diffs).to_not be_empty, "There were not any diffs for commit #{repository.latest_commit.commit_hash}"
           expect(repository.revisions_for(file_path)).to eq(2)
         end
 

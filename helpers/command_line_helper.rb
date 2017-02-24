@@ -33,4 +33,8 @@ module CommandLineHelper
       $stdout = old_stdout
     end
   end
+
+  def all_files_in(root_path)
+    Dir.glob("#{root_path}{,**/}*", File::FNM_DOTMATCH) - %w[. .. .git]
+  end
 end

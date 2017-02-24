@@ -1,4 +1,6 @@
 class CountFiles < AbstractCommitAnalyser
+  include CommandLineHelper
+
   def needs_update?
     commit.files.empty?
   end
@@ -6,7 +8,7 @@ class CountFiles < AbstractCommitAnalyser
   def call
     to_import = []
 
-    Dir["#{root_path}**/*"].each do |file|
+    all_files_in(root_path).each do |file|
       file_path = file_path_for(file)
       if file_path && File.file?(file)
         file_size = File.new(file).size
