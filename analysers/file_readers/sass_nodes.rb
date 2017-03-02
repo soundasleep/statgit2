@@ -21,7 +21,7 @@ class SassNodes < AbstractFileAnalyser
 
       FileSassStylesheet.new(params)
     rescue Sass::SyntaxError => e
-      LOG.warning "Raised #{e} when analysing #{file}"
+      LOG.warn "Raised #{e} when analysing #{file}"
       nil
     end
   end
