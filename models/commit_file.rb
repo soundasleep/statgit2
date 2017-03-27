@@ -13,4 +13,8 @@ class CommitFile < ActiveRecord::Base
   def contributors
     @contributors ||= commit.repository.contributors_for(full_path)
   end
+
+  def full_path
+    @full_path ||= FilePath.find(file_path_id).path
+  end
 end
