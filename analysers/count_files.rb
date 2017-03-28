@@ -11,9 +11,8 @@ class CountFiles < AbstractCommitAnalyser
     # The transaction prevents weird open file issues in sqlite3
     ActiveRecord::Base.transaction do
       all_files_in(root_path).each do |file|
-        file_path = file_path_for(file)
-        if file_path && File.file?(file)
-          file_path = file_path_for(file_path)
+        if File.file?(file)
+          file_path = file_path_for(file)
           file_size = File.new(file).size
 
           to_import << CommitFile.new(
@@ -32,9 +31,15 @@ class CountFiles < AbstractCommitAnalyser
     return to_import.any?
   end
 
-  def file_path_for(file_path)
-    @file_paths ||= {}
-    @file_paths[file_path] ||= FilePath.where(path: file_path).first || FilePath.create!(path: file_path)
+  def file_path_for(path_string)
+    @file_paths ||= Hash[all_file_paths]
+    @file_paths[path_string] ||= repository.file_paths.create!(path: path_string)
+  end
+
+  def all_file_paths
+    repository.file_paths.map do |file_path|
+      [file_path.path, file_path]
+    end
   end
 end
 
