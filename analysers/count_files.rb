@@ -12,7 +12,7 @@ class CountFiles < AbstractCommitAnalyser
     ActiveRecord::Base.transaction do
       all_files_in(root_path).each do |file|
         if File.file?(file)
-          file_path = file_path_for(file)
+          file_path = file_path_instance_for(file_path_for(file))
           file_size = File.new(file).size
 
           to_import << CommitFile.new(
@@ -31,9 +31,9 @@ class CountFiles < AbstractCommitAnalyser
     return to_import.any?
   end
 
-  def file_path_for(path_string)
-    @file_paths ||= Hash[all_file_paths]
-    @file_paths[path_string] ||= repository.file_paths.create!(path: path_string)
+  def file_path_instance_for(path_string)
+    @file_path_instances ||= Hash[all_file_paths]
+    @file_path_instances[path_string] ||= repository.file_paths.create!(path: path_string)
   end
 
   def all_file_paths
