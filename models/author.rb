@@ -5,6 +5,8 @@ class Author < ActiveRecord::Base
 
   has_many :commits, dependent: :destroy
 
+  validates :name, presence: true
+
   def changes
     @changes ||= repository.changes_by_author(self)
   end

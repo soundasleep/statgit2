@@ -4,6 +4,8 @@ class Repository < ActiveRecord::Base
   has_many :commits, dependent: :destroy
   has_many :authors, dependent: :destroy
 
+  validates :url, presence: true
+
   def latest_commit
     @latest_commit ||= commits.last  # commit default order is author_date asc
   end
