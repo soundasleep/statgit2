@@ -12,7 +12,17 @@ class Commit < ActiveRecord::Base
 
   default_scope { order('author_date ASC') }
 
-  # TODO add validation for nulls
+  validates :commit_hash, presence: true
+  validates :short_hash, presence: true
+  validates :tree_hash, presence: true
+  validates :parent_hashes, presence: true
+  validates :author_name, presence: true
+  validates :author_email, presence: true
+  validates :author_date, presence: true
+  validates :committer_name, presence: true
+  validates :committer_email, presence: true
+  validates :committer_date, presence: true
+  validates :subject, presence: true
 
   def date
     @date ||= author_date.in_time_zone(time_zone)

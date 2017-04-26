@@ -7,6 +7,8 @@ class Repository < ActiveRecord::Base
 
   # TODO add validation for nulls
 
+  validates :url, presence: true
+
   def latest_commit
     @latest_commit ||= commits.last  # commit default order is author_date asc
   end
