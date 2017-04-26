@@ -3,6 +3,9 @@ class Repository < ActiveRecord::Base
 
   has_many :commits, dependent: :destroy
   has_many :authors, dependent: :destroy
+  has_many :file_paths, dependent: :destroy
+
+  # TODO add validation for nulls
 
   validates :url, presence: true
 
