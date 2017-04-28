@@ -1,5 +1,6 @@
 class CommitFile < ActiveRecord::Base
   belongs_to :commit
+  belongs_to :file_path
 
   has_one :commit_diff, dependent: :destroy
 
@@ -18,6 +19,6 @@ class CommitFile < ActiveRecord::Base
   end
 
   def full_path
-    @full_path ||= FilePath.find(file_path_id).path
+    @full_path ||= file_path.path
   end
 end

@@ -12,17 +12,9 @@ class Commit < ActiveRecord::Base
 
   default_scope { order('author_date ASC') }
 
-  validates :commit_hash, presence: true
-  validates :short_hash, presence: true
-  validates :tree_hash, presence: true
-  validates :parent_hashes, presence: true
-  validates :author_name, presence: true
-  validates :author_email, presence: true
-  validates :author_date, presence: true
-  validates :committer_name, presence: true
-  validates :committer_email, presence: true
-  validates :committer_date, presence: true
-  validates :subject, presence: true
+  validates :commit_hash, :short_hash, :tree_hash, :parent_hashes,
+      :author_name, :author_email, :author_date, :committer_name,
+      :committer_email, :committer_date, :subject, presence: true
 
   def date
     @date ||= author_date.in_time_zone(time_zone)

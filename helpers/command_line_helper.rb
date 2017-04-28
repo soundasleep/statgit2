@@ -35,6 +35,8 @@ module CommandLineHelper
   end
 
   def all_files_in(root_path)
-    Dir.glob("#{root_path}{,**/}*", File::FNM_DOTMATCH) - %w[. .. .git]
+    Dir.glob("#{root_path}{,**/}*", File::FNM_DOTMATCH).reject do |path|
+      path.ends_with?("/.") || path.ends_with?("/..") || path.include?("/.git/")
+    end
   end
 end

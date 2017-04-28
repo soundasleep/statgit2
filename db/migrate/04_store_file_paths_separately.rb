@@ -17,8 +17,7 @@ class StoreFilePathsSeparately < ActiveRecord::Migration
 
     repository_ids.each do |repository|
       repository = repository[0]
-      # TODO use logger, not puts
-      puts "Migrating repository #{repository}..."
+      LOG.info "Migrating repository #{repository}..."
 
       sql = "SELECT DISTINCT full_path FROM commit_files WHERE commit_id IN (SELECT id FROM commits WHERE repository_id=?)"
       sql = ActiveRecord::Base.send(:sanitize_sql_array, [sql, repository])
@@ -28,7 +27,7 @@ class StoreFilePathsSeparately < ActiveRecord::Migration
       distinct_paths.each do |path|
         i += 1
         path = path[0]
-        puts "Migrated #{i} of #{distinct_paths.count} distinct paths [#{path}]" if i % 100 == 0
+        LOG.info "Migrated #{i} of #{distinct_paths.count} distinct paths [#{path}]" if i % 100 == 0
 
         sql = "INSERT INTO file_paths (path, repository_id) VALUES (?, ?)"
         sql = ActiveRecord::Base.send(:sanitize_sql_array, [sql, path, repository])
