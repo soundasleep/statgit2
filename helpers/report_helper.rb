@@ -81,11 +81,19 @@ module ReportHelper
   end
 
   def histogram_chart(repository, method, heading, title, options = {})
-    render_chart "histogram_chart", repository, method, title, {heading: heading}.merge(options)
+    render_chart "histogram_chart", repository, method, title, heading_options(heading).merge(options)
   end
 
   def large_histogram_chart(repository, method, heading, title, options = {})
     histogram_chart(repository, method, heading, title, {width: 800, height: 600}.merge(options))
+  end
+
+  def heading_options(heading)
+    {
+      heading: heading,
+      vertical_heading: heading.respond_to?(:each) ? "Count" : heading,
+      stacked: false,
+    }
   end
 
   def table(repository, method, labels, limit = 30, options = {})

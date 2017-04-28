@@ -21,7 +21,7 @@
 
       // Create the data table.
       var data = google.visualization.arrayToDataTable([
-        ["Key", "#{heading}"],
+        ["Key", "#{heading.respond_to?(:each) ? heading.join("\", \"") : heading}"],
 
         #{
           data.map do |key, values|
@@ -35,8 +35,9 @@
       var options = {
         width: #{width},
         height: #{height},
+        isStacked: #{stacked},
         hAxis: {title: "#{title}"},
-        vAxis: {title: "#{heading}", minValue: 0},
+        vAxis: {title: "#{vertical_heading}", minValue: 0},
         chartArea: {width: "75%", height: "70%", left: 50, top: 25}
       };
 
