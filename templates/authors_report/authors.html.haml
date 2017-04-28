@@ -4,13 +4,17 @@
 
 = scatter_chart(repository, :commit_activity, "Hour")
 
-%h2 Per Day
+%h2 Commits Per Day
 
 = histogram_chart(repository, :commits_per_day, "Commits", "Commits per Day")
 
-%h2 Per Hour
+%h2 Commits Per Hour
 
 = histogram_chart(repository, :commits_per_hour, "Commits", "Commits per Hour", width: 800, height: 300)
+
+%h2 Changes Per Hour
+
+= histogram_chart(repository, :changes_per_hour, ["Additions", "Deletions"], "Commits per Hour", width: 800, height: 300, vertical_heading: "Changes", stacked: true)
 
 %h2 Top Authors
 
