@@ -16,6 +16,13 @@ describe "Integration tests", type: :integration do
   }
   let(:options) { integration_options }
 
+  shared_examples "does not capture .git files" do
+    it "does not capture .git files" do
+      git_files = commit_files.select { |file| file.full_path.include?(".git/") }.map { |file| file.full_path }
+      expect(git_files).to be_empty
+    end
+  end
+
   def reset_workspace!
     if Dir.exist?(workspace)
       LOG.info "Resetting workspace #{workspace}"
@@ -72,12 +79,30 @@ describe "Integration tests", type: :integration do
       it "has a TODO in this file" do
         expect(repository.commits.first.file_todos).to_not be_empty
       end
+
+      it_behaves_like "does not capture .git files" do
+        let(:commit_files) { repository.latest_commit.file_todos.map(&:commit_file).flatten }
+      end
     end
 
     describe "sass" do
       # this captures the stylesheets in templates/stylesheets/
       it "has some sass nodes for the latest commit" do
-        expect(repository.commits.last.file_sass_stylesheets).to_not be_empty
+        expect(repository.latest_commit.file_sass_stylesheets).to_not be_empty
+      end
+
+      it_behaves_like "does not capture .git files" do
+        let(:commit_files) { repository.latest_commit.file_sass_stylesheets.map(&:commit_file).flatten }
+      end
+    end
+
+    describe "diffs" do
+      it "has some diff nodes for the latest commit" do
+        expect(repository.latest_commit.commit_diffs).to_not be_empty
+      end
+
+      it_behaves_like "does not capture .git files" do
+        let(:commit_files) { repository.latest_commit.commit_diffs.map(&:commit_file).flatten }
       end
     end
 
@@ -92,9 +117,23 @@ describe "Integration tests", type: :integration do
       end
     end
 
+    describe "file paths" do
+      it "has at least one file path for the latest commit" do
+        expect(repository.file_paths).to_not be_empty
+      end
+
+      it "has no file paths starting with .git" do
+        expect(repository.file_paths.map(&:path).select { |path| path.include?(".git/") }).to be_empty
+      end
+    end
+
     context "one of the files modified in the latest commit" do
       let(:file) { repository.latest_commit.commit_diffs.first.commit_file }
       let(:file_path) { file.full_path }
+
+      it_behaves_like "does not capture .git files" do
+        let(:commit_files) { repository.latest_commit.commit_files }
+      end
 
       describe "contributors_for" do
         it "has one contributor for a changed file (since --limit is 1)" do

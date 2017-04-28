@@ -1,3 +1,5 @@
+require "active_record"
+
 ALL_REPORTS = []
 COMMIT_ANALYSERS = []
 FILE_ANALYSERS = []
