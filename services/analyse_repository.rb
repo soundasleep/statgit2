@@ -108,10 +108,10 @@ class AnalyseRepository
     command = "cd #{root_path} && git reset --hard && git clean -f"
     execute_command command
 
-    command = "cd #{root_path} && git pull origin master"
+    command = "cd #{root_path} && git checkout -f master"
     execute_command command
 
-    command = "cd #{root_path} && git checkout -f master"
+    command = "cd #{root_path} && git pull"
     execute_command command
   end
 
