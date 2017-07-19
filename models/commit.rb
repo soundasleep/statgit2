@@ -12,7 +12,7 @@ class Commit < ActiveRecord::Base
 
   default_scope { order('author_date ASC') }
 
-  validates :commit_hash, :short_hash, :tree_hash, :parent_hashes,
+  validates :commit_hash, :short_hash, :tree_hash,
       :author_name, :author_email, :author_date, :committer_name,
       :committer_email, :committer_date, :subject, presence: true
 

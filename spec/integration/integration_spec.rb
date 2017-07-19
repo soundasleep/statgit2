@@ -202,6 +202,20 @@ describe "Integration tests", type: :integration do
           end
         end
       end
+
+      describe "max = 1" do
+        let(:options) {
+          integration_options.merge({
+            limit: nil,
+            max: 1,
+          })
+        }
+
+        it "has analysed only one commit out of way more than 3 total" do
+          expect(repository.analysed_commits.size).to eq(1), "analysed commits = #{repository.analysed_commits.map(&:subject)}"
+          expect(repository.commits.size).to be > 3
+        end
+      end
     end
   end
 end
