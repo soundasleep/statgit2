@@ -31,22 +31,29 @@ module ReportHelper
     end
   end
 
-  def render_chart(chart_type, repository, method, title, options = {})
-    data = nil
+  def render_chart(chart_type, repository, methods, titles, options = {})
+    data = {}
 
-    benchmark = Benchmark.realtime do
-      data = repository.send(method).map do |key, value|
-        if value.nil? || (value.is_a?(Float) && value.nan?)
-          nil
-        else
-          [key, wrap_array(value)]
-        end
-      end.compact
+    if !methods.respond_to?(:each)
+      methods = [methods]
     end
 
-    data = Hash[data]
+    benchmark = Benchmark.realtime do
+      methods.each.with_index do |submethod, index|
+        repository.send(submethod).map do |key, value|
+          if value.nil? || (value.is_a?(Float) && value.nan?)
+            # ignore
+          else
+            if !data.has_key?(key)
+              data[key] = methods.map { |_| nil }
+            end
+            data[key][index] = value
+          end
+        end
+      end
+    end
 
-    labels = wrap_array(title)
+    labels = wrap_array(titles)
 
     options = {
       width: 600,
@@ -57,8 +64,9 @@ module ReportHelper
       benchmark: benchmark,
       data: data,
       labels: labels,
-      title: title,
-      method: method,
+      titles: titles,
+      methods: methods,
+      div_name: "chart_#{Random.rand(0xffff)}",
     })
 
     render_template(shared_template(chart_type), arguments)
@@ -70,6 +78,10 @@ module ReportHelper
 
   def line_chart(repository, method, title, options = {})
     render_chart "line_chart", repository, method, title, options
+  end
+
+  def stacked_line_chart(repository, method, heading, title, options = {})
+    render_chart "stacked_line_chart", repository, method, title, heading_options(heading).merge(options)
   end
 
   def large_line_chart(repository, method, title, options = {})

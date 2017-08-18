@@ -34,8 +34,10 @@
     %dt Total lines of code
     %dd= repository.latest_commit.lines_of_code
 
-    %dt TODOs
-    %dd= link_to repository.latest_commit.todos, link_for(TodosReport)
+    %dt Unresolved issues
+    %dd
+      #{link_to "#{repository.latest_commit.todos} TODOs", link_for(UnresolvedReport)},
+      #{link_to "#{repository.latest_commit.todos} FIXMEs", link_for(UnresolvedReport)}
 
     %dt SASS Rules
     %dd= link_to repository.latest_commit.sass_rules, link_for(SassReport)
@@ -49,7 +51,7 @@
 %ul
   %li= link_to "Authors", link_for(AuthorsReport)
   %li= link_to "Files", link_for(FilesReport)
-  %li= link_to "TODOs", link_for(TodosReport)
+  %li= link_to "Unresolved Issues", link_for(UnresolvedReport)
   %li= link_to "Churn", link_for(ChurnReport)
 
 %h2 Lines of Code

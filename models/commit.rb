@@ -7,6 +7,7 @@ class Commit < ActiveRecord::Base
   has_many :commit_files, dependent: :destroy
   has_many :commit_diffs, dependent: :destroy
   has_many :file_todos, dependent: :destroy
+  has_many :file_fixmes, dependent: :destroy
   has_many :file_sass_stylesheets, dependent: :destroy
   has_many :lines_of_code_stats, dependent: :destroy
 
@@ -30,6 +31,10 @@ class Commit < ActiveRecord::Base
 
   def todos
     @todos ||= file_todos.sum(:todo_count)
+  end
+
+  def fixmes
+    @fixmes ||= file_fixmes.sum(:fixme_count)
   end
 
   def sass_rules

@@ -4,3 +4,5 @@ output/
 workspace/
 node_modules/
 .sass-cache/
+*.sqlite3
+.bundle/
