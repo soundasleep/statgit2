@@ -4,6 +4,7 @@ class Author < ActiveRecord::Base
   belongs_to :repository
 
   has_many :commits, dependent: :destroy
+  has_many :git_blames, dependent: :destroy
 
   validates :name, presence: true
 
