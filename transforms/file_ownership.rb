@@ -23,8 +23,6 @@ class FileOwnership
         } ]
     end
 
-    result << ["anonymous", {filename: "blah", revisions: -1, size: -1, contributors: -1, ownership: 0.01}]
-
     Hash[result]
   end
 end
