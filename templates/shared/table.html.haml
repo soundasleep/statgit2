@@ -18,6 +18,8 @@
                 = render_shared "author", email: values[key].email
               - when :last_commit
                 = iso_date(values[key].date)
+              - when :ownership
+                = "#{values[key] * 100.0}%"
               - else
                 = values[key]
 

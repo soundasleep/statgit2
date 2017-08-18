@@ -103,6 +103,10 @@ class Repository < ActiveRecord::Base
     @files_with_most_contributors ||= FilesWithMostContributors.new(self).call
   end
 
+  def total_ownership_per_author
+    @total_ownership_per_author ||= TotalOwnershipPerAuthor.new(self).call
+  end
+
   def changes_by_author(author)
     @changes_by_author ||= ChangesByAuthor.new(self).call
     @changes_by_author[author.id] || 0

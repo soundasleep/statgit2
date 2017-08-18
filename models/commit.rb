@@ -30,6 +30,10 @@ class Commit < ActiveRecord::Base
     @lines_of_code ||= lines_of_code_stats.sum(:code)
   end
 
+  def commit_files_by_ownership
+    @commit_files_by_ownership ||= commit_files.map(&:file_ownership)
+  end
+
   def todos
     @todos ||= file_todos.sum(:todo_count)
   end

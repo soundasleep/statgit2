@@ -15,4 +15,8 @@ class Author < ActiveRecord::Base
   def last_commit
     commits.last
   end
+
+  def most_owned_files
+    @most_owned_files ||= MostOwnedFiles.new(self).call
+  end
 end

@@ -1,5 +1,3 @@
-require "csv"
-
 class BlameWithGit < AbstractCommitAnalyser
   include CommandLineHelper
 
@@ -12,9 +10,13 @@ class BlameWithGit < AbstractCommitAnalyser
 
   def call
     to_import = []
+    i = 0
 
     repository.latest_commit.commit_files.each do |commit_file|
-      command = "cd #{root_path} && git blame --line-porcelain #{commit_file.full_path}"
+      i += 1
+      LOG.info "Blaming #{commit_file.full_path}..." if i % 100 == 0
+
+      command = "cd #{root_path} && git blame --line-porcelain \"#{commit_file.full_path}\""
       execute_command(command) do |porcelain|
         LOG.debug "blame: #{commit_file.full_path}"
 
@@ -80,6 +82,12 @@ class BlameWithGit < AbstractCommitAnalyser
   def find_author(mail)
     @find_author ||= Hash.new do |hash, key|
       hash[key] = repository.authors.where(email: key).first
+
+      # Some old authors may not be registered as having a commit within
+      # the last --max or --limit commits
+      if !hash[key]
+        hash[key] = repository.authors.create!(name: key, email: key)
+      end
     end
     @find_author[mail]
   end

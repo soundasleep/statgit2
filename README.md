@@ -21,11 +21,11 @@ A full list of options is available with `--help`.
 bundle exec rspec
 ```
 
-# TODO
+# Notes
 
-* `--from` and `--to` options
-* Generate all of the base stats from [statgit](https://github.com/soundasleep/statgit)
-* Write up features list
+To handle large code bases, statgit2 permits you to split analysis over a long
+period of time: use the `--max` or `--limit` switches to gradually build up your
+development statistics with automated jobs.
 
 ## Examples
 

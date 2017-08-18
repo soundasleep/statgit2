@@ -23,4 +23,13 @@ class CommitFile < ActiveRecord::Base
   def full_path
     @full_path ||= file_path.path
   end
+
+  def file_ownership
+    @file_ownership ||= FileOwnership.new(self).call
+  end
+
+  def total_lines
+    @total_lines ||= git_blames.sum(:line_count)
+  end
 end
+
