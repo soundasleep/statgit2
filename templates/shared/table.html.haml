@@ -21,4 +21,10 @@
               - else
                 = values[key]
 
+    - if data.empty?
+      %tr.empty
+        %td{ colspan: labels.length }
+          %i
+            Nothing!
+
 %small.benchmark Rendered in #{(benchmark * 1000).to_i} ms

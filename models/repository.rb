@@ -63,8 +63,16 @@ class Repository < ActiveRecord::Base
     @todos_per_day ||= TodosPerDay.new(self).call
   end
 
+  def fixmes_per_day
+    @fixmes_per_day ||= FixmesPerDay.new(self).call
+  end
+
   def files_with_most_todos
     @files_with_most_todos ||= FilesWithMostTodos.new(self).call
+  end
+
+  def files_with_most_fixmes
+    @files_with_most_fixmes ||= FilesWithMostFixmes.new(self).call
   end
 
   def top_authors

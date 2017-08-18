@@ -1,3 +1,5 @@
+/ TODO this is copy and pasted a lot, refactor it out!
+
 .div{id: div_name, style: "width: #{width}px; height: #{height}px;"}
 %small.benchmark Rendered in #{(benchmark * 1000).to_i} ms
 
@@ -18,13 +20,12 @@
 
       // Create the data table.
       var data = google.visualization.arrayToDataTable([
-        ["Date", "#{title}"],
+        ["Date", "#{heading.respond_to?(:each) ? heading.join("\", \"") : heading}"],
 
         #{
-          data.map do |date, values|
-            ([
-              "new Date(#{date[0, 4]}, #{date[5, 2]} - 1, #{date[8, 2]})"
-            ] + values).join(", ")
+          data.map do |key, values|
+            # TODO use an actual escaping thing
+            (["\"#{key}\""] + values).join(", ")
           end.map { |row| "[#{row}]" }.join(",\n")
         }
       ]);
@@ -34,12 +35,12 @@
         width: #{width},
         height: #{height},
         hAxis: {title: "Date"},
-        vAxis: {title: "#{title}", minValue: 0},
-        legend: "none",
-        chartArea: {width: "80%", height: "55%", left: 50, top: 25}
+        vAxis: {minValue: 0},
+        isStacked: true,
+        chartArea: {width: "65%", height: "70%", left: 100, top: 25}
       };
 
       // Instantiate and draw our chart, passing in some options.
-      var chart = new google.visualization.ScatterChart(document.getElementById("#{div_name}"));
+      var chart = new google.visualization.AreaChart(document.getElementById("#{div_name}"));
       chart.draw(data, options);
     }

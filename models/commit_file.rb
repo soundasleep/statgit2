@@ -5,6 +5,7 @@ class CommitFile < ActiveRecord::Base
   has_one :commit_diff, dependent: :destroy
 
   has_many :file_todos, dependent: :destroy
+  has_many :file_fixmes, dependent: :destroy
   has_many :file_sass_stylesheets, dependent: :destroy
 
   validates :full_path, presence: true

@@ -85,6 +85,17 @@ describe "Integration tests", type: :integration do
       end
     end
 
+    describe "fixme" do
+      # FIXME this is a fixme that will be caught by the FIXME analyser
+      it "has a FIXME in this file" do
+        expect(repository.commits.first.file_fixmes).to_not be_empty
+      end
+
+      it_behaves_like "does not capture .git files" do
+        let(:commit_files) { repository.latest_commit.file_fixmes.map(&:commit_file).flatten }
+      end
+    end
+
     describe "sass" do
       # this captures the stylesheets in templates/stylesheets/
       it "has some sass nodes for the latest commit" do
