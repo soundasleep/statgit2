@@ -70,6 +70,9 @@ class BlameWithGit < AbstractCommitAnalyser
 
     # (This should make it simpler to do author.git_blames without
     # also needing to reject commits that aren't the latest commit.)
+
+    # TODO this could be MUCH faster if you did instead,
+    # DELETE FROM git_blames WHERE commit_id IN (SELECT id FROM commits WHERE repository = ? AND id != ?)
     repository.commits.each do |commit|
       if commit != repository.latest_commit
         commit.git_blames.delete_all

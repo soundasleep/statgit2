@@ -19,7 +19,7 @@ class FileOwnership
           revisions: file.revisions,
           size: file.size,
           contributors: file.contributors,
-          ownership: blame.line_count / file.total_lines,
+          ownership: (blame.line_count * 1.0) / file.total_lines,
         } ]
     end
 

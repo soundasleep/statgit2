@@ -19,7 +19,7 @@
               - when :last_commit
                 = iso_date(values[key].date)
               - when :ownership
-                = "#{values[key] * 100.0}%"
+                = "#{sprintf("%0.01f", values[key] * 100.0)}%"
               - else
                 = values[key]
 
