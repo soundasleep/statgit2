@@ -22,7 +22,7 @@ class AbstractReport
   end
 
   def render_output(name, selector = nil)
-    render_template(root_template, template_arguments) do
+    render_template(root_template, template_arguments(selector)) do
       render_template(template_for(name, selector), template_arguments(selector))
     end
   end
@@ -90,7 +90,7 @@ class AbstractReport
   def template_arguments(selector = nil)
     {
       repository: repository,
-      selector: selector
+      selector: selector,
     }
   end
 end

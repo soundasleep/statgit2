@@ -1,5 +1,5 @@
 class SassReport < AbstractReport
-  def title
+  def title(selector = nil)
     "Sass"
   end
 

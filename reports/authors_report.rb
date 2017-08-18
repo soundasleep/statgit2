@@ -1,6 +1,10 @@
 class AuthorsReport < AbstractReportCollection
-  def title
-    "Authors"
+  def title(selector = nil)
+    if selector.present?
+      selector.email
+    else
+      "Authors"
+    end
   end
 
   def root_path

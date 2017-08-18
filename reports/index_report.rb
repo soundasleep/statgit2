@@ -1,5 +1,5 @@
 class IndexReport < AbstractReport
-  def title
+  def title(selector = nil)
     "Home"
   end
 

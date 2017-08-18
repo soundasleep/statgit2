@@ -1,5 +1,5 @@
 class UnresolvedReport < AbstractReport
-  def title
+  def title(selector = nil)
     "Unresolved"
   end
 
