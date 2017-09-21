@@ -58,8 +58,10 @@ describe "Integration tests", type: :integration do
 
       context "when the TODO analyser has already run" do
         it "does not call the analyser again" do
+          expect(repository.commits.first.completed_analysers).to_not be_empty
           expect_any_instance_of(CountTodos).to_not receive(:analyse)
           analyse_repository!
+          expect(repository.commits.first.completed_analysers).to_not be_empty
         end
 
         context "when the original TODO analyser found zero results" do
@@ -68,8 +70,10 @@ describe "Integration tests", type: :integration do
           end
 
           it "does not call the analyser again" do
+            expect(repository.commits.first.completed_analysers).to_not be_empty
             expect_any_instance_of(CountTodos).to_not receive(:analyse)
             analyse_repository!
+            expect(repository.commits.first.completed_analysers).to_not be_empty
           end
         end
       end
