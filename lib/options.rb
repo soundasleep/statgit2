@@ -40,7 +40,7 @@ def load_command_line_options
     end
 
     opts.on("-w", "--workspace PATH", "Clone the Git repository to this workspace (default: `workspace/`)") do |path|
-      fail "Expected / at end of path" unless path[-1] == "/"
+      fail "Expected / at end of workspace path" unless path[-1] == "/"
       options[:workspace] = path
     end
 

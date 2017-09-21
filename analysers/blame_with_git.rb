@@ -4,7 +4,8 @@ class BlameWithGit < AbstractCommitAnalyser
   class GitBlameError < StandardError; end
 
   def needs_update?
-    repository.latest_commit.commit_files.any? &&
+    commit == repository.latest_commit &&
+      repository.latest_commit.commit_files.any? &&
       repository.latest_commit.git_blames.empty?
   end
 
