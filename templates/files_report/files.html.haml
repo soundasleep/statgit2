@@ -16,7 +16,7 @@
 
 %h2 File Count
 
-= line_chart(repository, :files_count, "Files")
+= stacked_line_chart(repository, [:code_files_count_per_day, :tests_files_count_per_day], ["Code", "Tests"], "File Count")
 
 %h2 Average Lines of Code per File
 

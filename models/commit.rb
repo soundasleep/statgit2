@@ -27,6 +27,13 @@ class Commit < ActiveRecord::Base
     commit_files
   end
 
+  # The commit corresponding to this commit in the tests repository, if set
+  def tests_commit
+    return nil unless repository.tests_repository
+
+    repository.tests_repository.commits.where(commit_hash: commit_hash).first
+  end
+
   def lines_of_code
     @lines_of_code ||= lines_of_code_stats.sum(:code)
   end
