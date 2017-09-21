@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe "Integration tests", type: :integration do
+  include IntegrationSpecSupport
+
   let(:url) { "https://github.com/soundasleep/statgit2" }
   let(:workspace) { Dir.mktmpdir }
   let(:database_dir) { Dir.mktmpdir }
@@ -15,36 +17,6 @@ describe "Integration tests", type: :integration do
     })
   }
   let(:options) { integration_options }
-
-  shared_examples "does not capture .git files" do
-    it "does not capture .git files" do
-      git_files = commit_files.select { |file| file.full_path.include?(".git/") }.map { |file| file.full_path }
-      expect(git_files).to be_empty
-    end
-  end
-
-  def reset_workspace!
-    if Dir.exist?(workspace)
-      LOG.info "Resetting workspace #{workspace}"
-      FileUtils.rm_r(workspace)
-    end
-
-    if File.exist?(database)
-      LOG.info "Resetting database #{database}"
-      File.delete(database)
-    end
-
-    connect_to_database(options)
-    @repository = CreateRepository.new(options: options).call
-  end
-
-  def analyse_repository!
-    AnalyseRepository.new(repository: repository, options: options).call
-  end
-
-  def repository
-    @repository
-  end
 
   describe "connect_to_database" do
     it "can be called multiple times" do
@@ -82,6 +54,24 @@ describe "Integration tests", type: :integration do
 
       it_behaves_like "does not capture .git files" do
         let(:commit_files) { repository.latest_commit.file_todos.map(&:commit_file).flatten }
+      end
+
+      context "when the TODO analyser has already run" do
+        it "does not call the analyser again" do
+          expect_any_instance_of(CountTodos).to_not receive(:analyse)
+          analyse_repository!
+        end
+
+        context "when the original TODO analyser found zero results" do
+          before do
+            repository.commits.first.file_todos.delete_all
+          end
+
+          it "does not call the analyser again" do
+            expect_any_instance_of(CountTodos).to_not receive(:analyse)
+            analyse_repository!
+          end
+        end
       end
     end
 
