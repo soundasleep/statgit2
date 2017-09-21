@@ -47,6 +47,34 @@ describe CommandLineHelper, type: :helper do
       expect(output.map(&:strip)).to eq(["test(test"])
       expect(output.first.split("\n")).to eq(["test(test"])
     end
+
+    it "nicely captures an invalid command" do
+      begin
+        execute_command("exit 1") { }
+        raise "Should have thrown a CommandLineError"
+      rescue CommandLineHelper::CommandLineError => e
+        # OK
+      end
+    end
+  end
+
+  describe "#stream_command" do
+    it "can capture an echo" do
+      output = []
+      stream_command("echo hi; echo hello") do |line|
+        output << line
+      end
+      expect(output.map(&:strip)).to eq(["hi", "hello"])
+    end
+
+    it "nicely captures an invalid command" do
+      begin
+        stream_command("exit 1") { }
+        raise "Should have thrown a CommandLineError"
+      rescue CommandLineHelper::CommandLineError => e
+        # OK
+      end
+    end
   end
 
   describe "#binary_file?" do

@@ -14,44 +14,40 @@ class BlameWithGit < AbstractCommitAnalyser
     i = 0
 
     repository.latest_commit.commit_files.each do |commit_file|
+      i += 1
       next if binary_file?(commit_file.full_path)
 
-      i += 1
-      LOG.info "Blaming #{commit_file.full_path}..." if i % 100 == 0
+      LOG.info "Blaming #{commit_file.full_path} (#{percent_done(i)})..." if i % 100 == 0
 
       command = "cd #{root_path} && git blame --line-porcelain \"#{commit_file.full_path}\""
-      execute_command(command) do |porcelain|
-        LOG.debug "blame: #{commit_file.full_path}"
+      blame_authors = {}
 
-        blame_authors = {}
+      stream_command(command) do |line|
+        bits = line.split(" ", 2)
+        if bits[0] == "author-mail"
+          # drop <> around email
+          mail = bits[1][1..(bits[1].length - 2)]
 
-        porcelain.split("\n").each do |line|
-          bits = line.split(" ", 2)
-          if bits[0] == "author-mail"
-            # drop <> around email
-            mail = bits[1][1..(bits[1].length - 2)]
-
-            if !blame_authors.has_key?(mail)
-              if author = find_author(mail)
-                blame_authors[mail] = GitBlame.new(
-                  commit: commit,
-                  commit_file: commit_file,
-                  author: author,
-                  line_count: 0,
-                )
-              else
-                LOG.debug "Could not find author for mail '#{mail}'"
-              end
-            end
-
-            if blame_authors[mail]
-              blame_authors[mail].line_count += 1
+          if !blame_authors.has_key?(mail)
+            if author = find_author(mail)
+              blame_authors[mail] = GitBlame.new(
+                commit: commit,
+                commit_file: commit_file,
+                author: author,
+                line_count: 0,
+              )
+            else
+              LOG.debug "Could not find author for mail '#{mail}'"
             end
           end
-        end
 
-        to_import += blame_authors.values
+          if blame_authors[mail]
+            blame_authors[mail].line_count += 1
+          end
+        end
       end
+
+      to_import += blame_authors.values
     end
 
     raise GitBlameError, "Expected at least one git blame" if to_import.empty?
@@ -96,6 +92,10 @@ class BlameWithGit < AbstractCommitAnalyser
       end
     end
     @find_author[mail]
+  end
+
+  def percent_done(i)
+    sprintf "%0.1f%%", (i / repository.latest_commit.commit_files.count.to_f) * 100
   end
 end
 
