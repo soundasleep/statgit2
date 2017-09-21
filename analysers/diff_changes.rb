@@ -1,8 +1,12 @@
 class DiffChanges < AbstractCommitAnalyser
   include CommandLineHelper
 
+  def can_update?
+    !commit.commit_files.empty?
+  end
+
   def needs_update?
-    !commit.files.empty? && commit.commit_diffs.empty?
+    can_update? && commit.commit_diffs.empty?
   end
 
   def call

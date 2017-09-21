@@ -1,4 +1,8 @@
 class IdentifyAuthor < AbstractCommitAnalyser
+  def can_update?
+    true
+  end
+
   def needs_update?
     commit.author.nil?
   end

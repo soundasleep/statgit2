@@ -44,6 +44,28 @@ describe "Integration tests", type: :integration do
       it "has files for that commit" do
         expect(repository.commits.first.files).to_not be_empty
       end
+
+      context "when the cloc analyser has already run" do
+        it "does not call the analyser again" do
+          expect(repository.commits.first.completed_analysers).to_not be_empty
+          expect_any_instance_of(LinesOfCode).to_not receive(:analyse)
+          analyse_repository!
+          expect(repository.commits.first.completed_analysers).to_not be_empty
+        end
+
+        context "when the original TODO analyser found zero results" do
+          before do
+            repository.commits.first.lines_of_code_stats.delete_all
+          end
+
+          it "does not call the analyser again" do
+            expect(repository.commits.first.completed_analysers).to_not be_empty
+            expect_any_instance_of(LinesOfCode).to_not receive(:analyse)
+            analyse_repository!
+            expect(repository.commits.first.completed_analysers).to_not be_empty
+          end
+        end
+      end
     end
 
     describe "todo" do

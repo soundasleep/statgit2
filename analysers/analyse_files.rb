@@ -5,6 +5,12 @@ class AnalyseFiles < AbstractCommitAnalyser
     end
   end
 
+  def can_update?
+    commit.files.any? && analysers.any? do |analyser|
+      analyser.can_update?
+    end
+  end
+
   def needs_update?
     commit.files.any? && analysers.any? do |analyser|
       analyser.can_update? && analyser.needs_update? && !analyser.has_already_updated?
