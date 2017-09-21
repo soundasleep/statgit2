@@ -24,36 +24,38 @@ class BlameWithGit < AbstractCommitAnalyser
       commit_info = nil
 
       stream_command(command) do |line|
-        bits = line.split(" ", 2)
-        if bits[0].match(/^[a-f0-9]+$/)
-          other_bits = bits[1].split(" ", 3)
-          if other_bits.length == 3
-            commit_info = {
-              hash: bits[0],
-              original_line: other_bits[0],
-              final_line: other_bits[1],
-              line_count: other_bits[2],
-            }
-          end
-        elsif bits[0] == "author-mail"
-          # drop <> around email
-          mail = bits[1][1..(bits[1].length - 2)]
-
-          if !blame_authors.has_key?(mail)
-            if author = find_author(mail)
-              blame_authors[mail] = GitBlame.new(
-                commit: commit,
-                commit_file: commit_file,
-                author: author,
-                line_count: 0,
-              )
-            else
-              LOG.debug "Could not find author for mail '#{mail}'"
+        bits = line.strip.split(" ", 2)
+        if bits.length == 2
+          if bits[0].match(/^[a-f0-9]+$/)
+            other_bits = bits[1].split(" ", 3)
+            if other_bits.length == 3
+              commit_info = {
+                hash: bits[0],
+                original_line: other_bits[0],
+                final_line: other_bits[1],
+                line_count: other_bits[2],
+              }
             end
-          end
+          elsif bits[0] == "author-mail"
+            # drop <> around email
+            mail = bits[1][1..(bits[1].length - 2)]
 
-          if blame_authors[mail] && commit_info.present?
-            blame_authors[mail].line_count += commit_info[:line_count].to_i
+            if !blame_authors.has_key?(mail)
+              if author = find_author(mail)
+                blame_authors[mail] = GitBlame.new(
+                  commit: commit,
+                  commit_file: commit_file,
+                  author: author,
+                  line_count: 0,
+                )
+              else
+                LOG.debug "Could not find author for mail '#{mail}'"
+              end
+            end
+
+            if blame_authors[mail] && commit_info.present?
+              blame_authors[mail].line_count += commit_info[:line_count].to_i
+            end
           end
         end
       end
