@@ -39,4 +39,8 @@ module CommandLineHelper
       path.ends_with?("/.") || path.ends_with?("/..") || path.include?("/.git/")
     end
   end
+
+  def binary_file?(file_path)
+    !! file_path.match(/\.(png|gif|jpg|jpeg|pdf|exe|bin|sqlite3|db)$/)
+  end
 end

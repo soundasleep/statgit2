@@ -48,4 +48,53 @@ describe CommandLineHelper, type: :helper do
       expect(output.first.split("\n")).to eq(["test(test"])
     end
   end
+
+  describe "#binary_file?" do
+    subject { binary_file?(path) }
+
+    context "foo.png" do
+      let(:path) { "foo.png" }
+      it { is_expected.to eq true }
+    end
+
+    context "foo.gif" do
+      let(:path) { "foo.gif" }
+      it { is_expected.to eq true }
+    end
+
+    context "foo.pdf" do
+      let(:path) { "foo.pdf" }
+      it { is_expected.to eq true }
+    end
+
+    context "foo.svg" do
+      let(:path) { "foo.svg" }
+      it { is_expected.to eq false }
+    end
+
+    context "foo.rb" do
+      let(:path) { "foo.rb" }
+      it { is_expected.to eq false }
+    end
+
+    context "foo.html.erb" do
+      let(:path) { "foo.html.erb" }
+      it { is_expected.to eq false }
+    end
+
+    context "foo." do
+      let(:path) { "foo." }
+      it { is_expected.to eq false }
+    end
+
+    context "foo" do
+      let(:path) { "foo" }
+      it { is_expected.to eq false }
+    end
+
+    context "foopng" do
+      let(:path) { "foopng" }
+      it { is_expected.to eq false }
+    end
+  end
 end

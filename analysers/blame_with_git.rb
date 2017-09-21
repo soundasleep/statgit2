@@ -13,6 +13,8 @@ class BlameWithGit < AbstractCommitAnalyser
     i = 0
 
     repository.latest_commit.commit_files.each do |commit_file|
+      next if binary_file?(commit_file.full_path)
+
       i += 1
       LOG.info "Blaming #{commit_file.full_path}..." if i % 100 == 0
 
