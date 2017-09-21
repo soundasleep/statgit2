@@ -4,6 +4,7 @@ class Author < ActiveRecord::Base
   belongs_to :repository
 
   has_many :commits, dependent: :destroy
+  has_many :git_blames, dependent: :destroy
 
   validates :name, presence: true
 
@@ -13,5 +14,9 @@ class Author < ActiveRecord::Base
 
   def last_commit
     commits.last
+  end
+
+  def most_owned_files
+    @most_owned_files ||= MostOwnedFiles.new(self).call
   end
 end

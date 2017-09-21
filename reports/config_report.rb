@@ -1,5 +1,5 @@
 class ConfigReport < AbstractReport
-  def title
+  def title(selector = nil)
     "Configuration"
   end
 

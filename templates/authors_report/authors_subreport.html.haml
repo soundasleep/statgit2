@@ -41,3 +41,6 @@
 
 = histogram_chart(author, :changes_per_hour, ["Additions", "Deletions"], "Commits per Hour", width: 800, height: 300, vertical_heading: "Changes", stacked: true)
 
+%h2 Most Owned Files
+
+= table(author, :most_owned_files, {filename: "File", ownership: "Ownership", revisions: "Revisions", contributors: "Contributors", size: "Size"})

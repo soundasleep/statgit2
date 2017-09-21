@@ -1,5 +1,5 @@
 class ChurnReport < AbstractReport
-  def title
+  def title(selector = nil)
     "Churn"
   end
 

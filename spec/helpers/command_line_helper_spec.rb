@@ -47,5 +47,82 @@ describe CommandLineHelper, type: :helper do
       expect(output.map(&:strip)).to eq(["test(test"])
       expect(output.first.split("\n")).to eq(["test(test"])
     end
+
+    it "nicely captures an invalid command" do
+      begin
+        execute_command("exit 1") { }
+        raise "Should have thrown a CommandLineError"
+      rescue CommandLineHelper::CommandLineError => e
+        # OK
+      end
+    end
+  end
+
+  describe "#stream_command" do
+    it "can capture an echo" do
+      output = []
+      stream_command("echo hi; echo hello") do |line|
+        output << line
+      end
+      expect(output.map(&:strip)).to eq(["hi", "hello"])
+    end
+
+    it "nicely captures an invalid command" do
+      begin
+        stream_command("exit 1") { }
+        raise "Should have thrown a CommandLineError"
+      rescue CommandLineHelper::CommandLineError => e
+        # OK
+      end
+    end
+  end
+
+  describe "#binary_file?" do
+    subject { binary_file?(path) }
+
+    context "foo.png" do
+      let(:path) { "foo.png" }
+      it { is_expected.to eq true }
+    end
+
+    context "foo.gif" do
+      let(:path) { "foo.gif" }
+      it { is_expected.to eq true }
+    end
+
+    context "foo.pdf" do
+      let(:path) { "foo.pdf" }
+      it { is_expected.to eq true }
+    end
+
+    context "foo.svg" do
+      let(:path) { "foo.svg" }
+      it { is_expected.to eq false }
+    end
+
+    context "foo.rb" do
+      let(:path) { "foo.rb" }
+      it { is_expected.to eq false }
+    end
+
+    context "foo.html.erb" do
+      let(:path) { "foo.html.erb" }
+      it { is_expected.to eq false }
+    end
+
+    context "foo." do
+      let(:path) { "foo." }
+      it { is_expected.to eq false }
+    end
+
+    context "foo" do
+      let(:path) { "foo" }
+      it { is_expected.to eq false }
+    end
+
+    context "foopng" do
+      let(:path) { "foopng" }
+      it { is_expected.to eq false }
+    end
   end
 end

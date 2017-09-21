@@ -132,6 +132,30 @@ describe "Integration tests", type: :integration do
       end
     end
 
+    describe "git blames" do
+      it "has some git blame nodes for the latest commit" do
+        expect(repository.latest_commit.git_blames).to_not be_empty
+      end
+
+      it_behaves_like "does not capture .git files" do
+        let(:commit_files) { repository.latest_commit.git_blames.map(&:commit_file).flatten }
+      end
+    end
+
+    describe "file ownership" do
+      subject(:ownership) { repository.latest_commit.select_file(filename).file_ownership }
+
+      describe ".travis.yml" do
+        let(:filename) { ".travis.yml"}
+
+        it "has 100% ownership" do
+          expect(ownership).to_not be_empty
+          expect(ownership["jevon@powershop.co.nz"]).to_not be_empty
+          expect(ownership["jevon@powershop.co.nz"][:ownership]).to eq 1.0 # 100%
+        end
+      end
+    end
+
     context "one of the files modified in the latest commit" do
       let(:file) { repository.latest_commit.commit_diffs.first.commit_file }
       let(:file_path) { file.full_path }

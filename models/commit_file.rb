@@ -7,6 +7,7 @@ class CommitFile < ActiveRecord::Base
   has_many :file_todos, dependent: :destroy
   has_many :file_fixmes, dependent: :destroy
   has_many :file_sass_stylesheets, dependent: :destroy
+  has_many :git_blames, dependent: :destroy
 
   validates :full_path, presence: true
   validates :size, presence: true, numericality: { only_integer: true }
@@ -22,4 +23,13 @@ class CommitFile < ActiveRecord::Base
   def full_path
     @full_path ||= file_path.path
   end
+
+  def file_ownership
+    @file_ownership ||= FileOwnership.new(self).call
+  end
+
+  def total_lines
+    @total_lines ||= git_blames.sum(:line_count)
+  end
 end
+

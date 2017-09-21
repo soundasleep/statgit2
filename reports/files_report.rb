@@ -1,5 +1,5 @@
 class FilesReport < AbstractReport
-  def title
+  def title(selector = nil)
     "Files"
   end
 
