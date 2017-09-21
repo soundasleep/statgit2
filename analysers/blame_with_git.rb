@@ -19,12 +19,23 @@ class BlameWithGit < AbstractCommitAnalyser
 
       LOG.info "Blaming #{commit_file.full_path} (#{percent_done(i)})..." if i % 100 == 0
 
-      command = "cd #{root_path} && git blame --line-porcelain \"#{commit_file.full_path}\""
+      command = "cd #{root_path} && git blame --porcelain \"#{commit_file.full_path}\""
       blame_authors = {}
+      commit_info = nil
 
       stream_command(command) do |line|
         bits = line.split(" ", 2)
-        if bits[0] == "author-mail"
+        if bits[0].match(/^[a-f0-9]+$/)
+          other_bits = bits[1].split(" ", 3)
+          if other_bits.length == 3
+            commit_info = {
+              hash: bits[0],
+              original_line: other_bits[0],
+              final_line: other_bits[1],
+              line_count: other_bits[2],
+            }
+          end
+        elsif bits[0] == "author-mail"
           # drop <> around email
           mail = bits[1][1..(bits[1].length - 2)]
 
@@ -41,8 +52,8 @@ class BlameWithGit < AbstractCommitAnalyser
             end
           end
 
-          if blame_authors[mail]
-            blame_authors[mail].line_count += 1
+          if blame_authors[mail] && commit_info.present?
+            blame_authors[mail].line_count += commit_info[:line_count].to_i
           end
         end
       end
