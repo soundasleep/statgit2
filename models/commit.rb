@@ -11,6 +11,7 @@ class Commit < ActiveRecord::Base
   has_many :file_sass_stylesheets, dependent: :destroy
   has_many :lines_of_code_stats, dependent: :destroy
   has_many :git_blames, dependent: :destroy
+  has_many :completed_analysers, dependent: :destroy
 
   default_scope { order('author_date ASC') }
 
