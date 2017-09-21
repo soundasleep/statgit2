@@ -8,7 +8,9 @@ class FilesCount
   end
 
   def call
-    raw = repository.analysed_commits.map do |commit|
+    raw = repository.analysed_commits.uniq do |commit|
+      iso_date(commit.date)
+    end.map do |commit|
       [ iso_date(commit.date), commit.files.count ]
     end
 
