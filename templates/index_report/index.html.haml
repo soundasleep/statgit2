@@ -37,7 +37,7 @@
     %dt Unresolved issues
     %dd
       #{link_to "#{repository.latest_commit.todos} TODOs", link_for(UnresolvedReport)},
-      #{link_to "#{repository.latest_commit.todos} FIXMEs", link_for(UnresolvedReport)}
+      #{link_to "#{repository.latest_commit.fixmes} FIXMEs", link_for(UnresolvedReport)}
 
     %dt SASS Rules
     %dd= link_to repository.latest_commit.sass_rules, link_for(SassReport)
