@@ -34,6 +34,10 @@
     %dt Total lines of code
     %dd= repository.latest_commit.lines_of_code
 
+    - if repository.tests_repository
+      %dt Ratio of tests to code
+      %dd= link_to percent(repository.latest_commit.ratio_of_tests_to_code), link_for(FilesReport)
+
     %dt Unresolved issues
     %dd
       #{link_to "#{repository.latest_commit.todos} TODOs", link_for(UnresolvedReport)},

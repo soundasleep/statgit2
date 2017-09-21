@@ -22,6 +22,10 @@ class Repository < ActiveRecord::Base
     @lines_of_code_per_day ||= LinesOfCodePerDay.new(self).call
   end
 
+  def ratio_of_tests_to_code_per_day
+    @ratio_of_tests_to_code_per_day ||= RatioOfTestsToCodePerDay.new(self).call
+  end
+
   def commit_activity
     @commit_activity ||= CommitActivity.new(self).call
   end

@@ -70,4 +70,8 @@ class Commit < ActiveRecord::Base
   def lines_of_code_touched
     @lines_of_code_touched ||= commit_diffs.sum(:added) + commit_diffs.sum(:removed)
   end
+
+  def ratio_of_tests_to_code
+    @ratio_of_tests_to_code ||= RatioOfTestsToCode.new(self).call
+  end
 end

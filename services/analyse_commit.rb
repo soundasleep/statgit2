@@ -15,7 +15,7 @@ class AnalyseCommit
   def call
     return false unless needs_update?
 
-    LOG.info "Analysing commit #{commit.commit_hash} (#{percent_done})..."
+    LOG.info "Analysing commit #{commit.commit_hash}#{repository.is_tests_only? ? " tests" : ""} (#{percent_done})..."
 
     switched = false
     analysed = false

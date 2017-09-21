@@ -19,7 +19,7 @@
       // Create the data table.
       var data = new google.visualization.DataTable();
       data.addColumn("date", "Date");
-      data.addColumn("number", "#{title}");
+      data.addColumn("number", "#{labels.join(", ")}");
 
       data.addRows([
         #{
@@ -36,7 +36,7 @@
         width: #{width},
         height: #{height},
         hAxis: {title: "Date"},
-        vAxis: {title: "#{title}", minValue: 0},
+        vAxis: {title: "#{labels.join(", ")}", minValue: 0},
         chartArea: {width: "70%", height: "70%", left: 100, top: 25}
       };
 
