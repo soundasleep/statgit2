@@ -3,6 +3,10 @@ require "csv"
 class LinesOfCode < AbstractCommitAnalyser
   include CommandLineHelper
 
+  def can_update?
+    true
+  end
+
   def needs_update?
     commit.lines_of_code_stats.empty?
   end

@@ -44,6 +44,28 @@ describe "Integration tests", type: :integration do
       it "has files for that commit" do
         expect(repository.commits.first.files).to_not be_empty
       end
+
+      context "when the cloc analyser has already run" do
+        it "does not call the analyser again" do
+          expect(repository.commits.first.completed_analysers).to_not be_empty
+          expect_any_instance_of(LinesOfCode).to_not receive(:analyse)
+          analyse_repository!
+          expect(repository.commits.first.completed_analysers).to_not be_empty
+        end
+
+        context "when the original TODO analyser found zero results" do
+          before do
+            repository.commits.first.lines_of_code_stats.delete_all
+          end
+
+          it "does not call the analyser again" do
+            expect(repository.commits.first.completed_analysers).to_not be_empty
+            expect_any_instance_of(LinesOfCode).to_not receive(:analyse)
+            analyse_repository!
+            expect(repository.commits.first.completed_analysers).to_not be_empty
+          end
+        end
+      end
     end
 
     describe "todo" do
@@ -152,6 +174,35 @@ describe "Integration tests", type: :integration do
           expect(ownership).to_not be_empty
           expect(ownership["jevon@powershop.co.nz"]).to_not be_empty
           expect(ownership["jevon@powershop.co.nz"][:ownership]).to eq 1.0 # 100%
+        end
+      end
+    end
+
+    describe "identifying tests within analysed repositories" do
+      before do
+        analyse_tests_repository!
+      end
+
+      it "creates a tests-only repository" do
+        expect(repository.child_repositories.length).to eq 1
+        expect(tests_repository.parent_repository).to eq repository
+        expect(tests_repository.only_paths_matching).to include "test"
+        expect(repository.tests_repository).to eq tests_repository
+
+        expect(repository.is_tests_only?).to be false
+        expect(tests_repository.is_tests_only?).to be true
+      end
+
+      describe "the tests repository" do
+        describe "count files" do
+          let(:latest_commit) { tests_repository.latest_commit }
+
+          it "has files that we expect in the repository, but only of tests" do
+            expect(latest_commit.commit_files).to_not be_empty
+            expect(latest_commit.select_file("spec/integration/integration_spec.rb")).to_not be_nil
+            expect(latest_commit.select_file("README.md")).to be_nil
+            expect(latest_commit.select_file(".travis.yml")).to be_nil
+          end
         end
       end
     end

@@ -19,14 +19,22 @@ module IntegrationSpecSupport
 
     connect_to_database(options)
     @repository = CreateRepository.new(options: options).call
+    @tests_repository = CreateTestsRepository.new(parent: repository, options: options).call
   end
 
   def analyse_repository!
     AnalyseRepository.new(repository: repository, options: options).call
   end
 
+  def analyse_tests_repository!
+    AnalyseRepository.new(repository: tests_repository, options: options).call
+  end
+
   def repository
     @repository
   end
 
+  def tests_repository
+    @tests_repository
+  end
 end

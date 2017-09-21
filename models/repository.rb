@@ -1,9 +1,12 @@
 class Repository < ActiveRecord::Base
   include AnalysedCommits
 
+  belongs_to :parent_repository, class_name: "Repository"
+
   has_many :commits, dependent: :destroy
   has_many :authors, dependent: :destroy
   has_many :file_paths, dependent: :destroy
+  has_many :child_repositories, foreign_key: :parent_repository_id, class_name: "Repository", dependent: :destroy
 
   validates :url, presence: true
 
@@ -11,8 +14,16 @@ class Repository < ActiveRecord::Base
     @latest_commit ||= commits.last  # commit default order is author_date asc
   end
 
+  def tests_repository
+    child_repositories.where(is_tests_only: true).first
+  end
+
   def lines_of_code_per_day
     @lines_of_code_per_day ||= LinesOfCodePerDay.new(self).call
+  end
+
+  def ratio_of_tests_to_code_per_day
+    @ratio_of_tests_to_code_per_day ||= RatioOfTestsToCodePerDay.new(self).call
   end
 
   def commit_activity
@@ -35,8 +46,12 @@ class Repository < ActiveRecord::Base
     @latest_commit_languages ||= LatestCommitLanguages.new(self).call
   end
 
-  def files_count
-    @files_count ||= FilesCount.new(self).call
+  def code_files_count_per_day
+    @code_files_count ||= CodeFilesCountPerDay.new(self).call
+  end
+
+  def tests_files_count_per_day
+    @tests_files_count ||= TestsFilesCountPerDay.new(self).call
   end
 
   def lines_of_code_per_file_per_day

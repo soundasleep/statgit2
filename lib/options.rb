@@ -1,5 +1,9 @@
 require "optparse"
 
+def default_tests_path
+  "/(tests?|specs?|features?)(/.+|)$"
+end
+
 def default_options
   {
     limit: nil,
@@ -12,6 +16,7 @@ def default_options
     colours: false,
     blob_path: nil,
     commit_path: nil,
+    tests_path: default_tests_path,
     workspace: "workspace/",
   }
 end
@@ -54,6 +59,10 @@ def load_command_line_options
 
     opts.on("--max COMMITS", Integer, "Only analyse this many unanalysed commits (from the last [limit] commits)", "  Respects --limit and --commits-per-day settings") do |commits|
       options[:max] = commits
+    end
+
+    opts.on("--tests FILE", "Regular expression that matches paths of tests in the repository (default: `#{default_tests_path}`)") do |tests_path|
+      options[:tests_path] = tests_path
     end
 
     opts.on("--adapter ADAPTER", "Database adapter to use (default: `sqlite3`)") do |adapter|

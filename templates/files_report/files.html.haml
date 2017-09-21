@@ -10,13 +10,21 @@
       #{float_number(repository.latest_commit.average_file_size)}
       lines of code
 
+    - if repository.tests_repository
+      %dt Ratio of tests to code
+      %dd= percent(repository.latest_commit.ratio_of_tests_to_code)
+
 %h2 File Count
 
-= large_line_chart(repository, :files_count, "Files")
+= stacked_line_chart(repository, [:code_files_count_per_day, :tests_files_count_per_day], ["Code", "Tests"], "File Count")
 
 %h2 Average Lines of Code per File
 
-= large_line_chart(repository, :lines_of_code_per_file_per_day, "LOC/file")
+= line_chart(repository, :lines_of_code_per_file_per_day, "LOC/file")
+
+%h2 Ratio of tests to code
+
+= line_chart(repository, :ratio_of_tests_to_code_per_day, "Test/Code ratio")
 
 %h2 Most Changed Files
 

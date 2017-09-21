@@ -1,6 +1,10 @@
 class CountFiles < AbstractCommitAnalyser
   include CommandLineHelper
 
+  def can_update?
+    true
+  end
+
   def needs_update?
     commit.files.empty?
   end

@@ -3,6 +3,11 @@ class BlameWithGit < AbstractCommitAnalyser
 
   class GitBlameError < StandardError; end
 
+  def can_update?
+    commit == repository.latest_commit &&
+      commit.commit_files.any?
+  end
+
   def needs_update?
     commit == repository.latest_commit &&
       repository.latest_commit.commit_files.any? &&
