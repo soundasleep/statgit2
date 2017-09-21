@@ -1,14 +1,21 @@
 class Repository < ActiveRecord::Base
   include AnalysedCommits
 
+  belongs_to :parent_repository, class_name: "Repository"
+
   has_many :commits, dependent: :destroy
   has_many :authors, dependent: :destroy
   has_many :file_paths, dependent: :destroy
+  has_many :child_repositories, foreign_key: :parent_repository_id, class_name: "Repository", dependent: :destroy
 
   validates :url, presence: true
 
   def latest_commit
     @latest_commit ||= commits.last  # commit default order is author_date asc
+  end
+
+  def tests_repository
+    child_repositories.where(is_tests_only: true).first
   end
 
   def lines_of_code_per_day

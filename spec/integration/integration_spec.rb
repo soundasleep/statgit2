@@ -156,6 +156,35 @@ describe "Integration tests", type: :integration do
       end
     end
 
+    describe "identifying tests within analysed repositories" do
+      before do
+        analyse_tests_repository!
+      end
+
+      it "creates a tests-only repository" do
+        expect(repository.child_repositories.length).to eq 1
+        expect(tests_repository.parent_repository).to eq repository
+        expect(tests_repository.only_paths_matching).to include "test"
+        expect(repository.tests_repository).to eq tests_repository
+
+        expect(repository.is_tests_only?).to be false
+        expect(tests_repository.is_tests_only?).to be true
+      end
+
+      describe "the tests repository" do
+        describe "count files" do
+          let(:latest_commit) { tests_repository.latest_commit }
+
+          it "has files that we expect in the repository, but only of tests" do
+            expect(latest_commit.commit_files).to_not be_empty
+            expect(latest_commit.select_file("spec/integration/integration_spec.rb")).to_not be_nil
+            expect(latest_commit.select_file("README.md")).to be_nil
+            expect(latest_commit.select_file(".travis.yml")).to be_nil
+          end
+        end
+      end
+    end
+
     context "one of the files modified in the latest commit" do
       let(:file) { repository.latest_commit.commit_diffs.first.commit_file }
       let(:file_path) { file.full_path }

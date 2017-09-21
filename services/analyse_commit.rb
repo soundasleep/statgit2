@@ -1,3 +1,5 @@
+require "fileutils"
+
 class AnalyseCommit
   include CommandLineHelper
 
@@ -26,6 +28,15 @@ class AnalyseCommit
         if instance.needs_update?
           unless switched
             execute_command "cd #{root_path} && git reset --hard && git checkout #{commit.commit_hash} && git reset --hard #{commit.commit_hash}"
+
+            if repository.only_paths_matching.present?
+              all_files_in(root_path).reject do |path|
+                path.match(matching_regexp)
+              end.each do |path|
+                FileUtils.rm_rf(path, secure: true)
+              end
+            end
+
             switched = true
           end
 
@@ -49,5 +60,9 @@ class AnalyseCommit
 
   def percent_done
     sprintf "%0.1f%%", (1 - (repository.commits.find_index(commit) / repository.commits.count.to_f)) * 100
+  end
+
+  def matching_regexp
+    @matching_regexp ||= Regexp.new(repository.only_paths_matching)
   end
 end

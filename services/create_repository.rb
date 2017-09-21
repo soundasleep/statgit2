@@ -10,14 +10,17 @@ class CreateRepository
 
     fail "Need to provide a URL with --url" unless options[:url]
 
-    Repository.where(url: options[:url]).first || new_repository
+    Repository.where(repository_options).first_or_create!
   end
 
   private
 
-  def new_repository
-    Repository.create!(
+  def repository_options
+    {
+      parent_repository: nil,
+      is_tests_only: false,
+      only_paths_matching: nil,
       url: options[:url],
-    )
+    }
   end
 end
