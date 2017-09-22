@@ -20,7 +20,7 @@
 
       // Create the data table.
       var data = google.visualization.arrayToDataTable([
-        ["Date", "#{heading.respond_to?(:each) ? heading.join("\", \"") : heading}"],
+        ["Date", "#{labels.respond_to?(:each) ? labels.join("\", \"") : labels}"],
 
         #{
           data.map do |key, values|

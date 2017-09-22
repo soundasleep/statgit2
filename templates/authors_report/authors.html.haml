@@ -6,15 +6,15 @@
 
 %h2 Commits Per Day
 
-= histogram_chart(repository, :commits_per_day, heading: "Commits", title: "Commits per Day")
+= histogram_chart(repository, :commits_per_day, labels: "Commits", title: "Commits per Day")
 
 %h2 Commits Per Hour
 
-= histogram_chart(repository, :commits_per_hour, heading: "Commits", title: "Commits per Hour", options: { width: 800, height: 300 })
+= histogram_chart(repository, :commits_per_hour, labels: "Commits", title: "Commits per Hour", options: { width: 800, height: 300 })
 
 %h2 Changes Per Hour
 
-= histogram_chart(repository, :changes_per_hour, heading: ["Additions", "Deletions"], title: "Commits per Hour", options: { width: 800, height: 300, vertical_heading: "Changes", stacked: true })
+= histogram_chart(repository, :changes_per_hour, labels: ["Additions", "Deletions"], title: "Commits per Hour", options: { width: 800, height: 300, vertical_labels: "Changes", stacked: true })
 
 %h2 Top Authors
 

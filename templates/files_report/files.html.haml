@@ -19,19 +19,19 @@
 
 %h2 File Count
 
-= stacked_line_chart(repository, [:code_files_count_per_day, :tests_files_count_per_day], heading: ["Code", "Tests"], title: "File Count")
+= stacked_line_chart(repository, [:code_files_count_per_day, :tests_files_count_per_day], labels: ["Code", "Tests"], title: "File Count")
 
 %h2 Lines of Code
 
-= line_chart(repository, [:code_lines_of_code_per_day, :tests_lines_of_code_per_day], heading: ["Code LOC", "Tests LOC"], title: "Lines of Code")
+= line_chart(repository, [:code_lines_of_code_per_day, :tests_lines_of_code_per_day], labels: ["Code LOC", "Tests LOC"], title: "Lines of Code")
 
 %h2 Average Lines of Code per File
 
-= line_chart(repository, [:lines_of_code_per_file_per_day, :code_lines_of_code_per_file_per_day, :tests_lines_of_code_per_file_per_day], heading: ["Total", "Code", "Tests"], title: "LOC")
+= line_chart(repository, [:lines_of_code_per_file_per_day, :code_lines_of_code_per_file_per_day, :tests_lines_of_code_per_file_per_day], labels: ["Total", "Code", "Tests"], title: "LOC")
 
 %h2 Ratio of tests LOC to code LOC
 
-= line_chart(repository, :ratio_of_tests_to_code_per_day, heading: "Ratio", title: "Test/Code ratio")
+= line_chart(repository, :ratio_of_tests_to_code_per_day, labels: "Ratio", title: "Test/Code ratio")
 
 %h2 Most Changed Files
 

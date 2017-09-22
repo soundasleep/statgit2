@@ -33,7 +33,7 @@ module ReportHelper
     end
   end
 
-  def render_chart(chart_type, repository, methods, titles, options = {})
+  def render_chart(chart_type, repository, methods, labels, options = {})
     data = {}
 
     if !methods.respond_to?(:each)
@@ -55,7 +55,7 @@ module ReportHelper
       end
     end
 
-    labels = wrap_array(titles)
+    labels = wrap_array(labels)
 
     options = {
       width: 600,
@@ -66,7 +66,6 @@ module ReportHelper
       benchmark: benchmark,
       data: data,
       labels: labels,
-      titles: titles,
       methods: methods,
       div_name: "chart_#{Random.rand(0xffff)}",
     })
@@ -78,30 +77,30 @@ module ReportHelper
     render_chart "scatter_chart", repository, method, title, options
   end
 
-  def line_chart(repository, method, heading:, title:, options: {})
-    render_chart "line_chart", repository, method, title, heading_options(heading).merge(options)
+  def line_chart(repository, method, labels:, title:, options: {})
+    render_chart "line_chart", repository, method, title, labels_options(labels).merge(options)
   end
 
-  def stacked_line_chart(repository, method, heading:, title:, options: {})
-    render_chart "stacked_line_chart", repository, method, title, heading_options(heading).merge(options)
+  def stacked_line_chart(repository, method, labels:, title:, options: {})
+    render_chart "stacked_line_chart", repository, method, title, labels_options(labels).merge(options)
   end
 
   def pie_chart(repository, method, title:, options: {})
     render_chart "pie_chart", repository, method, title, {width: 400, height: 300}.merge(options)
   end
 
-  def histogram_chart(repository, method, heading:, title:, options: {})
-    render_chart "histogram_chart", repository, method, title, heading_options(heading).merge(options)
+  def histogram_chart(repository, method, labels:, title:, options: {})
+    render_chart "histogram_chart", repository, method, title, labels_options(labels).merge(options)
   end
 
-  def large_histogram_chart(repository, method, heading:, title:, options: {})
-    histogram_chart(repository, method, heading: heading, title: title, options: {width: 800, height: 600}.merge(options))
+  def large_histogram_chart(repository, method, labels:, title:, options: {})
+    histogram_chart(repository, method, labels: labels, title: title, options: {width: 800, height: 600}.merge(options))
   end
 
-  def heading_options(heading)
+  def labels_options(labels)
     {
-      heading: heading,
-      vertical_heading: heading.respond_to?(:each) ? "Count" : heading,
+      labels: labels,
+      vertical_labels: labels.respond_to?(:each) ? "Count" : labels,
       stacked: false,
     }
   end
