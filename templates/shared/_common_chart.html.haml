@@ -4,7 +4,7 @@
 %script{type: "text/javascript"}
   :plain
     // Load the Visualization API and the piechart package.
-    google.load("visualization", "1.0", {"packages": ["corechart"]});
+    google.charts.load('current', {packages: ['corechart']});
 
     // Set a callback to run when the Google Visualization API is loaded.
-    google.setOnLoadCallback(#{method_name});
+    google.charts.setOnLoadCallback(#{method_name});
