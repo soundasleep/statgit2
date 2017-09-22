@@ -26,19 +26,16 @@ module ReportHelper
   end
 
   def wrap_array(data)
-    if data.is_a?(Array)
+    if data.respond_to?(:each)
       data
     else
       [data]
     end
   end
 
-  def render_chart(chart_type, repository, methods, labels, options = {})
+  def render_chart(chart_type, repository, methods, title, options = {})
     data = {}
-
-    if !methods.respond_to?(:each)
-      methods = [methods]
-    end
+    methods = wrap_array(methods)
 
     benchmark = Benchmark.realtime do
       methods.each.with_index do |submethod, index|
@@ -55,8 +52,6 @@ module ReportHelper
       end
     end
 
-    labels = wrap_array(labels)
-
     options = {
       width: 600,
       height: 400,
@@ -65,9 +60,10 @@ module ReportHelper
     arguments = template_arguments.merge(options).merge({
       benchmark: benchmark,
       data: data,
-      labels: labels,
+      title: title,
       methods: methods,
-      div_name: "chart_#{Random.rand(0xffff)}",
+      div_name: "#{chart_type}_#{Random.rand(0xffff)}",
+      method_name: "render_#{chart_type}_#{Random.rand(0xffff)}",
     })
 
     render_template(shared_template(chart_type), arguments)
@@ -99,7 +95,7 @@ module ReportHelper
 
   def labels_options(labels)
     {
-      labels: labels,
+      labels: wrap_array(labels),
       vertical_labels: labels.respond_to?(:each) ? "Count" : labels,
       stacked: false,
     }
@@ -125,6 +121,7 @@ module ReportHelper
   def render_template(template, template_arguments)
     begin
       engine = Haml::Engine.new(File.read(template))
+      template_arguments[:arguments] = template_arguments # for reference in partials
       engine.render self, template_arguments do
         yield
       end
@@ -135,6 +132,10 @@ module ReportHelper
 
   def shared_template(key)
     File.dirname(__FILE__) + "/../templates/shared/#{key}.html.haml"
+  end
+
+  def render_partial(template, arguments)
+    render_template shared_template(template), arguments
   end
 
   def link_for(report, selector = nil)
