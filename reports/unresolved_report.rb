@@ -11,5 +11,3 @@ class UnresolvedReport < AbstractReport
     true
   end
 end
-
-ALL_REPORTS << UnresolvedReport

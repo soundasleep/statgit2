@@ -61,7 +61,7 @@ class AnalyseCommit
   private
 
   def commit_analysers
-    COMMIT_ANALYSERS.map do |tool|
+    AllAnalysers::COMMIT_ANALYSERS.map do |tool|
       tool.new(commit: commit, options: options)
     end
   end

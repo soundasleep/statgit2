@@ -116,5 +116,3 @@ class BlameWithGit < AbstractCommitAnalyser
     sprintf "%0.1f%%", (i / repository.latest_commit.commit_files.count.to_f) * 100
   end
 end
-
-COMMIT_ANALYSERS << BlameWithGit

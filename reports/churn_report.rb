@@ -11,5 +11,3 @@ class ChurnReport < AbstractReport
     true
   end
 end
-
-ALL_REPORTS << ChurnReport

@@ -46,5 +46,3 @@ class CountFiles < AbstractCommitAnalyser
     end
   end
 end
-
-COMMIT_ANALYSERS << CountFiles

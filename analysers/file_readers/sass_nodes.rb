@@ -1,3 +1,5 @@
+require "sass"
+
 class SassNodes < AbstractFileAnalyser
   def needs_update?
     commit.file_sass_stylesheets.empty?
@@ -73,5 +75,3 @@ class SassNodes < AbstractFileAnalyser
     Sass::Importers::Filesystem.new(root_path)
   end
 end
-
-FILE_ANALYSERS << SassNodes

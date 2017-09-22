@@ -24,5 +24,3 @@ class CountFixmes < AbstractFileAnalyser
     FileFixme.import!(collection)
   end
 end
-
-FILE_ANALYSERS << CountFixmes

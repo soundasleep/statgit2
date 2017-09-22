@@ -39,5 +39,3 @@ class LinesOfCode < AbstractCommitAnalyser
     return to_import.any?
   end
 end
-
-COMMIT_ANALYSERS << LinesOfCode

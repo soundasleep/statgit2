@@ -40,7 +40,7 @@ class AbstractReport
   end
 
   def navigation
-    ALL_REPORTS.map { |r| r.new(repository: repository) }.select(&:public?).map do |report|
+    AllReports::REPORTS.map { |r| r.new(repository: repository) }.select(&:public?).map do |report|
       [report.root_path + ".html", report.title]
     end
   end

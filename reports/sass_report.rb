@@ -11,5 +11,3 @@ class SassReport < AbstractReport
     true
   end
 end
-
-ALL_REPORTS << SassReport

@@ -1,6 +1,6 @@
 class AnalyseFiles < AbstractCommitAnalyser
   def analysers
-    @analysers ||= FILE_ANALYSERS.map do |analyser|
+    @analysers ||= AllAnalysers::FILE_ANALYSERS.map do |analyser|
       analyser.new(commit: commit, options: options)
     end
   end
@@ -64,5 +64,3 @@ class AnalyseFiles < AbstractCommitAnalyser
     string.encode("UTF-8", "UTF-8", invalid: :replace)
   end
 end
-
-COMMIT_ANALYSERS << AnalyseFiles

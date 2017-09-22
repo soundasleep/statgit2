@@ -11,5 +11,3 @@ class ConfigReport < AbstractReport
     true
   end
 end
-
-ALL_REPORTS << ConfigReport
