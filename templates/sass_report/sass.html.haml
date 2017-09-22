@@ -2,16 +2,16 @@
 
 %h2 SASS stylesheets in repository
 
-= line_chart(repository, :sass_stylesheets_per_day, "Stylesheets")
+= line_chart(repository, :sass_stylesheets_per_day, heading: "Stylesheets", title: "SASS stylesheets")
 
 %h2 SASS rules in repository
 
-= line_chart(repository, :sass_rules_per_day, "Rules")
+= line_chart(repository, :sass_rules_per_day, heading: "Rules", title: "SASS rules")
 
 %h2 SASS properties per rule
 
-= line_chart(repository, :sass_properties_per_rule_per_day, "Properties")
+= line_chart(repository, :sass_properties_per_rule_per_day, heading: "Properties", title: "SASS properties per rule")
 
 %h2 Files with most rules
 
-= table(repository, :files_with_most_sass_rules, {filename: "File", revisions: "Revisions", sass_rules: "Rules"})
+= table(repository, :files_with_most_sass_rules, labels: {filename: "File", revisions: "Revisions", sass_rules: "Rules"})

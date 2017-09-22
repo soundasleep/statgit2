@@ -11,7 +11,7 @@ class TestsFilesCountPerDay
     raw = repository.analysed_commits.uniq do |commit|
       iso_date(commit.date)
     end.map do |commit|
-      [ iso_date(commit.date), commit.tests_commit.present? ? commit.tests_commit.files.count : 0 ]
+      [ iso_date(commit.date), commit.tests_files_count ]
     end
 
     Hash[raw]

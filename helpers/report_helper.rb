@@ -7,6 +7,8 @@ module ReportHelper
   include NumberHelper
   include ActionView::Helpers::UrlHelper
 
+  class ReportRenderError < StandardError; end
+
   def commit_link(commit)
     if options[:commit_path]
       link_to(commit.commit_hash, options[:commit_path] + commit.commit_hash)
@@ -72,32 +74,28 @@ module ReportHelper
     render_template(shared_template(chart_type), arguments)
   end
 
-  def scatter_chart(repository, method, title, options = {})
+  def scatter_chart(repository, method, title:, options: {})
     render_chart "scatter_chart", repository, method, title, options
   end
 
-  def line_chart(repository, method, title, options = {})
-    render_chart "line_chart", repository, method, title, options
+  def line_chart(repository, method, heading:, title:, options: {})
+    render_chart "line_chart", repository, method, title, heading_options(heading).merge(options)
   end
 
-  def stacked_line_chart(repository, method, heading, title, options = {})
+  def stacked_line_chart(repository, method, heading:, title:, options: {})
     render_chart "stacked_line_chart", repository, method, title, heading_options(heading).merge(options)
   end
 
-  def large_line_chart(repository, method, title, options = {})
-    line_chart(repository, method, title, {width: 800, height: 600}.merge(options))
-  end
-
-  def pie_chart(repository, method, title, options = {})
+  def pie_chart(repository, method, title:, options: {})
     render_chart "pie_chart", repository, method, title, {width: 400, height: 300}.merge(options)
   end
 
-  def histogram_chart(repository, method, heading, title, options = {})
+  def histogram_chart(repository, method, heading:, title:, options: {})
     render_chart "histogram_chart", repository, method, title, heading_options(heading).merge(options)
   end
 
-  def large_histogram_chart(repository, method, heading, title, options = {})
-    histogram_chart(repository, method, heading, title, {width: 800, height: 600}.merge(options))
+  def large_histogram_chart(repository, method, heading:, title:, options: {})
+    histogram_chart(repository, method, heading: heading, title: title, options: {width: 800, height: 600}.merge(options))
   end
 
   def heading_options(heading)
@@ -108,7 +106,7 @@ module ReportHelper
     }
   end
 
-  def table(repository, method, labels, limit = 30, options = {})
+  def table(repository, method, labels:, limit: 30, options: {})
     data = nil
     benchmark = Benchmark.realtime do
       data = repository.send(method).first(limit)
@@ -126,9 +124,13 @@ module ReportHelper
   end
 
   def render_template(template, template_arguments)
-    engine = Haml::Engine.new(File.read(template))
-    engine.render self, template_arguments do
-      yield
+    begin
+      engine = Haml::Engine.new(File.read(template))
+      engine.render self, template_arguments do
+        yield
+      end
+    rescue ArgumentError => e
+      raise ReportRenderError, "Could not render '#{template}': #{e}"
     end
   end
 

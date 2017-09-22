@@ -54,8 +54,24 @@ class Repository < ActiveRecord::Base
     @tests_files_count ||= TestsFilesCountPerDay.new(self).call
   end
 
+  def code_lines_of_code_per_day
+    @code_lines_of_code ||= CodeLinesOfCodePerDay.new(self).call
+  end
+
+  def tests_lines_of_code_per_day
+    @tests_lines_of_code ||= TestsLinesOfCodePerDay.new(self).call
+  end
+
   def lines_of_code_per_file_per_day
     @lines_of_code_per_file_per_day ||= LinesOfCodePerFilePerDay.new(self).call
+  end
+
+  def code_lines_of_code_per_file_per_day
+    @code_lines_of_code_per_file_per_day ||= CodeLinesOfCodePerFilePerDay.new(self).call
+  end
+
+  def tests_lines_of_code_per_file_per_day
+    @tests_lines_of_code_per_file_per_day ||= TestsLinesOfCodePerFilePerDay.new(self).call
   end
 
   def lines_of_code_touched_per_month

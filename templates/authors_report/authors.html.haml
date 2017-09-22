@@ -2,20 +2,20 @@
 
 %h2 Commit Activity
 
-= scatter_chart(repository, :commit_activity, "Hour")
+= scatter_chart(repository, :commit_activity, title: "Hour")
 
 %h2 Commits Per Day
 
-= histogram_chart(repository, :commits_per_day, "Commits", "Commits per Day")
+= histogram_chart(repository, :commits_per_day, heading: "Commits", title: "Commits per Day")
 
 %h2 Commits Per Hour
 
-= histogram_chart(repository, :commits_per_hour, "Commits", "Commits per Hour", width: 800, height: 300)
+= histogram_chart(repository, :commits_per_hour, heading: "Commits", title: "Commits per Hour", options: { width: 800, height: 300 })
 
 %h2 Changes Per Hour
 
-= histogram_chart(repository, :changes_per_hour, ["Additions", "Deletions"], "Commits per Hour", width: 800, height: 300, vertical_heading: "Changes", stacked: true)
+= histogram_chart(repository, :changes_per_hour, heading: ["Additions", "Deletions"], title: "Commits per Hour", options: { width: 800, height: 300, vertical_heading: "Changes", stacked: true })
 
 %h2 Top Authors
 
-= table(repository, :top_authors, {author: "Author", commits: "Commits", changes: "Changes", last_commit: "Last Commit"})
+= table(repository, :top_authors, labels: {author: "Author", commits: "Commits", changes: "Changes", last_commit: "Last Commit"})

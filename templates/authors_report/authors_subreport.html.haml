@@ -27,20 +27,20 @@
 
 %h2 Commit Activity
 
-= scatter_chart(author, :commit_activity, "Hour")
+= scatter_chart(author, :commit_activity, title: "Hour")
 
 %h2 Commits Per Day
 
-= histogram_chart(author, :commits_per_day, "Commits", "Commits per Day")
+= histogram_chart(author, :commits_per_day, heading: "Commits", title: "Commits per Day")
 
 %h2 Commits Per Hour
 
-= histogram_chart(author, :commits_per_hour, "Commits", "Commits per Hour", width: 800, height: 300)
+= histogram_chart(author, :commits_per_hour, heading: "Commits", title: "Commits per Hour", options: { width: 800, height: 300})
 
 %h2 Changes Per Hour
 
-= histogram_chart(author, :changes_per_hour, ["Additions", "Deletions"], "Commits per Hour", width: 800, height: 300, vertical_heading: "Changes", stacked: true)
+= histogram_chart(author, :changes_per_hour, heading: ["Additions", "Deletions"], title: "Commits per Hour", options: { width: 800, height: 300, vertical_heading: "Changes", stacked: true })
 
 %h2 Most Owned Files
 
-= table(author, :most_owned_files, {filename: "File", ownership: "Ownership", revisions: "Revisions", contributors: "Contributors", size: "Size"})
+= table(author, :most_owned_files, labels: {filename: "File", ownership: "Ownership", revisions: "Revisions", contributors: "Contributors", size: "Size"})

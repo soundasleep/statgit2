@@ -10,30 +10,37 @@
       #{float_number(repository.latest_commit.average_file_size)}
       lines of code
 
+      (#{float_number(repository.latest_commit.average_code_file_size)} in code,
+      #{float_number(repository.latest_commit.average_tests_file_size)} in tests)
+
     - if repository.tests_repository
-      %dt Ratio of tests to code
+      %dt Ratio of tests LOC to code LOC
       %dd= percent(repository.latest_commit.ratio_of_tests_to_code)
 
 %h2 File Count
 
-= stacked_line_chart(repository, [:code_files_count_per_day, :tests_files_count_per_day], ["Code", "Tests"], "File Count")
+= stacked_line_chart(repository, [:code_files_count_per_day, :tests_files_count_per_day], heading: ["Code", "Tests"], title: "File Count")
+
+%h2 Lines of Code
+
+= line_chart(repository, [:code_lines_of_code_per_day, :tests_lines_of_code_per_day], heading: ["Code LOC", "Tests LOC"], title: "Lines of Code")
 
 %h2 Average Lines of Code per File
 
-= line_chart(repository, :lines_of_code_per_file_per_day, "LOC/file")
+= line_chart(repository, [:lines_of_code_per_file_per_day, :code_lines_of_code_per_file_per_day, :tests_lines_of_code_per_file_per_day], heading: ["Total", "Code", "Tests"], title: "LOC")
 
-%h2 Ratio of tests to code
+%h2 Ratio of tests LOC to code LOC
 
-= line_chart(repository, :ratio_of_tests_to_code_per_day, "Test/Code ratio")
+= line_chart(repository, :ratio_of_tests_to_code_per_day, heading: "Ratio", title: "Test/Code ratio")
 
 %h2 Most Changed Files
 
-= table(repository, :files_with_most_revisions, {filename: "File", revisions: "Revisions", contributors: "Contributors", size: "Size"})
+= table(repository, :files_with_most_revisions, labels: {filename: "File", revisions: "Revisions", contributors: "Contributors", size: "Size"})
 
 %h2 Largest Files
 
-= table(repository, :largest_files, {filename: "File", revisions: "Revisions", contributors: "Contributors", size: "Size"})
+= table(repository, :largest_files, labels: {filename: "File", revisions: "Revisions", contributors: "Contributors", size: "Size"})
 
 %h2 Most Contributed Files
 
-= table(repository, :files_with_most_contributors, {filename: "File", revisions: "Revisions", contributors: "Contributors", size: "Size"})
+= table(repository, :files_with_most_contributors, labels: {filename: "File", revisions: "Revisions", contributors: "Contributors", size: "Size"})

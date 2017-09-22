@@ -60,16 +60,16 @@
 
 %h2 Lines of Code
 
-= line_chart(repository, :lines_of_code_per_day, "LOC")
+= line_chart(repository, :lines_of_code_per_day, heading: "LOC", title: "Lines of Code")
 
 %h2 Languages
 
-= pie_chart(repository, :latest_commit_languages, "Lines of Code")
+= pie_chart(repository, :latest_commit_languages, title: "Lines of Code")
 
 %h2 Top Authors
 
-= pie_chart(repository, :commits_per_author, "Commits")
+= pie_chart(repository, :commits_per_author, title: "Commits")
 
 %h2 Total Ownership
 
-= pie_chart(repository, :total_ownership_per_author, "Ownership")
+= pie_chart(repository, :total_ownership_per_author, title: "Ownership")

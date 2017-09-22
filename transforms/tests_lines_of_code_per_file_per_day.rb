@@ -1,4 +1,4 @@
-class CodeFilesCountPerDay
+class TestsLinesOfCodePerFilePerDay
   include ReportHelper
 
   attr_reader :repository
@@ -11,7 +11,7 @@ class CodeFilesCountPerDay
     raw = repository.analysed_commits.uniq do |commit|
       iso_date(commit.date)
     end.map do |commit|
-      [ iso_date(commit.date), commit.code_files_count ]
+      [ iso_date(commit.date), commit.average_tests_file_size ]
     end
 
     Hash[raw]
