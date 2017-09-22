@@ -67,11 +67,15 @@ class Commit < ActiveRecord::Base
   end
 
   def sass_rules
-    @sass_rules ||= file_sass_stylesheets.sum(:rules)
+    @sass_rules ||= file_sass_stylesheets_sums.rules_sum
   end
 
   def sass_properties
-    @sass_properties ||= file_sass_stylesheets.sum(:properties)
+    @sass_properties ||= file_sass_stylesheets_sums.properties_sum
+  end
+
+  def file_sass_stylesheets_sums
+    @file_sass_stylesheets_sums ||= file_sass_stylesheets.select("SUM(rules) AS rules_sum, SUM(properties) AS properties_sum").first
   end
 
   def select_file(filename)
