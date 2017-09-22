@@ -24,5 +24,3 @@ class CountTodos < AbstractFileAnalyser
     FileTodo.import!(collection)
   end
 end
-
-FILE_ANALYSERS << CountTodos

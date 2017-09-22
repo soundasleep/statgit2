@@ -23,5 +23,3 @@ class AuthorsReport < AbstractReportCollection
     author.email
   end
 end
-
-ALL_REPORTS << AuthorsReport

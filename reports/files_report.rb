@@ -11,5 +11,3 @@ class FilesReport < AbstractReport
     true
   end
 end
-
-ALL_REPORTS << FilesReport

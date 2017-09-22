@@ -29,5 +29,3 @@ class IdentifyAuthor < AbstractCommitAnalyser
     repository.authors.create!(name: commit.author_name, email: commit.author_email)
   end
 end
-
-COMMIT_ANALYSERS << IdentifyAuthor

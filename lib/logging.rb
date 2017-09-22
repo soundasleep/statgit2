@@ -1,5 +1,4 @@
 require "logger"
-
 require "active_support/logger"
 
 LOG = Logger.new(STDOUT)

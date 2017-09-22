@@ -11,5 +11,3 @@ class IndexReport < AbstractReport
     true
   end
 end
-
-ALL_REPORTS << IndexReport

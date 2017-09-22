@@ -11,7 +11,7 @@ class GenerateReports
 
     repository.reload
 
-    ALL_REPORTS.each do |report|
+    AllReports::REPORTS.each do |report|
       instance = report.new(repository: repository)
 
       LOG.info ">> #{instance.name}"
