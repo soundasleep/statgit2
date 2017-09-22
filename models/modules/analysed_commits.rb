@@ -1,6 +1,14 @@
 module AnalysedCommits
+  include DateHelper
+
   def analysed_commits
     @analysed_commits ||= commits.where.not(author_id: nil)
+  end
+
+  def daily_commits
+    @daily_commits ||= analysed_commits.uniq do |commit|
+      iso_date(commit.date)
+    end
   end
 
   def commit_activity

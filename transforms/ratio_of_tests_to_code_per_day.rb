@@ -8,9 +8,7 @@ class RatioOfTestsToCodePerDay
   end
 
   def call
-    raw = repository.analysed_commits.uniq do |commit|
-      iso_date(commit.date)
-    end.map do |commit|
+    raw = repository.daily_commits.map do |commit|
       [ iso_date(commit.date), commit.ratio_of_tests_to_code ]
     end
 
