@@ -54,7 +54,7 @@ class BlameWithGit < AbstractCommitAnalyser
                   line_count: 0,
                 )
               else
-                LOG.debug "Could not find author for mail '#{mail}'"
+                LOG.debug "Could not find author for mail '#{mail}'" if LOG.debug?
               end
             end
 

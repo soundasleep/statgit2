@@ -16,7 +16,7 @@ class LinesOfCode < AbstractCommitAnalyser
 
     command = "node_modules/.bin/cloc --csv --quiet #{root_path}"
     execute_command(command) do |csv|
-      LOG.debug "cloc output: #{csv}"
+      LOG.debug "cloc output: #{csv}" if LOG.debug?
 
       CSV.parse(csv) do |row|
         if row.length == 5

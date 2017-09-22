@@ -14,7 +14,7 @@ class AbstractReport
     output = render_output(name, selector)
     bytes = File.write filename, output
 
-    LOG.debug "Created #{filename} (#{bytes} bytes)"
+    LOG.debug "Created #{filename} (#{bytes} bytes)" if LOG.debug?
   end
 
   def generate!

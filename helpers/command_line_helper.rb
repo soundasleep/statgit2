@@ -11,7 +11,7 @@ module CommandLineHelper
 
     command += " 2>&1 > #{temp_file.path}"
 
-    LOG.debug ">> #{command}"
+    LOG.debug ">> #{command}" if LOG.debug?
     system(*command) or raise CommandLineError, "Command failed: #{$?}"
 
     output = temp_file.read
@@ -20,13 +20,13 @@ module CommandLineHelper
       # remove any invalid UTF-8 symbols
       yield strip_invalid_utf8(output)
     else
-      LOG.debug "(#{output.split("\n").length} lines)"
+      LOG.debug "(#{output.split("\n").length} lines)" if LOG.debug?
     end
   end
 
   # Run the command, but stream the results to the given block
   def stream_command(command)
-    LOG.debug ">> #{command} (stream)"
+    LOG.debug ">> #{command} (stream)" if LOG.debug?
     IO.popen(command) do |io|
       while line = io.gets
         yield strip_invalid_utf8(line)
