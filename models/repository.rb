@@ -15,7 +15,7 @@ class Repository < ActiveRecord::Base
   end
 
   def tests_repository
-    child_repositories.where(is_tests_only: true).first
+    @tests_repository ||= child_repositories.where(is_tests_only: true).first
   end
 
   def lines_of_code_per_day
@@ -136,6 +136,17 @@ class Repository < ActiveRecord::Base
 
   def total_ownership_per_author
     @total_ownership_per_author ||= TotalOwnershipPerAuthor.new(self).call
+  end
+
+  def file_path_instance_for(path_string)
+    @file_path_instances ||= Hash[all_file_paths]
+    @file_path_instances[path_string] ||= file_paths.create!(path: path_string)
+  end
+
+  def all_file_paths
+    file_paths.map do |file_path|
+      [file_path.path, file_path]
+    end
   end
 
   def changes_by_author(author)

@@ -20,10 +20,13 @@ class AnalyseCommit
     switched = false
     analysed = false
 
+    # Allow analysers to persist state
+    analysers = commit_analysers
+
     # Rather than defining tool dependencies, just run all tools many times
     # (e.g. CountTodos depends on CountFiles to create commit.files)
     3.times do
-      commit_analysers.each do |analyser|
+      analysers.each do |analyser|
         if analyser.can_update? && analyser.needs_update? && !analyser.has_already_updated?
           unless switched
             execute_command "cd #{root_path} && git reset --hard && git checkout #{commit.commit_hash} && git reset --hard #{commit.commit_hash}"

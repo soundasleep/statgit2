@@ -1,6 +1,6 @@
 module AnalysedCommits
   def analysed_commits
-    commits.where.not(author_id: nil)
+    @analysed_commits ||= commits.where.not(author_id: nil)
   end
 
   def commit_activity
