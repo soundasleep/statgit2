@@ -164,4 +164,22 @@ class Repository < ActiveRecord::Base
     @contributors_for ||= ContributorsForPaths.new(self).call
     @contributors_for[file_path] || 0
   end
+
+  def todos_count_for(commit)
+    @todos_count_for ||= Hash[ FileTodo.joins(:commit)
+        .where("commits.repository_id = ?", id)
+        .select("commits.id AS commit_id, SUM(todo_count) AS todos_sum")
+        .group("commit_id")
+        .map { |row| [ row.commit_id, row.todos_sum ] } ]
+    @todos_count_for[commit.id]
+  end
+
+  def fixmes_count_for(commit)
+    @fixmes_count_for ||= Hash[ FileFixme.joins(:commit)
+        .where("commits.repository_id = ?", id)
+        .select("commits.id AS commit_id, SUM(fixme_count) AS fixmes_sum")
+        .group("commit_id")
+        .map { |row| [ row.commit_id, row.fixmes_sum ] } ]
+    @fixmes_count_for[commit.id]
+  end
 end

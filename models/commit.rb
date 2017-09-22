@@ -59,11 +59,11 @@ class Commit < ActiveRecord::Base
   end
 
   def todos
-    @todos ||= file_todos.sum(:todo_count)
+    repository.todos_count_for(self)
   end
 
   def fixmes
-    @fixmes ||= file_fixmes.sum(:fixme_count)
+    repository.fixmes_count_for(self)
   end
 
   def sass_rules
