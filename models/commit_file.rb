@@ -31,5 +31,9 @@ class CommitFile < ActiveRecord::Base
   def total_lines
     @total_lines ||= git_blames.sum(:line_count)
   end
+
+  def test_file?
+    @is_test_file ||= commit.tests_commit.present? && commit.tests_commit.select_file(full_path).present?
+  end
 end
 

@@ -119,3 +119,12 @@ table.statistics th.filename .deleted {
   font-style: italic;
   color: #666;
 }
+
+span, a {
+  &.filename {
+    color: blue;
+    &.test-file {
+      color: green;
+    }
+  }
+}

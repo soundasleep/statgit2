@@ -4,6 +4,7 @@ require "haml"
 module ReportHelper
   include DateHelper
   include NumberHelper
+  include FileHelper
   include ActionView::Helpers::UrlHelper
 
   class ReportRenderError < StandardError; end
@@ -16,11 +17,11 @@ module ReportHelper
     end
   end
 
-  def blob_link(filename)
+  def blob_link(filename, html_options = {})
     if options[:blob_path]
-      link_to(filename, options[:blob_path] + filename)
+      link_to(filename, options[:blob_path] + filename, html_options)
     else
-      filename
+      content_tag(:span, filename, html_options)
     end
   end
 
