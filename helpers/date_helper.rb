@@ -1,3 +1,5 @@
+require "active_support/time"
+
 module DateHelper
   def iso_date(date)
     return "" if date.nil?

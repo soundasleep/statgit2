@@ -1,3 +1,5 @@
+require "sass"
+
 class SassNodes < AbstractFileAnalyser
   def needs_update?
     commit.file_sass_stylesheets.empty?

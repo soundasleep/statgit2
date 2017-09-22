@@ -11,5 +11,6 @@ class AllAnalysers
   FILE_ANALYSERS = [
     CountFixmes,
     CountTodos,
+    SassNodes,
   ]
 end
