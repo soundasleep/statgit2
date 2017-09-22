@@ -34,6 +34,8 @@ module ReportHelper
   end
 
   def render_chart(chart_type, repository, methods, title, options = {})
+    LOG.debug "Rendering chart '#{chart_type}' on #{methods} (#{title})" if LOG.debug?
+
     data = {}
     methods = wrap_array(methods)
 
@@ -120,6 +122,7 @@ module ReportHelper
 
   def render_template(template, template_arguments)
     begin
+      LOG.debug "Rendering template '#{template}'" if LOG.debug?
       engine = Haml::Engine.new(File.read(template))
       template_arguments[:arguments] = template_arguments # for reference in partials
       engine.render self, template_arguments do

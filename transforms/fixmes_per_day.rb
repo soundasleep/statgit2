@@ -8,9 +8,7 @@ class FixmesPerDay
   end
 
   def call
-    raw = repository.analysed_commits.preload(:file_fixmes).uniq do |commit|
-      iso_date(commit.date)
-    end.map do |commit|
+    raw = repository.daily_commits.map do |commit|
       [ iso_date(commit.date), commit.fixmes ]
     end
 

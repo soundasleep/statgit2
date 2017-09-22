@@ -171,7 +171,7 @@ class AnalyseRepository
     end
 
     Commit.import to_import.compact
-    LOG.debug "Created #{to_import.size} commits"
+    LOG.debug "Created #{to_import.size} commits" if LOG.debug?
   end
 
   def new_commit(commit)

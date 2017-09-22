@@ -39,7 +39,7 @@ class Commit < ActiveRecord::Base
   def tests_commit
     return nil unless repository.tests_repository
 
-    repository.tests_repository.commits.where(commit_hash: commit_hash).first
+    @tests_commit ||= repository.tests_repository.commits.where(commit_hash: commit_hash).first
   end
 
   def lines_of_code
@@ -59,27 +59,35 @@ class Commit < ActiveRecord::Base
   end
 
   def todos
-    @todos ||= file_todos.sum(:todo_count)
+    repository.todos_count_for(self)
   end
 
   def fixmes
-    @fixmes ||= file_fixmes.sum(:fixme_count)
+    repository.fixmes_count_for(self)
   end
 
   def sass_rules
-    @sass_rules ||= file_sass_stylesheets.sum(:rules)
+    file_sass_stylesheets_sums.rules_sum
   end
 
   def sass_properties
-    @sass_properties ||= file_sass_stylesheets.sum(:properties)
+    file_sass_stylesheets_sums.properties_sum
+  end
+
+  def file_sass_stylesheets_count
+    file_sass_stylesheets_sums.stylesheets_count
+  end
+
+  def file_sass_stylesheets_sums
+    @file_sass_stylesheets_sums ||= file_sass_stylesheets.select("COUNT(*) as stylesheets_count, SUM(rules) AS rules_sum, SUM(properties) AS properties_sum").first
   end
 
   def select_file(filename)
-    commit_files_as_hash[filename]
+    commit_files_for_filepaths[repository.file_path_instance_for(filename)]
   end
 
-  def commit_files_as_hash
-    @commit_files_as_hash ||= Hash[commit_files.map { |file| [file.full_path, file] }]
+  def commit_files_for_filepaths
+    @commit_files_for_filepaths ||= Hash[commit_files.map { |file| [file.file_path, file] }]
   end
 
   def average_file_size

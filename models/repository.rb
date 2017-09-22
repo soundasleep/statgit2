@@ -15,7 +15,7 @@ class Repository < ActiveRecord::Base
   end
 
   def tests_repository
-    child_repositories.where(is_tests_only: true).first
+    @tests_repository ||= child_repositories.where(is_tests_only: true).first
   end
 
   def lines_of_code_per_day
@@ -138,6 +138,17 @@ class Repository < ActiveRecord::Base
     @total_ownership_per_author ||= TotalOwnershipPerAuthor.new(self).call
   end
 
+  def file_path_instance_for(path_string)
+    @file_path_instances ||= Hash[all_file_paths]
+    @file_path_instances[path_string] ||= file_paths.create!(path: path_string)
+  end
+
+  def all_file_paths
+    file_paths.map do |file_path|
+      [file_path.path, file_path]
+    end
+  end
+
   def changes_by_author(author)
     @changes_by_author ||= ChangesByAuthor.new(self).call
     @changes_by_author[author.id] || 0
@@ -152,5 +163,23 @@ class Repository < ActiveRecord::Base
   def contributors_for(file_path)
     @contributors_for ||= ContributorsForPaths.new(self).call
     @contributors_for[file_path] || 0
+  end
+
+  def todos_count_for(commit)
+    @todos_count_for ||= Hash[ FileTodo.joins(:commit)
+        .where("commits.repository_id = ?", id)
+        .select("commits.id AS commit_id, SUM(todo_count) AS todos_sum")
+        .group("commit_id")
+        .map { |row| [ row.commit_id, row.todos_sum ] } ]
+    @todos_count_for[commit.id]
+  end
+
+  def fixmes_count_for(commit)
+    @fixmes_count_for ||= Hash[ FileFixme.joins(:commit)
+        .where("commits.repository_id = ?", id)
+        .select("commits.id AS commit_id, SUM(fixme_count) AS fixmes_sum")
+        .group("commit_id")
+        .map { |row| [ row.commit_id, row.fixmes_sum ] } ]
+    @fixmes_count_for[commit.id]
   end
 end

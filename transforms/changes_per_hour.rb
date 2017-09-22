@@ -16,8 +16,10 @@ class ChangesPerHour
 
     repository_or_author.analysed_commits.each do |commit|
       hour = commit.date.hour
-      result["#{hour}h"][0] += commit.commit_diffs.sum(:added)
-      result["#{hour}h"][1] -= commit.commit_diffs.sum(:removed)
+      sums = commit.commit_diffs.select("SUM(added) AS added_sum, SUM(removed) AS removed_sum").first
+
+      result["#{hour}h"][0] += sums.added_sum
+      result["#{hour}h"][1] -= sums.removed_sum
     end
 
     result
