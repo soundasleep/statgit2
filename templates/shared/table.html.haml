@@ -13,7 +13,8 @@
               - when :size
                 = kb_size values[key]
               - when :filename
-                = blob_link values[key], class: "file #{test_file?(values[key]) ? "test-file" : ""}"
+                = blob_link values[key], class: "filename #{test_file?(values[key]) ? "test-file" : ""}"
+                = test_file?(values[key]) ? " (test)" : ""
               - when :author
                 = render_shared "author", email: values[key].email
               - when :last_commit
