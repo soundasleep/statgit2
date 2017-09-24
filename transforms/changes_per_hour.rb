@@ -18,8 +18,10 @@ class ChangesPerHour
       hour = commit.date.hour
       sums = commit.commit_diffs.select("SUM(added) AS added_sum, SUM(removed) AS removed_sum").first
 
-      result["#{hour}h"][0] += sums.added_sum
-      result["#{hour}h"][1] -= sums.removed_sum
+      if sums.present?
+        result["#{hour}h"][0] += sums.added_sum
+        result["#{hour}h"][1] -= sums.removed_sum
+      end
     end
 
     result
