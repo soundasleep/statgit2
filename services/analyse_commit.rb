@@ -33,7 +33,7 @@ class AnalyseCommit
 
             if repository.only_paths_matching.present?
               all_files_in(root_path).reject do |path|
-                path.match(matching_regexp)
+                path.match(matching_regexp) || File.directory?(path)  # do not delete /foo, it may contain /foo/spec
               end.each do |path|
                 FileUtils.rm_rf(path, secure: true)
               end
