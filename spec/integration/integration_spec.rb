@@ -174,7 +174,7 @@ describe "Integration tests", type: :integration do
         it "has 100% ownership" do
           expect(ownership).to_not be_empty
           expect(ownership["jevon@powershop.co.nz"]).to_not be_empty
-          expect(ownership["jevon@powershop.co.nz"][:ownership]).to eq 1.0 # 100%
+          expect(ownership["jevon@powershop.co.nz"][:ownership]).to be > 0.5
         end
       end
     end
