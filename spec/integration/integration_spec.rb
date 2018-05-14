@@ -1,4 +1,5 @@
 require "spec_helper"
+require "tmpdir"
 
 describe "Integration tests", type: :integration do
   include IntegrationSpecSupport

@@ -1,4 +1,4 @@
-class StoreFilePathsSeparately < ActiveRecord::Migration
+class StoreFilePathsSeparately < ActiveRecord::Migration[4.2]
   def up
     create_table :file_paths do |t|
       t.string  "path",         null: true

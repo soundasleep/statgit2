@@ -1,4 +1,4 @@
-class AddTestRepositories < ActiveRecord::Migration
+class AddTestRepositories < ActiveRecord::Migration[4.2]
   def change
     add_column :repositories, :parent_repository_id, :integer, null: true
     add_index  :repositories, ["parent_repository_id"]

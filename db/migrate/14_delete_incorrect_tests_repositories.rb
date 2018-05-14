@@ -1,4 +1,4 @@
-class DeleteIncorrectTestsRepositories < ActiveRecord::Migration
+class DeleteIncorrectTestsRepositories < ActiveRecord::Migration[4.2]
   def change
     # before issue #28, incorrect repository stats were being generated;
     # we need to regenerate them

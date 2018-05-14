@@ -1,4 +1,4 @@
-class InitialiseDatabase < ActiveRecord::Migration
+class InitialiseDatabase < ActiveRecord::Migration[4.2]
   def change
     create_table :schema do |t|
     end

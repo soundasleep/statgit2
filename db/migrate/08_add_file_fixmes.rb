@@ -1,4 +1,4 @@
-class AddFileFixmes < ActiveRecord::Migration
+class AddFileFixmes < ActiveRecord::Migration[4.2]
   def change
     create_table :file_fixmes do |t|
       t.integer  "commit_id",      null: false

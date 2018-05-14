@@ -1,4 +1,4 @@
-class AddFileSassStylesheets < ActiveRecord::Migration
+class AddFileSassStylesheets < ActiveRecord::Migration[4.2]
   def change
     create_table :file_sass_stylesheets do |t|
       t.integer "commit_id",    null: false

@@ -1,4 +1,4 @@
-class AddGitBlame < ActiveRecord::Migration
+class AddGitBlame < ActiveRecord::Migration[4.2]
   def change
     # A git blame is for a single commit, and records a list of all
     # authors for a given file, and a count of how many lines of that

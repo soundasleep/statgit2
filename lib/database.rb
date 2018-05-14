@@ -1,4 +1,5 @@
 require "active_record"
+require "active_record/migration"
 require "connection_pool"
 require "sqlite3"
 require "activerecord-import"
@@ -14,7 +15,7 @@ def connect_to_database(options)
   LOG.info "Using database #{options[:database]}"
 
   # And then apply migrations as necessary
-  ActiveRecord::Migrator.migrate("db/migrate/")
+  ActiveRecord::MigrationContext.new("db/migrate/").migrate
   LOG.info "Database migrated"
 end
 

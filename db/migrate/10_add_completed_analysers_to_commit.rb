@@ -1,4 +1,4 @@
-class AddCompletedAnalysersToCommit < ActiveRecord::Migration
+class AddCompletedAnalysersToCommit < ActiveRecord::Migration[4.2]
   def change
     create_table :completed_analysers do |t|
       t.integer  "commit_id",      null: false

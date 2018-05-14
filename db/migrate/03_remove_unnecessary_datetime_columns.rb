@@ -1,4 +1,4 @@
-class RemoveUnnecessaryDatetimeColumns < ActiveRecord::Migration
+class RemoveUnnecessaryDatetimeColumns < ActiveRecord::Migration[4.2]
   def change
     remove_column :commit_files, :created_at, :datetime, :null => false
     remove_column :commit_files, :updated_at, :datetime, :null => false

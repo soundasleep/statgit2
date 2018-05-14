@@ -1,4 +1,4 @@
-class RemoveGitFiles < ActiveRecord::Migration
+class RemoveGitFiles < ActiveRecord::Migration[4.2]
   def up
     git_file_paths = FilePath.all.select do |file_path|
       file_path.path.start_with?(".git") || file_path.path.include?("/.git/")

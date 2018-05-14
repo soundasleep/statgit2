@@ -1,3 +1,5 @@
+require "tempfile"
+
 module CommandLineHelper
   class CommandLineError < StandardError; end
 
