@@ -6,3 +6,4 @@ node_modules/
 .sass-cache/
 *.sqlite3
 .bundle/
+.byebug_history

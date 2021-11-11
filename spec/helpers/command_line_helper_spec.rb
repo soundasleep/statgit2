@@ -32,7 +32,7 @@ describe CommandLineHelper, type: :helper do
         output << out
       end
       expect(output.map(&:strip)).to eq(["hi"])
-      expect(output.first.split("\n")).to eq(["hi"])
+      expect(output.first.split("\n").map(&:strip)).to eq(["hi"])
     end
 
     it "can handle invalid UTF-8 by stripping it out" do
@@ -61,7 +61,7 @@ describe CommandLineHelper, type: :helper do
   describe "#stream_command" do
     it "can capture an echo" do
       output = []
-      stream_command("echo hi; echo hello") do |line|
+      stream_command("echo hi && echo hello") do |line|
         output << line
       end
       expect(output.map(&:strip)).to eq(["hi", "hello"])

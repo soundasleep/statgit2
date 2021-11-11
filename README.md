@@ -15,6 +15,10 @@ This will generate reports in `output/` and a database stored locally as `db/dat
 
 A full list of options is available with `--help`.
 
+## Requirements
+
+Tested on Ruby 2.3.3 and 3.0.2.
+
 # Tests
 
 ```

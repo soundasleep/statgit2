@@ -15,7 +15,7 @@ def connect_to_database(options)
   LOG.info "Using database #{options[:database]}"
 
   # And then apply migrations as necessary
-  ActiveRecord::MigrationContext.new("db/migrate/").migrate
+  ActiveRecord::MigrationContext.new("db/migrate/", ActiveRecord::Base.connection.schema_migration).migrate
   LOG.info "Database migrated"
 end
 

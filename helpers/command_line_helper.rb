@@ -9,14 +9,14 @@ module CommandLineHelper
 
   # Run the command, load the results into memory, then pass the entire block
   def execute_command(command)
-    temp_file = Tempfile.new(self.class.name)
+    temp_file = "#{Dir.tmpdir}/temp"
 
-    command += " 2>&1 > #{temp_file.path}"
+    command += " 2>&1 > #{temp_file}"
 
     LOG.debug ">> #{command}" if LOG.debug?
     system(*command) or raise CommandLineError, "Command failed: #{$?}"
 
-    output = temp_file.read
+    output = File.open(temp_file).read
 
     if block_given?
       # remove any invalid UTF-8 symbols
@@ -50,7 +50,7 @@ module CommandLineHelper
 
   def all_files_in(root_path)
     Dir.glob("#{root_path}{,**/}*", File::FNM_DOTMATCH).reject do |path|
-      path.ends_with?("/.") || path.ends_with?("/..") || path.include?("/.git/") || path.end_with?("/.git")
+      path.end_with?("/.") || path.end_with?("/..") || path.include?("/.git/") || path.end_with?("/.git")
     end
   end
 
