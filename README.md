@@ -17,7 +17,7 @@ A full list of options is available with `--help`.
 
 ## Requirements
 
-Tested on Ruby 2.3.3 and 3.0.2.
+- Ruby 2.6+ or 3.0+
 
 # Tests
 

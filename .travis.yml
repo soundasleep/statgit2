@@ -1,6 +1,0 @@
-language: ruby
-rvm:
-  - 2.3.3
-  - 3.0.2
-before_install:
-  - npm install
