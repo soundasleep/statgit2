@@ -11,10 +11,10 @@ class IdentifyAuthor < AbstractCommitAnalyser
     author = find_author || create_author
 
     # update latest author
-    author.update_attributes! name: commit.author_name
+    author.update! name: commit.author_name
 
     # link through to commit
-    commit.update_attributes! author: author
+    commit.update! author: author
 
     return true
   end

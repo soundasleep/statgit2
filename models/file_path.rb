@@ -9,7 +9,7 @@ class FilePath < ActiveRecord::Base
   private
 
   def cannot_be_a_git_file
-    if path.starts_with?(".git/")
+    if path.start_with?(".git/")
       errors.add(:path, "'#{path}' can't start with .git")
     end
   end

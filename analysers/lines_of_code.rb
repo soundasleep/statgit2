@@ -14,7 +14,8 @@ class LinesOfCode < AbstractCommitAnalyser
   def call
     to_import = []
 
-    command = "node_modules/.bin/cloc --csv --quiet #{root_path}"
+    slash = File::ALT_SEPARATOR || File::SEPARATOR
+    command = "node_modules#{slash}.bin#{slash}cloc --csv --quiet #{root_path}"
     execute_command(command) do |csv|
       LOG.debug "cloc output: #{csv}" if LOG.debug?
 

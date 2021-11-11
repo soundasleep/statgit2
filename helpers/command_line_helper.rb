@@ -50,7 +50,7 @@ module CommandLineHelper
 
   def all_files_in(root_path)
     Dir.glob("#{root_path}{,**/}*", File::FNM_DOTMATCH).reject do |path|
-      path.ends_with?("/.") || path.ends_with?("/..") || path.include?("/.git/") || path.end_with?("/.git")
+      path.end_with?("/.") || path.end_with?("/..") || path.include?("/.git/") || path.end_with?("/.git")
     end
   end
 
