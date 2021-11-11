@@ -8,6 +8,7 @@ gem 'connection_pool'
 
 gem 'actionview'
 gem 'sqlite3'
+gem 'tzinfo-data'
 
 gem 'logger'
 gem 'logger-colors'

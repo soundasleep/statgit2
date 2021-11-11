@@ -9,14 +9,14 @@ module CommandLineHelper
 
   # Run the command, load the results into memory, then pass the entire block
   def execute_command(command)
-    temp_file = Tempfile.new(self.class.name)
+    temp_file = "#{Dir.tmpdir}/temp"
 
-    command += " 2>&1 > #{temp_file.path}"
+    command += " 2>&1 > #{temp_file}"
 
     LOG.debug ">> #{command}" if LOG.debug?
     system(*command) or raise CommandLineError, "Command failed: #{$?}"
 
-    output = temp_file.read
+    output = File.open(temp_file).read
 
     if block_given?
       # remove any invalid UTF-8 symbols
