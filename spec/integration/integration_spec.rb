@@ -141,7 +141,6 @@ describe "Integration tests", type: :integration do
         expect(latest_commit.commit_files).to_not be_empty
         expect(latest_commit.select_file("spec/integration/integration_spec.rb")).to_not be_nil
         expect(latest_commit.select_file("README.md")).to_not be_nil
-        expect(latest_commit.select_file(".travis.yml")).to_not be_nil
       end
     end
 
@@ -168,13 +167,13 @@ describe "Integration tests", type: :integration do
     describe "file ownership" do
       subject(:ownership) { repository.latest_commit.select_file(filename).file_ownership }
 
-      describe ".travis.yml" do
-        let(:filename) { ".travis.yml"}
+      describe ".github/workflows/ruby.yml" do
+        let(:filename) { ".github/workflows/ruby.yml"}
 
         it "has 100% ownership" do
           expect(ownership).to_not be_empty
-          expect(ownership["jevon@powershop.co.nz"]).to_not be_empty
-          expect(ownership["jevon@powershop.co.nz"][:ownership]).to be > 0.5
+          expect(ownership["jevon@jevon.org"]).to_not be_empty
+          expect(ownership["jevon@jevon.org"][:ownership]).to be > 0.5
         end
       end
     end
@@ -202,7 +201,6 @@ describe "Integration tests", type: :integration do
             expect(latest_commit.commit_files).to_not be_empty
             expect(latest_commit.select_file("spec/integration/integration_spec.rb")).to_not be_nil
             expect(latest_commit.select_file("README.md")).to be_nil
-            expect(latest_commit.select_file(".travis.yml")).to be_nil
           end
         end
       end
@@ -223,7 +221,7 @@ describe "Integration tests", type: :integration do
         end
 
         it "has zero contributors for a file that has _not_ been changed in the last 1 commits" do
-          expect(repository.contributors_for(".travis.yml")).to eq(0)
+          expect(repository.contributors_for("Rakefile")).to eq(0)
         end
 
         it "has zero contributors for a file that does not exist" do
@@ -238,7 +236,7 @@ describe "Integration tests", type: :integration do
         end
 
         it "has zero revisions for a file that has _not_ been changed in the last 1 commits" do
-          expect(repository.revisions_for(".travis.yml")).to eq(0)
+          expect(repository.revisions_for("Rakefile")).to eq(0)
         end
 
         it "has zero revision for a file that does not exist" do
