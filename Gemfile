@@ -13,7 +13,7 @@ gem 'tzinfo-data'
 
 gem 'logger'
 gem 'logger-colors'
-gem 'rake', '< 11.0'
+gem 'rake', '>= 12.3.3'
 
 gem 'haml'
 gem 'sass'

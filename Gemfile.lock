@@ -27,7 +27,8 @@ GEM
     crass (1.0.6)
     diff-lcs (1.2.5)
     erubi (1.10.0)
-    haml (4.0.7)
+    haml (5.2.2)
+      temple (>= 0.8.0)
       tilt
     i18n (1.8.11)
       concurrent-ruby (~> 1.0)
@@ -49,7 +50,7 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.4.2)
       loofah (~> 2.3)
-    rake (10.5.0)
+    rake (13.0.6)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
@@ -67,7 +68,8 @@ GEM
     rspec-support (3.4.1)
     sass (3.4.20)
     sqlite3 (1.4.2)
-    tilt (2.0.1)
+    temple (0.8.2)
+    tilt (2.0.10)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     tzinfo-data (1.2021.5)
@@ -89,7 +91,7 @@ DEPENDENCIES
   haml
   logger
   logger-colors
-  rake (< 11.0)
+  rake (>= 12.3.3)
   rspec
   rspec-collection_matchers
   sass
